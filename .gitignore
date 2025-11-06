@@ -1,2 +1,4 @@
 # All compiled java files 
 *.class
+# Sensitive information
+program/doc/logfile.txt
