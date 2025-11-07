@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Smer
-comment0.text=\r\n\ Enumeration\ class\ Smer\ -\ write\ a\ description\ of\ the\ enum\ class\ here\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ 0.1\r\n
+comment0.text=\r\n\ Enumeration\ trieda\ Smer\r\n\ Obsahuje\ popisuje\ smer\ (pohybu)\ v\ rovine\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ 0.1\r\n
 comment1.params=
 comment1.target=int\ toInt()
 comment1.text=\r\n\ Priradi\ zo\ smeru\ hodnotu\ int\ \r\n\ \r\n\ @return\ hodnotu\r\n
@@ -9,8 +9,8 @@ comment2.target=Smer\ opacny()
 comment2.text=\r\n\ Vytvara\ opacny\ smer\ ku\ smeru\ \r\n\ @param\ smer\ vlozeny\ smer\r\n\ @return\ opacny\ smer\r\n
 comment3.params=smernik
 comment3.target=Smer\ toSmer(int)
-comment3.text=\r\n\ Vytvori\ Smer\ na\ zaklade\ priradenej\ hodnoty\r\n\ @param\ smernik\r\n\ @return\r\n
+comment3.text=\r\n\ Vytvori\ Smer\ na\ zaklade\ priradenej\ hodnoty\r\n\ @param\ smernik\r\n\ @return\ priradena\ hodnota\ Smer\r\n
 comment4.params=s1\ s2
 comment4.target=boolean\ opacneSmery(Smer,\ Smer)
-comment4.text=\r\n\ Kontroluje\ vztah\ medzi\ smermi\ \r\n\ @param\ s1\ prvy\ smer\r\n\ @param\ s2\ druhy\ smer\r\n\ @return\ PRAVDA\ ak\ su\ navzajom\ protichodne\r\n
+comment4.text=\r\n\ Kontroluje\ vztah\ medzi\ smermi\r\n\ @param\ s1\ prvy\ smer\r\n\ @param\ s2\ druhy\ smer\r\n\ @return\ PRAVDA\ ak\ su\ navzajom\ protichodne\r\n
 numComments=5

@@ -8,9 +8,13 @@ import java.util.Random;
  * @version 0.1
  */
 public class Svet {
+    private int indexPociatocnejMiestnosti;
     private ArrayList<Miestnost> miestnosti;
     /**
      * Konstruktor Sveta
+     * Vytvori hreny Svet so stanovenym poctom miestnosti
+     * Taktiez vytvori prepoje (navaznosti) medzi miestnostami
+     * 
      * @param velkost nastavuje pocet miestnosti vo svete
      */
     public Svet(int velkost) {
@@ -59,5 +63,17 @@ public class Svet {
                 }
             }
         }
+
+        // nastavi miestnost v krotrej hrac zacne hru
+        // miestnost je medzi prvou 1/5 a 4/5 celkoveho poctu
+        this.indexPociatocnejMiestnosti = (int)Math.round(this.miestnosti.size() * 0.2 + random.nextDouble() * (this.miestnosti.size() * 0.6));
+    }
+
+    /**
+     * Vrati Zacinajucu Miestnost 
+     * @return Miesnost v kotorej zacina hra 
+     */
+    public Miestnost getZaciatocnaMiestnost() {
+        return this.miestnosti.get(this.indexPociatocnejMiestnosti);
     }
 }
