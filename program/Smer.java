@@ -14,8 +14,7 @@ public enum Smer {
 
     /**
      * Priradi zo smeru hodnotu int 
-     * 
-     * @return hodnotu
+     * @return hodnota v tvare int
      */
     public int toInt() {
         int i = -1;
@@ -37,6 +36,31 @@ public enum Smer {
                 break;
         }
         return i;
+    }
+        /**
+     * Priradi zo smeru hodnotu Vektor 
+     * @return hodnota v tvare int
+     */
+    public Vektor toVektor() {
+        Vektor v = Vektor.zero();
+        switch (this) {
+            case Hore:
+                v = Vektor.hore();                
+                break;
+            case Lavo:
+                v = Vektor.lavo();                
+                break;
+            case Pravo:
+                v = Vektor.pravo();                
+                break;
+            case Dole:
+                v = Vektor.dole();                
+                break;
+        
+            default:
+                break;
+        }
+        return v;
     }
     /**
      * Vytvara opacny smer ku smeru 

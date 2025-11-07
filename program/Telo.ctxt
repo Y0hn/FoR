@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.target=Telo
+comment0.text=\r\n\ Reprezentacia\ postavy\ vo\ svete\r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ 0.1\r\n
+comment1.params=maxZdravie\ pozicia\ smer\ rychlost\ polomerTela
+comment1.target=Telo(int,\ Vektor,\ Vektor,\ double,\ double)
+comment1.text=\r\n\ Vytvori\ Telo\ pre\ postavu\ \r\n\ @param\ maxZdravie\ pociatocny\ pocet\ zravia\r\n\ @param\ pozicia\ polohovy\ Vektor\ -\ zacinajuca\ polaha\ v\ miestnosti\r\n\ @param\ smer\ normalizovany\ smerovy\ Vektor\ pohybu\r\n\ @param\ rychlost\ ovplyvnuje\ rychlost\ pohybu\ tela\r\n\ @param\ polomerTela\ polomer\ kruhoveho\ tela\r\n
+comment2.params=pozicia\ smer\ rychlost\ polomerTela
+comment2.target=Telo(Vektor,\ Vektor,\ double,\ double)
+comment2.text=\r\n\ Vytvori\ zjednodusene\ Telo\ \r\n\ @param\ pozicia\ polohovy\ Vektor\ -\ zacinajuca\ polaha\ v\ miestnosti\r\n\ @param\ smer\ normalizovany\ smerovy\ Vektor\ pohybu\r\n\ @param\ rychlost\ ovplyvnuje\ rychlost\ pohybu\ tela\r\n\ @param\ polomerTela\ polomer\ kruhoveho\ tela\r\n
+comment3.params=druheTelo
+comment3.target=boolean\ dotykaSa(Telo)
+comment3.text=\r\n\ Zisti\ ci\ sa\ Tela\ dotykaju\r\n\ @param\ druheTelo\ referencia\ na\ merany\ objekt\r\n\ @return\ PRAVDA\ ak\ je\ ich\ vzajomna\ vzdialenost\ mensia\ ako\ sucet\ ich\ polomerov\r\n
+comment4.params=zmena
+comment4.target=boolean\ zmenZdravie(int)
+comment4.text=\r\n\ Zmeni\ zdravie\ Tela\r\n\ @param\ uber\ velkost\ zmeny\ zdravia\ (+/-)\r\n\ @return\ PRAVDA\ ak\ Telo\ stale\ zije\r\n
+comment5.params=dlzkaPohybu
+comment5.target=void\ pohybVSmere(double)
+numComments=6

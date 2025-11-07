@@ -6,15 +6,27 @@
  * @version 0.1
  */
 public class Hrac {
-    private int zdravie;
-    private Vektor pozicia;
+    private Telo telo;
     private Miestnost sucasnaMiestnost;
     /**
      * Vytvori hraca vo svete
      */
     public Hrac(Svet svet) {
         this.sucasnaMiestnost = svet.getZaciatocnaMiestnost();
-        this.pozicia = Vektor.zero(); 
-        this.zdravie = 10;
+        this.telo = new Telo(10, Vektor.zero(), Vektor.dole(), 0, 20);
+    }
+    /**
+     * Vrati sucastnu Miestnost
+     * @return Miestnost v ktorej je Hrac
+     */
+    public Miestnost getSucasnaMiestnost() {
+        return this.sucasnaMiestnost;
+    }
+    /**
+     * Vrati Telo Hraca
+     * @return reprazentacia Hraca vo Svete
+     */
+    public Telo getTelo() {
+        return this.telo;
     }
 }
