@@ -4,10 +4,4 @@ comment0.text=\r\n\ Drzi\ informacie\ o\ celom\ hernom\ Svete\r\n\ \r\n\ @author
 comment1.params=velkost
 comment1.target=Svet(int)
 comment1.text=\r\n\ Konstruktor\ Sveta\r\n\ @param\ velkost\ nastavuje\ pocet\ miestnosti\ vo\ svete\r\n
-comment2.params=s1\ s2
-comment2.target=boolean\ opacneSmery(int,\ int)
-comment2.text=\r\n\ Kontroluje\ vztah\ medzi\ smermi\ (1\ \=\ L,\ 2\ \=\ R,\ 3\ \=\ D)\ \r\n\ @param\ s1\ prvy\ smer\r\n\ @param\ s2\ druhy\ smer\r\n\ @return\ PRAVDA\ ak\ su\ navzajom\ protichodne\r\n
-comment3.params=smer
-comment3.target=int\ opacnySmer(int)
-comment3.text=\r\n\ Vytvara\ opacny\ smer\ ku\ smeru\ \r\n\ @param\ smer\ vlozeny\ smer\r\n\ @return\ opacny\ smer\r\n
-numComments=4
+numComments=2

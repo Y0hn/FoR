@@ -25,12 +25,13 @@ public class Miestnost {
      * @param sused referencia na suseda
      * @param smer smer v ktorom lezi v zavislosti od stredu sucasnej miestnosti
      */
-    public void nastavSuseda(Miestnost sused, int smer) {
-        if (smer < 0 || 3 < smer) {
-            System.out.println("Zly smer " + smer);
+    public void nastavSuseda(Miestnost sused, Smer smer) {
+        int s = smer.toInt();
+        if (s < 0 || 3 < s) {
+            System.out.println("Zly smer: " + s);
             return;
         }
-        this.susedneMiestnosti[smer] = sused;
+        this.susedneMiestnosti[s] = sused;
     }
     /**
      * Ziska pocet susedov
