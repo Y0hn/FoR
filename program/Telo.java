@@ -3,7 +3,7 @@
  * Reprezentacia postavy vo svete
  * 
  * @author y0hn 
- * @version 0.1
+ * @version v0.2
  */
 public class Telo {
     private int maxZdravie;
@@ -40,6 +40,20 @@ public class Telo {
         this.smer = smer;
         this.rychlostPohybu = rychlost;
         this.polomerTela = polomerTela;
+    }
+    /**
+     * Ziska poziciu Tela
+     * @return absolutna pozicia Tela v Miestnosti
+     */
+    public Vektor getPozicia() {
+        return this.pozicia;
+    }
+    /**
+     * Ziska polomer Tela
+     * @return polomer kruhoveho Tela
+     */
+    public double getPolomer() {
+        return this.polomerTela;
     }
 
     /**

@@ -4,7 +4,7 @@
  * Obsahuje popisuje smer (pohybu) v rovine
  * 
  * @author y0hn
- * @version 0.1
+ * @version v0.1
  */
 public enum Smer {
     Hore,

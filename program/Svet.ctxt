@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Svet
-comment0.text=\r\n\ Drzi\ informacie\ o\ celom\ hernom\ Svete\r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ 0.1\r\n
+comment0.text=\r\n\ Drzi\ informacie\ o\ celom\ hernom\ Svete\r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ v0.1\r\n
 comment1.params=velkost
 comment1.target=Svet(int)
 comment1.text=\r\n\ Konstruktor\ Sveta\r\n\ Vytvori\ hreny\ Svet\ so\ stanovenym\ poctom\ miestnosti\r\n\ Taktiez\ vytvori\ prepoje\ (navaznosti)\ medzi\ miestnostami\r\n\ \r\n\ @param\ velkost\ nastavuje\ pocet\ miestnosti\ vo\ svete\r\n

@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Miestnost
-comment0.text=\r\n\ Miestnost\ vo\ svete,\ ktora\ ma\ susedne\ miestnosti\ a\ obsahuje\ nieco\r\n\ Po\ vojdeni\ hraca\ do\ miestnosti\ sa\ aktivuje\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ 0.1\r\n
+comment0.text=\r\n\ Miestnost\ vo\ svete,\ ktora\ ma\ susedne\ miestnosti\ a\ obsahuje\ nieco\r\n\ Po\ vojdeni\ hraca\ do\ miestnosti\ sa\ aktivuje\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.2\r\n
 comment1.params=
 comment1.target=Miestnost()
 comment1.text=\r\n\ Konstruktor\ triedy\ Miestnost\r\n
@@ -8,9 +8,9 @@ comment2.params=sused\ smer
 comment2.target=void\ nastavSuseda(Miestnost,\ Smer)
 comment2.text=\r\n\ Nastavi\ suseda\ v\ predom\ urcenom\ smere\r\n\ \r\n\ @param\ sused\ referencia\ na\ suseda\r\n\ @param\ smer\ smer\ v\ ktorom\ lezi\ v\ zavislosti\ od\ stredu\ sucasnej\ miestnosti\r\n
 comment3.params=
-comment3.target=int\ getPocetSusedov()
-comment3.text=\r\n\ Ziska\ pocet\ susedov\r\n\ @return\ pocet\ susedov\ bez\ hodnot\ "null"\r\n
-comment4.params=smer
-comment4.target=boolean\ maSusedaVSmere(int)
-comment4.text=\r\n\ Zisti\ ci\ ma\ suseda\ v\ smere\r\n\ @param\ smer\ smer\ zistovania\r\n\ @return\ PRAVDA\ ak\ ma\ v\ tom\ smere\ suseda\r\n
+comment3.target=void\ vytvorSteny()
+comment3.text=\r\n\ Vytvori\ steny\ podla\ existujucich\ susedov\r\n
+comment4.params=
+comment4.target=int\ getPocetSusedov()
+comment4.text=\r\n\ Ziska\ pocet\ susedov\r\n\ @return\ pocet\ susedov\ bez\ hodnot\ "null"\r\n
 numComments=5

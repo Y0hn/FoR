@@ -3,7 +3,7 @@
  * Drzi informacie o hracovi vo Svete
  * 
  * @author y0hn 
- * @version 0.1
+ * @version v0.1
  */
 public class Hrac {
     private Telo telo;

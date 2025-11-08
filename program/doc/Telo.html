@@ -19,7 +19,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -52,7 +52,7 @@ extends java.lang.Object</pre>
 <div class="block">Reprezentacia postavy vo svete</div>
 <dl>
 <dt><span class="simpleTagLabel">Version:</span></dt>
-<dd>0.1</dd>
+<dd>v0.2</dd>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>y0hn</dd>
 </dl>
@@ -120,11 +120,25 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPolomer()">getPolomer</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Ziska polomer Tela</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>Vektor</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPozicia()">getPozicia</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Ziska poziciu Tela</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#pohybVSmere(double)">pohybVSmere</a></span>&#8203;(double&nbsp;dlzkaPohybu)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#zmenZdravie(int)">zmenZdravie</a></span>&#8203;(int&nbsp;zmena)</code></th>
 <td class="colLast">
@@ -207,6 +221,34 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="getPozicia()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPozicia</h4>
+<pre class="methodSignature">public&nbsp;Vektor&nbsp;getPozicia()</pre>
+<div class="block">Ziska poziciu Tela</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>absolutna pozicia Tela v Miestnosti</dd>
+</dl>
+</li>
+</ul>
+<a id="getPolomer()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPolomer</h4>
+<pre class="methodSignature">public&nbsp;double&nbsp;getPolomer()</pre>
+<div class="block">Ziska polomer Tela</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>polomer kruhoveho Tela</dd>
+</dl>
+</li>
+</ul>
 <a id="dotykaSa(Telo)">
 <!--   -->
 </a>

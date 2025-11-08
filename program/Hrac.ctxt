@@ -1,7 +1,13 @@
 #BlueJ class context
 comment0.target=Hrac
-comment0.text=\r\n\ Drzi\ informacie\ o\ hracovi\ vo\ Svete\r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ 0.1\r\n
+comment0.text=\r\n\ Drzi\ informacie\ o\ hracovi\ vo\ Svete\r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ v0.1\r\n
 comment1.params=svet
 comment1.target=Hrac(Svet)
 comment1.text=\r\n\ Vytvori\ hraca\ vo\ svete\r\n
-numComments=2
+comment2.params=
+comment2.target=Miestnost\ getSucasnaMiestnost()
+comment2.text=\r\n\ Vrati\ sucastnu\ Miestnost\r\n\ @return\ Miestnost\ v\ ktorej\ je\ Hrac\r\n
+comment3.params=
+comment3.target=Telo\ getTelo()
+comment3.text=\r\n\ Vrati\ Telo\ Hraca\r\n\ @return\ reprazentacia\ Hraca\ vo\ Svete\r\n
+numComments=4

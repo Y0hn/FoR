@@ -3,7 +3,7 @@
  * 2D Vektor
  * 
  * @author y0hn
- * @version 0.1
+ * @version v0.3
  */
 public class Vektor {
     private double x;
@@ -54,6 +54,33 @@ public class Vektor {
         return Math.sqrt(this.x * this.x  + this.y * this.y);
     }
     /**
+     * Vrati Vektor patriaci do praveho horneho kvadradnu
+     * Obidve suradnice Vektora budu kladne alebo 0; 
+     * @return Vektor (|y|,|x|)
+     */
+    public Vektor absolutny() {
+        double noveX = Math.abs(this.x);
+        double noveY = Math.abs(this.y);
+        return new Vektor(noveX, noveY);
+    }
+    /**
+     * Vymeni hodnoty Vektora
+     * @return prevratni Vektor (y,x)
+     */
+    public Vektor vymeneny() {
+        return new Vektor(this.y, this.x);
+    }
+    /**
+     * Vypocita sucet Vektorov
+     * @param druhyVektor Vektor
+     * @return scitany Vektor (x1+x2, y1+y2)
+     */
+    public Vektor skalarnySucet(double skalar) {
+        double noveX = this.x + skalar;
+        double noveY = this.y + skalar;
+        return new Vektor(noveX, noveY);
+    }
+    /**
      * Vypocita sucet Vektorov
      * @param druhyVektor Vektor
      * @return scitany Vektor (x1+x2, y1+y2)
@@ -81,6 +108,16 @@ public class Vektor {
     public Vektor skalarnySucin(double skalar) {
         double noveX = this.x * skalar;
         double noveY = this.y * skalar;
+        return new Vektor(noveX, noveY);
+    }
+    /**
+     * Vypocita "sucin" dvoch Vektorov
+     * @param druhyVektor rozsirujuci Vektor
+     * @return rozsireny Vektor (x1*x2, y1*y2)
+     */
+    public Vektor sucin(Vektor druhyVektor) {
+        double noveX = this.x * druhyVektor.x;
+        double noveY = this.y * druhyVektor.x;
         return new Vektor(noveX, noveY);
     }
     /**
@@ -115,27 +152,27 @@ public class Vektor {
      * @return Vektor v bode (0,0)
      */
     public static Vektor hore() {
-        return new Vektor(0, 0);
+        return new Vektor(0, 1);
     }
     /**
      * Vytvori nuloy Vektor 
      * @return Vektor v bode (0,0)
      */
     public static Vektor dole() {
-        return new Vektor(0, 0);
+        return new Vektor(0, -1);
     }
     /**
      * Vytvori nuloy Vektor 
      * @return Vektor v bode (0,0)
      */
     public static Vektor lavo() {
-        return new Vektor(0, 0);
+        return new Vektor(-1, 0);
     }
     /**
      * Vytvori nuloy Vektor 
      * @return Vektor v bode (0,0)
      */
     public static Vektor pravo() {
-        return new Vektor(0, 0);
+        return new Vektor(1, 0);
     }
 }

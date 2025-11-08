@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Smer
-comment0.text=\r\n\ Enumeration\ trieda\ Smer\r\n\ Obsahuje\ popisuje\ smer\ (pohybu)\ v\ rovine\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ 0.1\r\n
+comment0.text=\r\n\ Enumeration\ trieda\ Smer\r\n\ Obsahuje\ popisuje\ smer\ (pohybu)\ v\ rovine\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.1\r\n
 comment1.params=
 comment1.target=int\ toInt()
 comment1.text=\r\n\ Priradi\ zo\ smeru\ hodnotu\ int\ \r\n\ @return\ hodnota\ v\ tvare\ int\r\n

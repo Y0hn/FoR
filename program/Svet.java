@@ -5,7 +5,7 @@ import java.util.Random;
  * Drzi informacie o celom hernom Svete
  * 
  * @author y0hn 
- * @version 0.1
+ * @version v0.1
  */
 public class Svet {
     private int indexPociatocnejMiestnosti;
