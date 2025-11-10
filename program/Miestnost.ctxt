@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Miestnost
-comment0.text=\r\n\ Miestnost\ vo\ svete,\ ktora\ ma\ susedne\ miestnosti\ a\ obsahuje\ nieco\r\n\ Po\ vojdeni\ hraca\ do\ miestnosti\ sa\ aktivuje\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.2\r\n
+comment0.text=\r\n\ Miestnost\ vo\ svete,\ ktora\ ma\ susedne\ miestnosti\ a\ obsahuje\ nieco\r\n\ Po\ vojdeni\ hraca\ do\ miestnosti\ sa\ aktivuje\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.3\r\n
 comment1.params=
 comment1.target=Miestnost()
 comment1.text=\r\n\ Konstruktor\ triedy\ Miestnost\r\n
@@ -13,4 +13,7 @@ comment3.text=\r\n\ Vytvori\ steny\ podla\ existujucich\ susedov\r\n
 comment4.params=
 comment4.target=int\ getPocetSusedov()
 comment4.text=\r\n\ Ziska\ pocet\ susedov\r\n\ @return\ pocet\ susedov\ bez\ hodnot\ "null"\r\n
-numComments=5
+comment5.params=otvorene
+comment5.target=void\ nastavVsetkyDvere(boolean)
+comment5.text=\r\n\ Nastavi\ stav\ pre\ vsetky\ dvere\ v\ Miestnosti\r\n\ @param\ otvorene\ ak\ PRAVDA\ dvere\ sa\ otvoria\ (vypnu)\r\n
+numComments=6

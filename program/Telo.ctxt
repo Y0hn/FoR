@@ -21,4 +21,5 @@ comment6.target=boolean\ zmenZdravie(int)
 comment6.text=\r\n\ Zmeni\ zdravie\ Tela\r\n\ @param\ uber\ velkost\ zmeny\ zdravia\ (+/-)\r\n\ @return\ PRAVDA\ ak\ Telo\ stale\ zije\r\n
 comment7.params=dlzkaPohybu
 comment7.target=void\ pohybVSmere(double)
+comment7.text=\r\n\ Presunie\ Telo\ v\ smere\ prednastaveneho\ smeroveho\ Vektora\ \r\n\ vo\ danej\ vzdialenosti\ \r\n\ @param\ dlzkaPohybu\ dlzka\ pohybu\ od\ predchadzajuceho\ bodu\r\n
 numComments=8

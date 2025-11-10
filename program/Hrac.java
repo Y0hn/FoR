@@ -10,6 +10,7 @@ public class Hrac {
     private Miestnost sucasnaMiestnost;
     /**
      * Vytvori hraca vo svete
+     * @param svet Svet v ktorom hrac zacina hru 
      */
     public Hrac(Svet svet) {
         this.sucasnaMiestnost = svet.getZaciatocnaMiestnost();

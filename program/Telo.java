@@ -76,6 +76,11 @@ public class Telo {
         }
         return this.zdravie <= 0;
     }
+    /**
+     * Presunie Telo v smere prednastaveneho smeroveho Vektora 
+     * vo danej vzdialenosti 
+     * @param dlzkaPohybu dlzka pohybu od predchadzajuceho bodu
+     */
     public void pohybVSmere(double dlzkaPohybu) {
         Vektor pohyb = this.smer.skalarnySucin(this.rychlostPohybu);
         // Mozna funkcionalita

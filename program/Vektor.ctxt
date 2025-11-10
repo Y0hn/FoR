@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Vektor
-comment0.text=\r\n\ 2D\ Vektor\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.3\r\n
+comment0.text=\r\n\ 2D\ Vektor\ (reprezentuje\ bod\ v\ Kartezianskej\ suradnicovej\ sustave\ so\ suradnicami\ [x,y])\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.3\r\n
 comment1.params=x\ y
 comment1.target=Vektor(double,\ double)
 comment1.text=\r\n\ Vytvori\ 2-rozmerny\ Vektor\ bodu\ (x,y)\r\n\ @param\ x\ pozicia\ x\r\n\ @param\ y\ pozicia\ y\ \r\n

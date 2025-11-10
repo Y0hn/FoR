@@ -37,7 +37,7 @@ public enum Smer {
         }
         return i;
     }
-        /**
+    /**
      * Priradi zo smeru hodnotu Vektor 
      * @return hodnota v tvare int
      */

@@ -1,16 +1,19 @@
-
 /**
  * Brani Hracovi opustit z heraciu plochu
  * 
  * @author y0hn
- * @version v0.2
+ * @version v0.3
  */
 public class Stena {
     /* Hodnoty v buducnosti ziskavame z Displaya */
     private static Vektor rozmerDisplay = new Vektor(500, 500); 
     private static double sirkaSteny = 20;
     private static double sirkaDveri = 0.6;
-
+    /**
+     * 0 => Mur1,
+     * 1 => Dvere,
+     * 2 => Mur2
+     */
     private Mur[] mury;
     /**
      * Vytvori celistvu Stenu pre Miestnost v Smere
@@ -37,17 +40,12 @@ public class Stena {
     }
     /**
      * Vytvori clenitu Stenu medzi Miestnost a jej Suseda.
-     * Obsahuje dvere
-     * @param smer od stredu miestnosti
+     * Stena obsahuje dvere, ktore vedu do susednej Miestnosti
+     * @param smer od stredu sucastnej Miestnosti
      * @param sused susedna Miestnost
      */
     public Stena(Smer smer, Miestnost sused) {
         Vektor smerovyVektor = smer.toVektor();
-        /*
-         * 0 => Mur1
-         * 1 => Dvere
-         * 2 => Mur2
-         */
         this.mury = new Mur[3];
         double pomerPosunuDveri = 1 - sirkaDveri;
         Vektor dlzkaMuru = rozmerDisplay.skalarnySucin(1 / 3);
@@ -93,12 +91,22 @@ public class Stena {
         this.mury[1].nastavAktivny(false);
     }
     /**
+     * Nastavi stav dveri
+     * @param otvorene ak PRAVDA tak sa dvere otvoria
+     */
+    public void nastavDvere(boolean otvorene) {
+        if (this.mury.length == 3) {
+            this.mury[1].nastavAktivny(!otvorene);
+        }
+    } 
+    /**
      * Reprezentuje cast Steny vo Svete
      */
     public class Mur {
         private Vektor pozicia;
         private Vektor velkost;
         private boolean aktivny;
+        private Miestnost vedieDoMiestnosti;
 
         /**
          * Vytvori cast Steny
@@ -106,6 +114,7 @@ public class Stena {
          * @param velkost velkost obdlznika
          */
         public Mur(Vektor pozicia, Vektor velkost) {
+            this.vedieDoMiestnosti = null;
             this.pozicia = pozicia;
             this.velkost = velkost;
             this.aktivny = true;
@@ -116,6 +125,13 @@ public class Stena {
          */
         public void nastavAktivny(boolean aktivny) {
             this.aktivny = aktivny;
+        }
+        /**
+         * Nastavi Miestnost za Murom
+         * @param miestnost do ktorej Dvere vedu
+         */
+        public void setMiestnost(Miestnost miestnost) {
+            this.vedieDoMiestnosti = miestnost;
         }
         /**
          * Ziska ci je Mur aktivny (nepriechodny)
@@ -133,6 +149,11 @@ public class Stena {
             boolean kolizuje = true;
             Vektor polohaTela = telo.getPozicia();
             double polomer = telo.getPolomer();
+
+            // ak hrac prechadza dverami prepne aktivnu Miestnost
+            if (!this.aktivny) {
+                Miestnost aktivna = this.vedieDoMiestnosti; /* planovana zmena */
+            }
 
             kolizuje &= polohaTela.getX() + polomer > this.pozicia.getX(); // kolizia z lava
             kolizuje &= polohaTela.getX() - polomer < this.pozicia.getX() + this.velkost.getX(); // kolizia z prava

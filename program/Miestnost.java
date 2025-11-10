@@ -3,7 +3,7 @@
  * Po vojdeni hraca do miestnosti sa aktivuje
  * 
  * @author y0hn
- * @version v0.2
+ * @version v0.3
  */
 public class Miestnost {
     /**
@@ -59,5 +59,14 @@ public class Miestnost {
             }
         }
         return pocet;
+    }
+    /**
+     * Nastavi stav pre vsetky dvere v Miestnosti
+     * @param otvorene ak PRAVDA dvere sa otvoria (vypnu)
+     */
+    public void nastavVsetkyDvere(boolean otvorene) {
+        for (Stena stena : this.steny) {
+            stena.nastavDvere(otvorene);
+        }
     }
 }

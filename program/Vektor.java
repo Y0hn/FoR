@@ -1,6 +1,6 @@
 
 /**
- * 2D Vektor
+ * 2D Vektor (reprezentuje bod v Kartezianskej suradnicovej sustave so suradnicami [x,y])
  * 
  * @author y0hn
  * @version v0.3
