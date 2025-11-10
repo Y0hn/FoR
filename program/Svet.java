@@ -5,7 +5,7 @@ import java.util.Random;
  * Drzi informacie o celom hernom Svete
  * 
  * @author y0hn 
- * @version v0.1
+ * @version v0.2
  */
 public class Svet {
     private int indexPociatocnejMiestnosti;
@@ -39,9 +39,9 @@ public class Svet {
                 smer = Smer.toSmer((int)Math.round(random.nextDouble() * 2) + 1);
             } while (poslednySmer != null && Smer.opacneSmery(smer, poslednySmer));
 
-
-            miestnost.nastavSuseda(sused, smer);
-            sused.nastavSuseda(miestnost, smer.opacny());
+            int index = smery.size();
+            miestnost.nastavSuseda(index - 1, smer);
+            sused.nastavSuseda(index, smer.opacny());
             this.miestnosti.add(miestnost);
             miestnost = sused;
             smery.add(smer);
@@ -55,8 +55,11 @@ public class Svet {
                             || 
                         smery.get(dalsi) == Smer.Dole && Smer.opacneSmery(smery.get(predosly), smery.get(dalsi - 1))) {   // alebo spodna pokracuje dole
 
-                        this.miestnosti.get(predosly).nastavSuseda(this.miestnosti.get(dalsi), Smer.Dole);    // do vyssej miestnosti prida cestu dole
-                        this.miestnosti.get(dalsi).nastavSuseda(this.miestnosti.get(predosly), Smer.Hore);    // do nizsej miestnosti prida cestu hore
+                        
+
+
+                        this.miestnosti.get(predosly).nastavSuseda(dalsi, Smer.Dole);    // do vyssej miestnosti prida cestu dole
+                        this.miestnosti.get(dalsi).nastavSuseda(predosly, Smer.Hore);    // do nizsej miestnosti prida cestu hore
                     } else {
                         break;
                     }
@@ -70,10 +73,18 @@ public class Svet {
     }
 
     /**
-     * Vrati Zacinajucu Miestnost 
-     * @return Miesnost v kotorej zacina hra 
+     * Vrati intdex Zacinajej Miestnosti 
+     * @return index Miesnosti v kotorej zacina hra 
      */
-    public Miestnost getZaciatocnaMiestnost() {
-        return this.miestnosti.get(this.indexPociatocnejMiestnosti);
+    public int getZaciatocnaMiestnost() {
+        return this.indexPociatocnejMiestnosti;
+    }
+    /**
+     * Ziska Miestnost z pola Miestnosti
+     * @param index poradove cislo Miestnosti vo Svete 
+     * @return Miestnost na mieste index v poli
+     */
+    public Miestnost getMiestnost(int index) {
+        return this.miestnosti.get(index);
     }
 }

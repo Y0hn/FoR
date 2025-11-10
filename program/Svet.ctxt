@@ -1,10 +1,13 @@
 #BlueJ class context
 comment0.target=Svet
-comment0.text=\r\n\ Drzi\ informacie\ o\ celom\ hernom\ Svete\r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ v0.1\r\n
+comment0.text=\r\n\ Drzi\ informacie\ o\ celom\ hernom\ Svete\r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ v0.2\r\n
 comment1.params=velkost
 comment1.target=Svet(int)
 comment1.text=\r\n\ Konstruktor\ Sveta\r\n\ Vytvori\ hreny\ Svet\ so\ stanovenym\ poctom\ miestnosti\r\n\ Taktiez\ vytvori\ prepoje\ (navaznosti)\ medzi\ miestnostami\r\n\ \r\n\ @param\ velkost\ nastavuje\ pocet\ miestnosti\ vo\ svete\r\n
 comment2.params=
-comment2.target=Miestnost\ getZaciatocnaMiestnost()
-comment2.text=\r\n\ Vrati\ Zacinajucu\ Miestnost\ \r\n\ @return\ Miesnost\ v\ kotorej\ zacina\ hra\ \r\n
-numComments=3
+comment2.target=int\ getZaciatocnaMiestnost()
+comment2.text=\r\n\ Vrati\ intdex\ Zacinajej\ Miestnosti\ \r\n\ @return\ index\ Miesnosti\ v\ kotorej\ zacina\ hra\ \r\n
+comment3.params=index
+comment3.target=Miestnost\ getMiestnost(int)
+comment3.text=\r\n\ Ziska\ Miestnost\ z\ pola\ Miestnosti\r\n\ @param\ index\ poradove\ cislo\ Miestnosti\ vo\ Svete\ \r\n\ @return\ Miestnost\ na\ mieste\ index\ v\ poli\r\n
+numComments=4

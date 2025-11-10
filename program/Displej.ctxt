@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=Displej
+comment0.text=\r\n\ Zobrazovac\ okna\ Hry\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.1\r\n
+comment1.params=nazovOkna\ rozmer
+comment1.target=Displej(java.lang.String,\ Vektor)
+comment1.text=\r\n\ Vytvori\ okno\ Displeja\ \r\n\ @param\ nazovOkna\ zobrazovany\ v\ hlavicke\ okna\r\n\ @param\ rozmer\ Vektor\ velkosti\ okna\r\n
+comment2.params=e
+comment2.target=void\ windowClosing(java.awt.event.WindowEvent)
+comment3.params=
+comment3.target=void\ vykresli()
+numComments=4

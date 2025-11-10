@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=Hra
+comment0.text=\r\n\ Spustacia\ Trieda\r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ 0.1\r\n
+comment1.params=args
+comment1.target=void\ main(java.lang.String[])
+comment1.text=\r\n\ Sluzi\ na\ spustenie\ Hry\ \r\n
+comment2.params=
+comment2.target=void\ zavri()
+comment2.text=\ \r\n\ Ukonci\ hru\ \r\n
+comment3.params=
+comment3.target=Vektor\ getRozmerDisplay()
+comment3.text=\ \r\n\ Zisti\ rozmer\ Displeja\ Hry\r\n\ @return\ vrati\ Vektor\ rozmeru\ Displaya\ akualnej\ Hry\r\n
+comment4.params=indexAktivnejMiestnosti
+comment4.target=void\ nastavAktivnuMiestnost(int)
+comment4.text=\r\n\ Nastavi\ aktivnu\ Miestnost\ podla\ jej\ indexu\ vo\ Svete\r\n\ @param\ indexAktivnejMiestnosti\ index\ novej\ aktivnej\ Miestnosti\r\n
+numComments=5

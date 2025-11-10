@@ -3,7 +3,7 @@
  * Po vojdeni hraca do miestnosti sa aktivuje
  * 
  * @author y0hn
- * @version v0.3
+ * @version v0.4
  */
 public class Miestnost {
     /**
@@ -12,22 +12,25 @@ public class Miestnost {
      * Prava 2
      * Dolna 3
      */
-    private Miestnost[] susedneMiestnosti;
+    private int[] susedneMiestnosti;
     private Stena[] steny;
     /**
      * Konstruktor triedy Miestnost
      */
     public Miestnost() {
-        this.susedneMiestnosti = new Miestnost[4];
+        this.susedneMiestnosti = new int[4];
         this.steny = new Stena[4];
+
+        for (int i = 0; i < this.susedneMiestnosti.length; i++) {
+            this.susedneMiestnosti[i] = -1;
+        }
     }
     /**
      * Nastavi suseda v predom urcenom smere
-     * 
-     * @param sused referencia na suseda
+     * @param sused index susednej Miestnosti
      * @param smer smer v ktorom lezi v zavislosti od stredu sucasnej miestnosti
      */
-    public void nastavSuseda(Miestnost sused, Smer smer) {
+    public void nastavSuseda(int sused, Smer smer) {
         int s = smer.toInt();
         if (s < 0 || 3 < s) {
             System.out.println("Zly smer: " + s);
@@ -40,7 +43,7 @@ public class Miestnost {
      */
     public void vytvorSteny() {
         for (int i = 0; i < 4; i++) {
-            if (this.susedneMiestnosti[i] == null) {
+            if (this.susedneMiestnosti[i] < 0) {
                 this.steny[i] = new Stena(Smer.toSmer(i));
             } else {
                 this.steny[i] = new Stena(Smer.toSmer(i), this.susedneMiestnosti[i]);
@@ -54,7 +57,7 @@ public class Miestnost {
     public int getPocetSusedov() {
         int pocet = 0;
         for (int i = 0; i < this.susedneMiestnosti.length; i++) {
-            if (this.susedneMiestnosti[i] != null) {
+            if (this.susedneMiestnosti[i] != -1) {
                 pocet++;
             }
         }

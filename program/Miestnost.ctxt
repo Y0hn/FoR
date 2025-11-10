@@ -1,12 +1,12 @@
 #BlueJ class context
 comment0.target=Miestnost
-comment0.text=\r\n\ Miestnost\ vo\ svete,\ ktora\ ma\ susedne\ miestnosti\ a\ obsahuje\ nieco\r\n\ Po\ vojdeni\ hraca\ do\ miestnosti\ sa\ aktivuje\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.3\r\n
+comment0.text=\r\n\ Miestnost\ vo\ svete,\ ktora\ ma\ susedne\ miestnosti\ a\ obsahuje\ nieco\r\n\ Po\ vojdeni\ hraca\ do\ miestnosti\ sa\ aktivuje\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.4\r\n
 comment1.params=
 comment1.target=Miestnost()
 comment1.text=\r\n\ Konstruktor\ triedy\ Miestnost\r\n
 comment2.params=sused\ smer
-comment2.target=void\ nastavSuseda(Miestnost,\ Smer)
-comment2.text=\r\n\ Nastavi\ suseda\ v\ predom\ urcenom\ smere\r\n\ \r\n\ @param\ sused\ referencia\ na\ suseda\r\n\ @param\ smer\ smer\ v\ ktorom\ lezi\ v\ zavislosti\ od\ stredu\ sucasnej\ miestnosti\r\n
+comment2.target=void\ nastavSuseda(int,\ Smer)
+comment2.text=\r\n\ Nastavi\ suseda\ v\ predom\ urcenom\ smere\r\n\ @param\ sused\ index\ susednej\ Miestnosti\r\n\ @param\ smer\ smer\ v\ ktorom\ lezi\ v\ zavislosti\ od\ stredu\ sucasnej\ miestnosti\r\n
 comment3.params=
 comment3.target=void\ vytvorSteny()
 comment3.text=\r\n\ Vytvori\ steny\ podla\ existujucich\ susedov\r\n

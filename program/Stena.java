@@ -2,11 +2,9 @@
  * Brani Hracovi opustit z heraciu plochu
  * 
  * @author y0hn
- * @version v0.3
+ * @version v0.4
  */
 public class Stena {
-    /* Hodnoty v buducnosti ziskavame z Displaya */
-    private static Vektor rozmerDisplay = new Vektor(500, 500); 
     private static double sirkaSteny = 20;
     private static double sirkaDveri = 0.6;
     /**
@@ -18,23 +16,25 @@ public class Stena {
     /**
      * Vytvori celistvu Stenu pre Miestnost v Smere
      * @param smer od stredu miestnosti
+     * @param rozmer urcuje velkost displaya
      */
     public Stena(Smer smer) {
         this.mury = new Mur[1];
+        Vektor rozmer = Hra.getRozmerDisplay();
 
         // absolutna poloha ku lavemu-hronemu rohu okna
         Vektor polohaMuru = Vektor.zero();
         if (smer == Smer.Pravo) {
-            polohaMuru = new Vektor(rozmerDisplay.getX() - sirkaSteny, 0);
+            polohaMuru = new Vektor(rozmer.getX() - sirkaSteny, 0);
         } else if (smer == Smer.Dole) {
-            polohaMuru = new Vektor(0, rozmerDisplay.getX() - sirkaSteny);
+            polohaMuru = new Vektor(0, rozmer.getX() - sirkaSteny);
         }
 
         // nastavi velkost Muru
         Vektor absSmerVektor = smer.toVektor().absolutny();                     // ziska vektor (0,1) alebo (1,0)
         Vektor velkostMuru = absSmerVektor.skalarnySucin(sirkaSteny);           // nastavi sirku Muru
         absSmerVektor = absSmerVektor.vymeneny();                               // vymeni hodnoty
-        velkostMuru = velkostMuru.sucet(absSmerVektor.sucin(rozmerDisplay));    // natiahne Mur na celu Stenu Miestnosti (Display)
+        velkostMuru = velkostMuru.sucet(absSmerVektor.sucin(rozmer));    // natiahne Mur na celu Stenu Miestnosti (Display)
 
         this.mury[0] = new Mur(polohaMuru, velkostMuru);
     }
@@ -44,19 +44,20 @@ public class Stena {
      * @param smer od stredu sucastnej Miestnosti
      * @param sused susedna Miestnost
      */
-    public Stena(Smer smer, Miestnost sused) {
+    public Stena(Smer smer, int sused) {
+        Vektor rozmer = Hra.getRozmerDisplay();
         Vektor smerovyVektor = smer.toVektor();
         this.mury = new Mur[3];
         double pomerPosunuDveri = 1 - sirkaDveri;
-        Vektor dlzkaMuru = rozmerDisplay.skalarnySucin(1 / 3);
+        Vektor dlzkaMuru = rozmer.skalarnySucin(1 / 3);
 
         for (int i = 0; i < 3; i++) {
             // absolutna poloha ku lavemu-hronemu rohu okna
             Vektor polohaMuru = Vektor.zero();
             if (smer == Smer.Pravo) {
-                polohaMuru = new Vektor(rozmerDisplay.getX() - sirkaSteny, 0);
+                polohaMuru = new Vektor(rozmer.getX() - sirkaSteny, 0);
             } else if (smer == Smer.Dole) {
-                polohaMuru = new Vektor(0, rozmerDisplay.getX() - sirkaSteny);
+                polohaMuru = new Vektor(0, rozmer.getX() - sirkaSteny);
             }
 
             // posun oproti predchadzajucemu ziskame rozsirenim vymeneneho sVektora
@@ -86,9 +87,8 @@ public class Stena {
 
             this.mury[i] = new Mur(polohaMuru, velkostMuru);
         }
-
-        // otvori dvere
-        this.mury[1].nastavAktivny(false);
+ 
+        this.mury[1].vedieDoMiestnosti(sused);
     }
     /**
      * Nastavi stav dveri
@@ -106,7 +106,7 @@ public class Stena {
         private Vektor pozicia;
         private Vektor velkost;
         private boolean aktivny;
-        private Miestnost vedieDoMiestnosti;
+        private int vedieDoMiestnosti;
 
         /**
          * Vytvori cast Steny
@@ -114,7 +114,7 @@ public class Stena {
          * @param velkost velkost obdlznika
          */
         public Mur(Vektor pozicia, Vektor velkost) {
-            this.vedieDoMiestnosti = null;
+            this.vedieDoMiestnosti = -1;
             this.pozicia = pozicia;
             this.velkost = velkost;
             this.aktivny = true;
@@ -127,11 +127,11 @@ public class Stena {
             this.aktivny = aktivny;
         }
         /**
-         * Nastavi Miestnost za Murom
-         * @param miestnost do ktorej Dvere vedu
+         * Nastavi index Miestnosti za Murom
+         * @param index index do ktorej Dvere vedu
          */
-        public void setMiestnost(Miestnost miestnost) {
-            this.vedieDoMiestnosti = miestnost;
+        public void vedieDoMiestnosti(int index) {
+            this.vedieDoMiestnosti = index;
         }
         /**
          * Ziska ci je Mur aktivny (nepriechodny)
@@ -151,8 +151,8 @@ public class Stena {
             double polomer = telo.getPolomer();
 
             // ak hrac prechadza dverami prepne aktivnu Miestnost
-            if (!this.aktivny) {
-                Miestnost aktivna = this.vedieDoMiestnosti; /* planovana zmena */
+            if (!this.aktivny && 0 <= this.vedieDoMiestnosti) {
+                Hra.nastavAktivnuMiestnost(this.vedieDoMiestnosti);
             }
 
             kolizuje &= polohaTela.getX() + polomer > this.pozicia.getX(); // kolizia z lava
