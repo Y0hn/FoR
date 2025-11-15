@@ -1,9 +1,10 @@
+import java.awt.Dimension;
 
 /**
  * 2D Vektor (reprezentuje bod v Kartezianskej suradnicovej sustave so suradnicami [x,y])
  * 
  * @author y0hn
- * @version v0.3
+ * @version v0.4
  */
 public class Vektor {
     private double x;
@@ -138,6 +139,13 @@ public class Vektor {
         double noveX = Math.cos(uhol);
         double noveY = Math.sin(uhol);
         return new Vektor(noveX, noveY);
+    }
+    /**
+     * Vrati rozmer Vektora ako Dimenziu
+     * @return Dimenzia (x,y)
+     */
+    public Dimension toDimension() {
+        return new Dimension(this.getIntX(), this.getIntY());
     }
 
     /**

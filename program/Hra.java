@@ -1,9 +1,9 @@
 
 /**
- * Spustacia Trieda
+ * Trieda pre zjednotenie vsetkych komponentov Hry
  * 
  * @author y0hn 
- * @version 0.1
+ * @version 0.2
  */
 public class Hra {
     private static Hra singleton;
@@ -12,35 +12,25 @@ public class Hra {
     private int aktivnaMistnost;
     private boolean hranieSa;
     private Hrac hrac;
+    private Displej displej;
 
     /**
-     * Sluzi na spustenie Hry 
+     * Zacne novu Hru iba pripade ak uz nebezi ina
+     * @return beziacu Hru
      */
-    public static void main(String[] args) {
-        singleton = new Hra();
-        singleton.rozmerDisplej = new Vektor(500, 500);
-        singleton.hranieSa = true;
-        
-        Svet svet = new Svet(50);
-        singleton.aktivnaMistnost = svet.getZaciatocnaMiestnost();
-        singleton.hrac = new Hrac();
-        
-        Displej displej = new Displej("FrontRooms", singleton.rozmerDisplej);
-
-        // hra sa hra
-        while (singleton.hranieSa) {
-            displej.vykresli();
+    public static Hra start() {
+        if (singleton == null) {
+            Vektor rozmerDisplej =  new Vektor(500, 500);
+            singleton = new Hra(rozmerDisplej);
         }
-
-        System.exit(0);
+        return singleton;
     }
-    /** 
-     * Ukonci hru 
+    /**
+     * Ukonci beziacu Hru
      */
-    public static void zavri() {
-        singleton.hranieSa = false;
+    public static void stop() {
+        // zastav hru
     }
-
     /** 
      * Zisti rozmer Displeja Hry
      * @return vrati Vektor rozmeru Displaya akualnej Hry
@@ -54,5 +44,19 @@ public class Hra {
      */
     public static void nastavAktivnuMiestnost(int indexAktivnejMiestnosti) {
         singleton.aktivnaMistnost = indexAktivnejMiestnosti;
+    }
+
+    /**
+     * Sluzi na spustenie Hry 
+     */
+    public Hra(Vektor rozmery) {
+        this.rozmerDisplej = rozmery;
+        this.hranieSa = true;
+        
+        Svet svet = new Svet(50);
+        this.aktivnaMistnost = svet.getZaciatocnaMiestnost();
+        this.hrac = new Hrac();
+        
+        this.displej = new Displej("FrontRooms", this.rozmerDisplej);
     }
 }

@@ -2,3 +2,4 @@
 *.class
 # Sensitive information
 program/doc/logfile.txt
+FRICheckstyle-standalone.jar

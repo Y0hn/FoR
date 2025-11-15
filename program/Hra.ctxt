@@ -1,16 +1,19 @@
 #BlueJ class context
 comment0.target=Hra
-comment0.text=\r\n\ Spustacia\ Trieda\r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ 0.1\r\n
-comment1.params=args
-comment1.target=void\ main(java.lang.String[])
-comment1.text=\r\n\ Sluzi\ na\ spustenie\ Hry\ \r\n
+comment0.text=\r\n\ Trieda\ pre\ zjednotenie\ vsetkych\ komponentov\ Hry\r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ 0.2\r\n
+comment1.params=
+comment1.target=Hra\ start()
+comment1.text=\r\n\ Zacne\ novu\ Hru\ iba\ pripade\ ak\ uz\ nebezi\ ina\r\n\ @return\ beziacu\ Hru\r\n
 comment2.params=
-comment2.target=void\ zavri()
-comment2.text=\ \r\n\ Ukonci\ hru\ \r\n
+comment2.target=void\ stop()
+comment2.text=\r\n\ \r\n
 comment3.params=
 comment3.target=Vektor\ getRozmerDisplay()
 comment3.text=\ \r\n\ Zisti\ rozmer\ Displeja\ Hry\r\n\ @return\ vrati\ Vektor\ rozmeru\ Displaya\ akualnej\ Hry\r\n
 comment4.params=indexAktivnejMiestnosti
 comment4.target=void\ nastavAktivnuMiestnost(int)
 comment4.text=\r\n\ Nastavi\ aktivnu\ Miestnost\ podla\ jej\ indexu\ vo\ Svete\r\n\ @param\ indexAktivnejMiestnosti\ index\ novej\ aktivnej\ Miestnosti\r\n
-numComments=5
+comment5.params=rozmery
+comment5.target=Hra(Vektor)
+comment5.text=\r\n\ Sluzi\ na\ spustenie\ Hry\ \r\n
+numComments=6
