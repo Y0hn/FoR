@@ -7,10 +7,11 @@
  */
 public class Hra {
     private static Hra singleton;
+    private static Vektor rozmerDisplej;
 
-    private Vektor rozmerDisplej;
-    private int aktivnaMistnost;
+    private Miestnost aktivnaMistnost;
     private boolean hranieSa;
+    private Svet svet;
     private Hrac hrac;
     private Displej displej;
 
@@ -20,7 +21,7 @@ public class Hra {
      */
     public static Hra start() {
         if (singleton == null) {
-            Vektor rozmerDisplej =  new Vektor(500, 500);
+            Vektor rozmerDisplej =  new Vektor(600, 600);
             singleton = new Hra(rozmerDisplej);
         }
         return singleton;
@@ -36,27 +37,34 @@ public class Hra {
      * @return vrati Vektor rozmeru Displaya akualnej Hry
      */
     public static Vektor getRozmerDisplay() {
-        return singleton.rozmerDisplej;
+        return rozmerDisplej;
     }
     /**
      * Nastavi aktivnu Miestnost podla jej indexu vo Svete
      * @param indexAktivnejMiestnosti index novej aktivnej Miestnosti
      */
     public static void nastavAktivnuMiestnost(int indexAktivnejMiestnosti) {
-        singleton.aktivnaMistnost = indexAktivnejMiestnosti;
+        singleton.aktivnaMistnost = singleton.svet.getMiestnost(indexAktivnejMiestnosti);
+        singleton.nacitajMiestnost();
     }
 
     /**
      * Sluzi na spustenie Hry 
      */
     public Hra(Vektor rozmery) {
-        this.rozmerDisplej = rozmery;
+        rozmerDisplej = rozmery;
         this.hranieSa = true;
-        
-        Svet svet = new Svet(50);
+        this.svet = new Svet(50);
         this.aktivnaMistnost = svet.getZaciatocnaMiestnost();
         this.hrac = new Hrac();
         
-        this.displej = new Displej("FrontRooms", this.rozmerDisplej);
+        this.displej = new Displej("", "FrontRooms", rozmerDisplej);
+        this.nacitajMiestnost();
+    }
+    /**
+     * Zobrazi aktivnu Miestnost na Displeji
+     */
+    private void nacitajMiestnost() {
+        this.displej.nastavAktivnuMiestnost(aktivnaMistnost);
     }
 }

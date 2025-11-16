@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Stena
-comment0.text=\r\n\ Brani\ Hracovi\ opustit\ z\ heraciu\ plochu\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.4\r\n
+comment0.text=\r\n\ Brani\ Hracovi\ opustit\ z\ heraciu\ plochu\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.5\r\n
 comment1.params=smer
 comment1.target=Stena(Smer)
 comment1.text=\r\n\ Vytvori\ celistvu\ Stenu\ pre\ Miestnost\ v\ Smere\r\n\ @param\ smer\ od\ stredu\ miestnosti\r\n\ @param\ rozmer\ urcuje\ velkost\ displaya\r\n
@@ -10,4 +10,7 @@ comment2.text=\r\n\ Vytvori\ clenitu\ Stenu\ medzi\ Miestnost\ a\ jej\ Suseda.\r
 comment3.params=otvorene
 comment3.target=void\ nastavDvere(boolean)
 comment3.text=\r\n\ Nastavi\ stav\ dveri\r\n\ @param\ otvorene\ ak\ PRAVDA\ tak\ sa\ dvere\ otvoria\r\n
-numComments=4
+comment4.params=
+comment4.target=javax.swing.JPanel\ getGrafika()
+comment4.text=\r\n\ Ziska\ graficku\ reprezentaciu\ Steny\ \r\n\ @return\ JPanel\ oblasti\ Steny\r\n
+numComments=5

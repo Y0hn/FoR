@@ -5,7 +5,7 @@ import java.util.Random;
  * Drzi informacie o celom hernom Svete
  * 
  * @author y0hn 
- * @version v0.2
+ * @version v0.3
  */
 public class Svet {
     private int indexPociatocnejMiestnosti;
@@ -70,14 +70,18 @@ public class Svet {
         // nastavi miestnost v krotrej hrac zacne hru
         // miestnost je medzi prvou 1/5 a 4/5 celkoveho poctu
         this.indexPociatocnejMiestnosti = (int)Math.round(this.miestnosti.size() * 0.2 + random.nextDouble() * (this.miestnosti.size() * 0.6));
+
+        for (Miestnost m : miestnosti) {
+            m.vytvorSteny();
+        }
     }
 
     /**
      * Vrati intdex Zacinajej Miestnosti 
      * @return index Miesnosti v kotorej zacina hra 
      */
-    public int getZaciatocnaMiestnost() {
-        return this.indexPociatocnejMiestnosti;
+    public Miestnost getZaciatocnaMiestnost() {
+        return this.miestnosti.get(this.indexPociatocnejMiestnosti);
     }
     /**
      * Ziska Miestnost z pola Miestnosti

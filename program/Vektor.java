@@ -4,7 +4,7 @@ import java.awt.Dimension;
  * 2D Vektor (reprezentuje bod v Kartezianskej suradnicovej sustave so suradnicami [x,y])
  * 
  * @author y0hn
- * @version v0.4
+ * @version v0.5
  */
 public class Vektor {
     private double x;
@@ -118,7 +118,7 @@ public class Vektor {
      */
     public Vektor sucin(Vektor druhyVektor) {
         double noveX = this.x * druhyVektor.x;
-        double noveY = this.y * druhyVektor.x;
+        double noveY = this.y * druhyVektor.y;
         return new Vektor(noveX, noveY);
     }
     /**

@@ -1,3 +1,6 @@
+import java.awt.Color;
+import javax.swing.JPanel;
+
 /**
  * Miestnost vo svete, ktora ma susedne miestnosti a obsahuje nieco
  * Po vojdeni hraca do miestnosti sa aktivuje
@@ -14,6 +17,7 @@ public class Miestnost {
      */
     private int[] susedneMiestnosti;
     private Stena[] steny;
+    private JPanel podlaha;
     /**
      * Konstruktor triedy Miestnost
      */
@@ -24,6 +28,8 @@ public class Miestnost {
         for (int i = 0; i < this.susedneMiestnosti.length; i++) {
             this.susedneMiestnosti[i] = -1;
         }
+        this.podlaha = new JPanel();
+        this.podlaha.setBackground(Color.gray);
     }
     /**
      * Nastavi suseda v predom urcenom smere
@@ -71,5 +77,19 @@ public class Miestnost {
         for (Stena stena : this.steny) {
             stena.nastavDvere(otvorene);
         }
+    }
+    /**
+     * Vrati reprezentaciu Miestnosti (Stien a podlahy) na displej
+     * @return JPanel[] grafika Stien a podlahy
+     */
+    public JPanel[] getGrafika() {
+        JPanel[] grafika = new JPanel[5];
+        grafika[4] = this.podlaha;
+
+        for (int i = 0; i < this.steny.length; i++) {
+            grafika[i] = this.steny[i].getGrafika();
+        }
+
+        return grafika;
     }
 }
