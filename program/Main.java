@@ -11,5 +11,6 @@ public class Main {
      */
     public static void main(String[] args) {
         Hra hra = Hra.start();
+        Casovac casovac = new Casovac(hra);
     }
 }

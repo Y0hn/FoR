@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=Casovac
+comment0.text=\r\n\ Obnovuje\ Hru\r\n\ \r\n\ @author\ y0hn\ (not\ totaly)\r\n\ @version\ v0.1\r\n
+comment1.params=hra
+comment1.target=Casovac(Hra)
+comment1.text=\r\n\ Vytvori\ casovac\r\n\ \ \r\n\ @param\ hra\ \ \ \r\n
+comment2.params=event
+comment2.target=void\ actionPerformed(java.awt.event.ActionEvent)
+numComments=3

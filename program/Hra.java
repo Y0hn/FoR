@@ -43,6 +43,16 @@ public class Hra {
         this.hrac = new Hrac();
         
         this.nacitajMiestnost(svet.getZaciatocnaMiestnost());
+        this.hrac.nastavVstup(this.displej.getOkno());
+        this.displej.nastavHraca(this.hrac);
+    }
+    
+    /**
+     * Obnovi Hru
+     */
+    public void tik() {
+        this.hrac.tik();
+        this.displej.obnovHraca(this.hrac);
     }
     /**
      * Zmeni aktivnu Miestnost zobrazovanu na Displeji

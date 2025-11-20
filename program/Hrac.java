@@ -1,3 +1,8 @@
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.Vector;
+
+import javax.swing.JFrame;
 
 /**
  * Drzi informacie o hracovi vo Svete
@@ -12,7 +17,8 @@ public class Hrac {
      * @param svet Svet v ktorom hrac zacina hru 
      */
     public Hrac() {
-        this.telo = new Telo(10, Vektor2D.zero(), Vektor2D.dole(), 0, 20);
+        Vektor2D pozicia = Displej.getRozmer().getVelkost().skalarnySucin(0.5);
+        this.telo = new Telo(10, pozicia, Vektor2D.zero(), 5, 20);
     }
     /**
      * Vrati Telo Hraca
@@ -20,5 +26,64 @@ public class Hrac {
      */
     public Telo getTelo() {
         return this.telo;
+    }
+    public void tik() {
+        //this.telo.pohybVSmere();
+    }
+    /**
+     * Nastavi odposluch na klavesove vstupy k oknu
+     * @param okno hlavne zobrazenie Hry
+     */
+    public void nastavVstup(JFrame okno) {
+        KeyAdapter ka = new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                vstup(e.getKeyCode());
+            }
+            /*public void keyReleased(KeyEvent e) {
+                koniecVstupu(e.getKeyCode());
+            }*/
+        };
+        okno.addKeyListener(ka);
+    }
+
+    private void vstup(int vstup) {
+        telo.pohybVektor(keyToVektor2D(vstup));
+    }
+    /*private void koniecVstupu(int vstup) {
+        telo.pohybVektor(keyToVektor2D(vstup).skalarnySucin(-1));
+    }*/
+    private Vektor2D keyToVektor2D(int klaves) {   
+        Vektor2D v = Vektor2D.zero();     
+        switch (klaves) {
+            case 87: // W
+                v = Vektor2D.dole();
+                break;
+            case 65: // A
+                v = Vektor2D.lavo();
+                break;
+            case 83: // S
+                v = Vektor2D.hore();
+                break;
+            case 68: // D
+                v = Vektor2D.pravo();
+                break;
+
+            case 38: // sipka Hore
+                v = Vektor2D.dole();
+                break;
+            case 37: // sipka Lavo
+                v = Vektor2D.lavo();
+                break;
+            case 40: // sipka Dole
+                v = Vektor2D.hore();
+                break;
+            case 39: // sipka Pravo
+                v = Vektor2D.pravo();
+                break;
+
+            default:
+                break;
+        }
+        return v;
     }
 }

@@ -2,6 +2,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.Color;
+import java.awt.Point;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLayeredPane;
@@ -10,7 +11,7 @@ import javax.swing.JLayeredPane;
  * Zobrazovac okna Hry
  * 
  * @author y0hn
- * @version v0.5
+ * @version v0.6
  */
 public class Displej {
     private static Rozmer2D rozmer;
@@ -23,6 +24,7 @@ public class Displej {
     }
 
     private JFrame okno;
+    private JPanel hrac;
     private JLayeredPane aktivnaMiestnost;
 
     /**
@@ -52,7 +54,39 @@ public class Displej {
         this.okno.setVisible(true);
         //System.out.println(rozmer.getPozicia() + " + " + rozmer.getVelkost());
     }
+    /**
+     * Vrati Hlavne Zobrazovacie Okno
+     * @return hlave okno
+     */
+    public JFrame getOkno() {
+        return this.okno;
+    }
+    /**
+     * Vytvori Hracovi objekt na Displeji 
+     * @param h objekt Hraca
+     */
+    public void nastavHraca(Hrac h) {
+        this.hrac = new JPanel();
 
+        Vektor2D pozicia = h.getTelo().getPozicia();
+        double polomer = h.getTelo().getPolomer();
+        pozicia = new Vektor2D(pozicia.getX() - polomer, pozicia.getY() - polomer);
+
+        int velkost = (int)Math.round(polomer) * 2;
+        this.hrac.setBounds(pozicia.getIntX(), pozicia.getIntY(), velkost, velkost);
+        this.hrac.setBackground(Color.red);
+        this.aktivnaMiestnost.setLayer(hrac, 3);
+        this.aktivnaMiestnost.add(this.hrac);
+        this.hrac = (JPanel)this.aktivnaMiestnost.getComponentAt(pozicia.getIntX(), pozicia.getIntY());
+    }
+    /**
+     * Obnovi Hracovi poziciu na Displeji 
+     * @param h objekt Hraca
+     */
+    public void obnovHraca(Hrac h) {
+        Vektor2D pozicia = h.getTelo().getPozicia();
+        this.hrac.setLocation(pozicia.getIntX(), pozicia.getIntY());
+    }
     /**
      * Zmeni Miestnost vykreslovanu na Displej
      * @param m nova aktivna Mistnost
@@ -62,7 +96,8 @@ public class Displej {
             this.okno.remove(this.aktivnaMiestnost);
         }
         this.aktivnaMiestnost = vytvorGrafikuMiestnosti(m);
-        this.okno.add(this.aktivnaMiestnost);
+        this.aktivnaMiestnost.setLayout(null);
+        this.okno.setContentPane(this.aktivnaMiestnost);
     }
     
     private JLayeredPane vytvorGrafikuMiestnosti(Miestnost m) {

@@ -77,14 +77,13 @@ public class Telo {
         return this.zdravie <= 0;
     }
     /**
-     * Presunie Telo v smere prednastaveneho smeroveho Vektor2Da 
-     * vo danej vzdialenosti 
-     * @param dlzkaPohybu dlzka pohybu od predchadzajuceho bodu
+     * Usmerni smerovy Vektor2D Tela smerom Vektor2D
+     * (normalizuje)
+     * @param smerovyVektor novy smerovy Vektor2D
      */
-    public void pohybVSmere(double dlzkaPohybu) {
+    public void pohybVektor(Vektor2D smerovyVektor) {
+        this.smer = smerovyVektor.normalizuj();
         Vektor2D pohyb = this.smer.skalarnySucin(this.rychlostPohybu);
-        // Mozna funkcionalita
-        //pohyb = pohyb.skalarnySucin(deltaTime);
         this.pozicia = this.pozicia.sucet(pohyb);
     }
 }
