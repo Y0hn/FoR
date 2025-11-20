@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Stena
-comment0.text=\r\n\ Brani\ Hracovi\ opustit\ z\ heraciu\ plochu\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.6\r\n
+comment0.text=\r\n\ Brani\ Hracovi\ opustit\ z\ heraciu\ plochu\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.7\r\n
 comment1.params=smer
 comment1.target=Stena(Smer)
 comment1.text=\r\n\ Vytvori\ celistvu\ Stenu\ pre\ Miestnost\ v\ Smere\r\n\ @param\ smer\ od\ stredu\ miestnosti\r\n\ @param\ rozmer\ urcuje\ velkost\ displaya\r\n
@@ -8,8 +8,8 @@ comment2.params=smer\ sused
 comment2.target=Stena(Smer,\ int)
 comment2.text=\r\n\ Vytvori\ clenitu\ Stenu\ medzi\ Miestnost\ a\ jej\ Suseda.\r\n\ Stena\ obsahuje\ dvere,\ ktore\ vedu\ do\ susednej\ Miestnosti\r\n\ @param\ smer\ od\ stredu\ sucastnej\ Miestnosti\r\n\ @param\ sused\ susedna\ Miestnost\r\n
 comment3.params=
-comment3.target=Vektor2D[][]\ getRozmery()
-comment3.text=\r\n\ Vrati\ rozmery\ vsetkych\ Murov\ v\ Stene\r\n\ @return\ [[pozicia,\ velkost],\ ...]\ <-\ Vektor2D[][]\r\n
+comment3.target=Rozmer2D[]\ getRozmery()
+comment3.text=\r\n\ Vrati\ Rozmery\ vsetkych\ Murov\ v\ Stene\r\n\ @return\ [mur[0].rozmery,\ ...]\ <-\ Rozmer2D\r\n
 comment4.params=otvorene
 comment4.target=void\ nastavDvere(boolean)
 comment4.text=\r\n\ Nastavi\ stav\ dveri\r\n\ @param\ otvorene\ ak\ PRAVDA\ tak\ sa\ dvere\ otvoria\r\n

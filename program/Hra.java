@@ -7,9 +7,7 @@
  */
 public class Hra {
     private static Hra singleton;
-    private static Vektor2D rozmerDisplej;
 
-    private Miestnost aktivnaMistnost;
     private boolean hranieSa;
     private Svet svet;
     private Hrac hrac;
@@ -21,17 +19,10 @@ public class Hra {
      */
     public static Hra start() {
         if (singleton == null) {
-            Vektor2D rozmerDisplej =  new Vektor2D(600, 600);
+            Vektor2D rozmerDisplej =  new Vektor2D(600, 400);
             singleton = new Hra(rozmerDisplej);
         }
         return singleton;
-    }
-    /** 
-     * Zisti rozmer Displeja Hry
-     * @return vrati Vektor2D rozmeru Displaya akualnej Hry
-     */
-    public static Vektor2D getRozmerDisplay() {
-        return rozmerDisplej;
     }
     /**
      * Nastavi aktivnu Miestnost podla jej indexu vo Svete
@@ -46,23 +37,19 @@ public class Hra {
      * @param rozmery su rozmery Displeja v tvare Vektor2D2
      */
     public Hra(Vektor2D rozmery) {
-        rozmerDisplej = rozmery;
         this.hranieSa = true;
+        this.displej = new Displej("", "FrontRooms", rozmery);
         this.svet = new Svet(50);
-        this.aktivnaMistnost = svet.getZaciatocnaMiestnost();
         this.hrac = new Hrac();
         
-        this.displej = new Displej("", "FrontRooms", rozmerDisplej);
-        this.nacitajMiestnost(this.aktivnaMistnost);
+        this.nacitajMiestnost(svet.getZaciatocnaMiestnost());
     }
     /**
      * Zmeni aktivnu Miestnost zobrazovanu na Displeji
      * @param m nova Miestnost
      */
     private void nacitajMiestnost(Miestnost m) {
-        this.displej.odstranAktivnuMiestnost(aktivnaMistnost);
-        this.displej.nastavAktivnuMiestnost(m);
-        this.aktivnaMistnost = m;        
+        this.displej.zmenAktivnuMiestnost(m);
     }
     /**
      * Zmeni aktivnu Miestnost zobrazovanu na Displeji
