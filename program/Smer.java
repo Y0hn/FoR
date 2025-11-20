@@ -38,23 +38,23 @@ public enum Smer {
         return i;
     }
     /**
-     * Priradi zo smeru hodnotu Vektor 
+     * Priradi zo smeru hodnotu Vektor2D 
      * @return hodnota v tvare int
      */
-    public Vektor toVektor() {
-        Vektor v = Vektor.zero();
+    public Vektor2D toVektor2D() {
+        Vektor2D v = Vektor2D.zero();
         switch (this) {
             case Hore:
-                v = Vektor.hore();                
+                v = Vektor2D.hore();                
                 break;
             case Lavo:
-                v = Vektor.lavo();                
+                v = Vektor2D.lavo();                
                 break;
             case Pravo:
-                v = Vektor.pravo();                
+                v = Vektor2D.pravo();                
                 break;
             case Dole:
-                v = Vektor.dole();                
+                v = Vektor2D.dole();                
                 break;
         
             default:

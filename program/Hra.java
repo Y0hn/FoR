@@ -7,7 +7,7 @@
  */
 public class Hra {
     private static Hra singleton;
-    private static Vektor rozmerDisplej;
+    private static Vektor2D rozmerDisplej;
 
     private Miestnost aktivnaMistnost;
     private boolean hranieSa;
@@ -21,16 +21,16 @@ public class Hra {
      */
     public static Hra start() {
         if (singleton == null) {
-            Vektor rozmerDisplej =  new Vektor(600, 600);
+            Vektor2D rozmerDisplej =  new Vektor2D(600, 600);
             singleton = new Hra(rozmerDisplej);
         }
         return singleton;
     }
     /** 
      * Zisti rozmer Displeja Hry
-     * @return vrati Vektor rozmeru Displaya akualnej Hry
+     * @return vrati Vektor2D rozmeru Displaya akualnej Hry
      */
-    public static Vektor getRozmerDisplay() {
+    public static Vektor2D getRozmerDisplay() {
         return rozmerDisplej;
     }
     /**
@@ -43,9 +43,9 @@ public class Hra {
 
     /**
      * Sluzi na vytvorenie Hry 
-     * @param rozmery su rozmery Displeja v tvare Vektor2
+     * @param rozmery su rozmery Displeja v tvare Vektor2D2
      */
-    public Hra(Vektor rozmery) {
+    public Hra(Vektor2D rozmery) {
         rozmerDisplej = rozmery;
         this.hranieSa = true;
         this.svet = new Svet(50);

@@ -2,8 +2,8 @@
 comment0.target=Displej
 comment0.text=\r\n\ Zobrazovac\ okna\ Hry\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.4\r\n
 comment1.params=ikonaOkna\ nazovOkna\ rozmerOkna
-comment1.target=Displej(java.lang.String,\ java.lang.String,\ Vektor)
-comment1.text=\r\n\ Vytvori\ okno\ Displeja\ \r\n\ @param\ nazovOkna\ zobrazovany\ v\ hlavicke\ okna\r\n\ @param\ rozmer\ Vektor\ velkosti\ okna\r\n
+comment1.target=Displej(java.lang.String,\ java.lang.String,\ Vektor2D)
+comment1.text=\r\n\ Vytvori\ okno\ Displeja\ \r\n\ @param\ nazovOkna\ zobrazovany\ v\ hlavicke\ okna\r\n\ @param\ rozmer\ Vektor2D\ velkosti\ okna\r\n
 comment2.params=m
 comment2.target=void\ nastavAktivnuMiestnost(Miestnost)
 comment2.text=\r\n\ Vykresli\ aktivnu\ Miestnost\ na\ Displej\r\n\ @param\ m\ aktivna\ Mistnost\r\n
@@ -13,5 +13,5 @@ comment3.text=\r\n\ Odstrani\ predoslu\ Miestnost\ z\ Displeja\r\n\ @param\ m\ p
 comment4.params=m
 comment4.target=javax.swing.JLayeredPane\ vytvorGrafikuMiestnosti(Miestnost)
 comment5.params=rozmery\ i
-comment5.target=javax.swing.JPanel\ vytvorGrafikuSteny(Vektor[],\ int)
+comment5.target=javax.swing.JPanel\ vytvorGrafikuSteny(Vektor2D[],\ int)
 numComments=6

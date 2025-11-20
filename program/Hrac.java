@@ -12,7 +12,7 @@ public class Hrac {
      * @param svet Svet v ktorom hrac zacina hru 
      */
     public Hrac() {
-        this.telo = new Telo(10, Vektor.zero(), Vektor.dole(), 0, 20);
+        this.telo = new Telo(10, Vektor2D.zero(), Vektor2D.dole(), 0, 20);
     }
     /**
      * Vrati Telo Hraca

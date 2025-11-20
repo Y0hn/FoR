@@ -76,9 +76,9 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,Vektor,Vektor,double,double)">Telo</a></span>&#8203;(int&nbsp;maxZdravie,
-    Vektor&nbsp;pozicia,
-    Vektor&nbsp;smer,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,Vektor2D,Vektor2D,double,double)">Telo</a></span>&#8203;(int&nbsp;maxZdravie,
+    Vektor2D&nbsp;pozicia,
+    Vektor2D&nbsp;smer,
     double&nbsp;rychlost,
     double&nbsp;polomerTela)</code></th>
 <td class="colLast">
@@ -86,8 +86,8 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(Vektor,Vektor,double,double)">Telo</a></span>&#8203;(Vektor&nbsp;pozicia,
-    Vektor&nbsp;smer,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(Vektor2D,Vektor2D,double,double)">Telo</a></span>&#8203;(Vektor2D&nbsp;pozicia,
+    Vektor2D&nbsp;smer,
     double&nbsp;rychlost,
     double&nbsp;polomerTela)</code></th>
 <td class="colLast">
@@ -127,7 +127,7 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>Vektor</code></td>
+<td class="colFirst"><code>Vektor2D</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPozicia()">getPozicia</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Ziska poziciu Tela</div>
@@ -137,7 +137,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#pohybVSmere(double)">pohybVSmere</a></span>&#8203;(double&nbsp;dlzkaPohybu)</code></th>
 <td class="colLast">
-<div class="block">Presunie Telo v smere prednastaveneho smeroveho Vektora 
+<div class="block">Presunie Telo v smere prednastaveneho smeroveho Vektor2Da 
  vo danej vzdialenosti</div>
 </td>
 </tr>
@@ -172,43 +172,43 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(int,Vektor,Vektor,double,double)">
+<a id="&lt;init&gt;(int,Vektor2D,Vektor2D,double,double)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>Telo</h4>
 <pre>public&nbsp;Telo&#8203;(int&nbsp;maxZdravie,
-            Vektor&nbsp;pozicia,
-            Vektor&nbsp;smer,
+            Vektor2D&nbsp;pozicia,
+            Vektor2D&nbsp;smer,
             double&nbsp;rychlost,
             double&nbsp;polomerTela)</pre>
 <div class="block">Vytvori Telo pre postavu</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>maxZdravie</code> - pociatocny pocet zravia</dd>
-<dd><code>pozicia</code> - polohovy Vektor - zacinajuca polaha v miestnosti</dd>
-<dd><code>smer</code> - normalizovany smerovy Vektor pohybu</dd>
+<dd><code>pozicia</code> - polohovy Vektor2D - zacinajuca polaha v miestnosti</dd>
+<dd><code>smer</code> - normalizovany smerovy Vektor2D pohybu</dd>
 <dd><code>rychlost</code> - ovplyvnuje rychlost pohybu tela</dd>
 <dd><code>polomerTela</code> - polomer kruhoveho tela</dd>
 </dl>
 </li>
 </ul>
-<a id="&lt;init&gt;(Vektor,Vektor,double,double)">
+<a id="&lt;init&gt;(Vektor2D,Vektor2D,double,double)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Telo</h4>
-<pre>public&nbsp;Telo&#8203;(Vektor&nbsp;pozicia,
-            Vektor&nbsp;smer,
+<pre>public&nbsp;Telo&#8203;(Vektor2D&nbsp;pozicia,
+            Vektor2D&nbsp;smer,
             double&nbsp;rychlost,
             double&nbsp;polomerTela)</pre>
 <div class="block">Vytvori zjednodusene Telo</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>pozicia</code> - polohovy Vektor - zacinajuca polaha v miestnosti</dd>
-<dd><code>smer</code> - normalizovany smerovy Vektor pohybu</dd>
+<dd><code>pozicia</code> - polohovy Vektor2D - zacinajuca polaha v miestnosti</dd>
+<dd><code>smer</code> - normalizovany smerovy Vektor2D pohybu</dd>
 <dd><code>rychlost</code> - ovplyvnuje rychlost pohybu tela</dd>
 <dd><code>polomerTela</code> - polomer kruhoveho tela</dd>
 </dl>
@@ -230,7 +230,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPozicia</h4>
-<pre class="methodSignature">public&nbsp;Vektor&nbsp;getPozicia()</pre>
+<pre class="methodSignature">public&nbsp;Vektor2D&nbsp;getPozicia()</pre>
 <div class="block">Ziska poziciu Tela</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -291,7 +291,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>pohybVSmere</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;pohybVSmere&#8203;(double&nbsp;dlzkaPohybu)</pre>
-<div class="block">Presunie Telo v smere prednastaveneho smeroveho Vektora 
+<div class="block">Presunie Telo v smere prednastaveneho smeroveho Vektor2Da 
  vo danej vzdialenosti</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Rozmer2D
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Rozmer\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=x\ y\ vX\ vY
+comment1.target=Rozmer2D(double,\ double,\ double,\ double)
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Rozmer\r\n
+comment2.params=pozicia\ velkost
+comment2.target=Rozmer2D(Vektor2D,\ Vektor2D)
+comment2.text=\r\n\ Constructor\ for\ objects\ of\ class\ Rozmer\r\n
+numComments=3

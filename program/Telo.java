@@ -8,19 +8,19 @@
 public class Telo {
     private int maxZdravie;
     private int zdravie;
-    private Vektor pozicia;
-    private Vektor smer;
+    private Vektor2D pozicia;
+    private Vektor2D smer;
     private double rychlostPohybu;
     private double polomerTela;
     /**
      * Vytvori Telo pre postavu 
      * @param maxZdravie pociatocny pocet zravia
-     * @param pozicia polohovy Vektor - zacinajuca polaha v miestnosti
-     * @param smer normalizovany smerovy Vektor pohybu
+     * @param pozicia polohovy Vektor2D - zacinajuca polaha v miestnosti
+     * @param smer normalizovany smerovy Vektor2D pohybu
      * @param rychlost ovplyvnuje rychlost pohybu tela
      * @param polomerTela polomer kruhoveho tela
      */
-    public Telo(int maxZdravie, Vektor pozicia, Vektor smer, double rychlost, double polomerTela) {
+    public Telo(int maxZdravie, Vektor2D pozicia, Vektor2D smer, double rychlost, double polomerTela) {
         this.maxZdravie = maxZdravie;
         this.zdravie = maxZdravie;
         this.pozicia = pozicia;
@@ -30,12 +30,12 @@ public class Telo {
     }
     /**
      * Vytvori zjednodusene Telo 
-     * @param pozicia polohovy Vektor - zacinajuca polaha v miestnosti
-     * @param smer normalizovany smerovy Vektor pohybu
+     * @param pozicia polohovy Vektor2D - zacinajuca polaha v miestnosti
+     * @param smer normalizovany smerovy Vektor2D pohybu
      * @param rychlost ovplyvnuje rychlost pohybu tela
      * @param polomerTela polomer kruhoveho tela
      */
-    public Telo(Vektor pozicia, Vektor smer, double rychlost, double polomerTela) {
+    public Telo(Vektor2D pozicia, Vektor2D smer, double rychlost, double polomerTela) {
         this.pozicia = pozicia;
         this.smer = smer;
         this.rychlostPohybu = rychlost;
@@ -45,7 +45,7 @@ public class Telo {
      * Ziska poziciu Tela
      * @return absolutna pozicia Tela v Miestnosti
      */
-    public Vektor getPozicia() {
+    public Vektor2D getPozicia() {
         return this.pozicia;
     }
     /**
@@ -77,12 +77,12 @@ public class Telo {
         return this.zdravie <= 0;
     }
     /**
-     * Presunie Telo v smere prednastaveneho smeroveho Vektora 
+     * Presunie Telo v smere prednastaveneho smeroveho Vektor2Da 
      * vo danej vzdialenosti 
      * @param dlzkaPohybu dlzka pohybu od predchadzajuceho bodu
      */
     public void pohybVSmere(double dlzkaPohybu) {
-        Vektor pohyb = this.smer.skalarnySucin(this.rychlostPohybu);
+        Vektor2D pohyb = this.smer.skalarnySucin(this.rychlostPohybu);
         // Mozna funkcionalita
         //pohyb = pohyb.skalarnySucin(deltaTime);
         this.pozicia = this.pozicia.sucet(pohyb);

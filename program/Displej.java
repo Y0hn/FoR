@@ -19,9 +19,9 @@ public class Displej {
     /**
      * Vytvori okno Displeja 
      * @param nazovOkna zobrazovany v hlavicke okna
-     * @param rozmer Vektor velkosti okna
+     * @param rozmer Vektor2D velkosti okna
      */
-    public Displej(String ikonaOkna, String nazovOkna, Vektor rozmerOkna) {
+    public Displej(String ikonaOkna, String nazovOkna, Vektor2D rozmerOkna) {
         this.okno = new JFrame();
         this.platno = new JLayeredPane();
 
@@ -79,7 +79,7 @@ public class Displej {
         miestnost.setBounds(0, 0, Hra.getRozmerDisplay().getIntX(), Hra.getRozmerDisplay().getIntY());
 
         for (int i = 0; i < 4; i++) {
-            Vektor[][] rozmery = m.getStena(Smer.toSmer(i)).getRozmery();
+            Vektor2D[][] rozmery = m.getStena(Smer.toSmer(i)).getRozmery();
 
             for (int ii = 0; ii < rozmery.length; ii++) {
                 JPanel stena = this.vytvorGrafikuSteny(rozmery[ii], (ii+1)*(i+1)*10);
@@ -96,7 +96,7 @@ public class Displej {
 
         return miestnost;
     }
-    private JPanel vytvorGrafikuSteny(Vektor[] rozmery, int i) {
+    private JPanel vytvorGrafikuSteny(Vektor2D[] rozmery, int i) {
         JPanel stena = new JPanel();
         stena.setBounds(rozmery[0].getIntX(), rozmery[0].getIntY(), rozmery[1].getIntX(), rozmery[1].getIntY());
         Color c = new Color(i,i,i);
