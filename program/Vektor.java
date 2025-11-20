@@ -147,6 +147,14 @@ public class Vektor {
     public Dimension toDimension() {
         return new Dimension(this.getIntX(), this.getIntY());
     }
+    /**
+     * Navratova pre zjednodusenie citatelnosti vo vypise
+     * @return [x,y]
+     */
+    public String toString() {
+        return String.format("[%d,%d]", this.getIntX(), this.getIntY());
+    }
+
 
     /**
      * Vytvori nuloy Vektor 

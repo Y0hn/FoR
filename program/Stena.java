@@ -1,16 +1,14 @@
-import java.awt.Color;
-
-import javax.swing.JPanel;
 
 /**
  * Brani Hracovi opustit z heraciu plochu
  * 
  * @author y0hn
- * @version v0.5
+ * @version v0.6
  */
 public class Stena {
     public static final int SIRKA_STENY = 50;
     public static final double SIRKA_DVERI = 0.6;
+    private static final double POMER_MUROV = (double)1 / (double)3;
 
     /**
      * 0 => Mur1,
@@ -18,7 +16,6 @@ public class Stena {
      * 2 => Mur2
      */
     private Mur[] mury;
-    private JPanel panel;
 
     /**
      * Vytvori celistvu Stenu pre Miestnost v Smere
@@ -26,7 +23,6 @@ public class Stena {
      * @param rozmer urcuje velkost displaya
      */
     public Stena(Smer smer) {
-        this.panel = new JPanel();
         this.mury = new Mur[1];
         Vektor rozmer = Hra.getRozmerDisplay();
 
@@ -45,8 +41,6 @@ public class Stena {
         velkostMuru = velkostMuru.sucet(absSmerVektor.sucin(rozmer));    // natiahne Mur na celu Stenu Miestnosti (Display)
 
         this.mury[0] = new Mur(polohaMuru, velkostMuru);
-        this.panel.setBounds(polohaMuru.getIntX(), polohaMuru.getIntY(), velkostMuru.getIntX(), velkostMuru.getIntY());
-        this.panel.setBackground(Color.DARK_GRAY);
     }
     /**
      * Vytvori clenitu Stenu medzi Miestnost a jej Suseda.
@@ -59,7 +53,7 @@ public class Stena {
         Vektor smerovyVektor = smer.toVektor();
         this.mury = new Mur[3];
         double pomerPosunuDveri = 1 - SIRKA_DVERI;
-        Vektor dlzkaMuru = rozmer.skalarnySucin(1 / 3);
+        Vektor dlzkaMuru = rozmer.skalarnySucin(POMER_MUROV);
 
         for (int i = 0; i < 3; i++) {
             // absolutna poloha ku lavemu-hronemu rohu okna
@@ -81,9 +75,7 @@ public class Stena {
                 if (smer == Smer.Pravo) {
                     posunDveri = new Vektor(SIRKA_STENY * pomerPosunuDveri, 0);
                 } else if (smer == Smer.Dole) {
-                    posunDveri = new Vektor(0, SIRKA_STENY * pomerPosunuDveri / 2);
-                } else if (smer == Smer.Hore) {
-                    posunDveri = new Vektor(0, SIRKA_STENY * pomerPosunuDveri / -2);
+                    posunDveri = new Vektor(0, SIRKA_STENY - SIRKA_DVERI * SIRKA_STENY);
                 }
             }
             polohaMuru = polohaMuru.sucet(posunDveri);
@@ -99,10 +91,20 @@ public class Stena {
         }
  
         this.mury[1].vedieDoMiestnosti(sused);
-
-        // Docasne riesenie !!! ///
-        this.panel = new Stena(smer).panel;
     }
+    /**
+     * Vrati rozmery vsetkych Murov v Stene
+     * @return [[pozicia, velkost], ...] <- Vektor[][]
+     */
+    public Vektor[][] getRozmery() {        
+        Vektor[][] rozmery = new Vektor[this.mury.length][];
+        
+        for (int i = 0; i < this.mury.length; i++) {
+            rozmery[i] = this.mury[i].getRozmery();
+        }
+        return rozmery;
+    }
+
     /**
      * Nastavi stav dveri
      * @param otvorene ak PRAVDA tak sa dvere otvoria
@@ -111,13 +113,6 @@ public class Stena {
         if (this.mury.length == 3) {
             this.mury[1].nastavAktivny(!otvorene);
         }
-    } 
-    /**
-     * Ziska graficku reprezentaciu Steny 
-     * @return JPanel oblast Steny
-     */
-    public JPanel getGrafika() {
-        return this.panel;
     }
     /**
      * Reprezentuje cast Steny vo Svete
@@ -140,6 +135,21 @@ public class Stena {
             this.aktivny = true;
         }
         /**
+         * Ziska ci je Mur aktivny (nepriechodny)
+         * @return PRAVDA ak je nepriechodny
+         */
+        public boolean getAktivny() {
+            return this.aktivny;
+        }
+        /**
+         * Vrati rozmery Muru
+         * @return [pozicia, velkost]
+         */
+        public Vektor[] getRozmery() {
+            return new Vektor[]{pozicia, velkost};
+        }
+        
+        /**
          * Nastavi priechodnost "dverami" (Murom)
          * @param aktivny ak PRAVDA neda sa prejist (aktivny Mur)
          */
@@ -152,13 +162,6 @@ public class Stena {
          */
         public void vedieDoMiestnosti(int index) {
             this.vedieDoMiestnosti = index;
-        }
-        /**
-         * Ziska ci je Mur aktivny (nepriechodny)
-         * @return PRAVDA ak je nepriechodny
-         */
-        public boolean getAktivny() {
-            return this.aktivny;
         }
         /**
          * Zisti ci sa Mur prekryva s Telom

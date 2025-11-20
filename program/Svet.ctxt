@@ -9,5 +9,5 @@ comment2.target=Miestnost\ getZaciatocnaMiestnost()
 comment2.text=\r\n\ Vrati\ intdex\ Zacinajej\ Miestnosti\ \r\n\ @return\ index\ Miesnosti\ v\ kotorej\ zacina\ hra\ \r\n
 comment3.params=index
 comment3.target=Miestnost\ getMiestnost(int)
-comment3.text=\r\n\ Ziska\ Miestnost\ z\ pola\ Miestnosti\r\n\ @param\ index\ poradove\ cislo\ Miestnosti\ vo\ Svete\ \r\n\ @return\ Miestnost\ na\ mieste\ index\ v\ poli\r\n
+comment3.text=\r\n\ Ziska\ Miestnost\ z\ pola\ Miestnosti,\ \r\n\ ak\ je\ index\ nespravny\ vrati\ hodnotu\ NULL\r\n\ @param\ index\ poradove\ cislo\ Miestnosti\ vo\ Svete\ \r\n\ @return\ Miestnost\ na\ mieste\ index\ v\ poli\r\n
 numComments=4

@@ -3,7 +3,7 @@
  * Trieda pre zjednotenie vsetkych komponentov Hry
  * 
  * @author y0hn 
- * @version 0.2
+ * @version 0.3
  */
 public class Hra {
     private static Hra singleton;
@@ -26,12 +26,6 @@ public class Hra {
         }
         return singleton;
     }
-    /**
-     * Ukonci beziacu Hru
-     */
-    public static void stop() {
-        // zastav hru
-    }
     /** 
      * Zisti rozmer Displeja Hry
      * @return vrati Vektor rozmeru Displaya akualnej Hry
@@ -44,12 +38,12 @@ public class Hra {
      * @param indexAktivnejMiestnosti index novej aktivnej Miestnosti
      */
     public static void nastavAktivnuMiestnost(int indexAktivnejMiestnosti) {
-        singleton.aktivnaMistnost = singleton.svet.getMiestnost(indexAktivnejMiestnosti);
-        singleton.nacitajMiestnost();
+        singleton.nacitajMiestnost(indexAktivnejMiestnosti);
     }
 
     /**
-     * Sluzi na spustenie Hry 
+     * Sluzi na vytvorenie Hry 
+     * @param rozmery su rozmery Displeja v tvare Vektor2
      */
     public Hra(Vektor rozmery) {
         rozmerDisplej = rozmery;
@@ -59,12 +53,23 @@ public class Hra {
         this.hrac = new Hrac();
         
         this.displej = new Displej("", "FrontRooms", rozmerDisplej);
-        this.nacitajMiestnost();
+        this.nacitajMiestnost(this.aktivnaMistnost);
     }
     /**
-     * Zobrazi aktivnu Miestnost na Displeji
+     * Zmeni aktivnu Miestnost zobrazovanu na Displeji
+     * @param m nova Miestnost
      */
-    private void nacitajMiestnost() {
-        this.displej.nastavAktivnuMiestnost(aktivnaMistnost);
+    private void nacitajMiestnost(Miestnost m) {
+        this.displej.odstranAktivnuMiestnost(aktivnaMistnost);
+        this.displej.nastavAktivnuMiestnost(m);
+        this.aktivnaMistnost = m;        
+    }
+    /**
+     * Zmeni aktivnu Miestnost zobrazovanu na Displeji
+     * @param indexMiestnosti vo Svete
+     */
+    private void nacitajMiestnost(int indexMiestnosti) {
+        Miestnost m = svet.getMiestnost(indexMiestnosti);
+        this.nacitajMiestnost(m);
     }
 }

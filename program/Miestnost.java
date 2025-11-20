@@ -1,12 +1,9 @@
-import java.awt.Color;
-import javax.swing.JPanel;
-
 /**
  * Miestnost vo svete, ktora ma susedne miestnosti a obsahuje nieco
  * Po vojdeni hraca do miestnosti sa aktivuje
  * 
  * @author y0hn
- * @version v0.4
+ * @version v0.5
  */
 public class Miestnost {
     /**
@@ -17,7 +14,6 @@ public class Miestnost {
      */
     private int[] susedneMiestnosti;
     private Stena[] steny;
-    private JPanel podlaha;
     /**
      * Konstruktor triedy Miestnost
      */
@@ -28,8 +24,14 @@ public class Miestnost {
         for (int i = 0; i < this.susedneMiestnosti.length; i++) {
             this.susedneMiestnosti[i] = -1;
         }
-        this.podlaha = new JPanel();
-        this.podlaha.setBackground(Color.gray);
+    }
+    /**
+     * Vrati Stenu v Smere 
+     * @param s smer od stredu
+     * @return referencia na Stenu
+     */
+    public Stena getStena(Smer s) {
+        return steny[s.toInt()];
     }
     /**
      * Nastavi suseda v predom urcenom smere
@@ -57,19 +59,6 @@ public class Miestnost {
         }
     }
     /**
-     * Ziska pocet susedov
-     * @return pocet susedov bez hodnot "null"
-     */
-    public int getPocetSusedov() {
-        int pocet = 0;
-        for (int i = 0; i < this.susedneMiestnosti.length; i++) {
-            if (this.susedneMiestnosti[i] != -1) {
-                pocet++;
-            }
-        }
-        return pocet;
-    }
-    /**
      * Nastavi stav pre vsetky dvere v Miestnosti
      * @param otvorene ak PRAVDA dvere sa otvoria (vypnu)
      */
@@ -77,19 +66,5 @@ public class Miestnost {
         for (Stena stena : this.steny) {
             stena.nastavDvere(otvorene);
         }
-    }
-    /**
-     * Vrati reprezentaciu Miestnosti (Stien a podlahy) na displej
-     * @return JPanel[] grafika Stien a podlahy
-     */
-    public JPanel[] getGrafika() {
-        JPanel[] grafika = new JPanel[5];
-        grafika[4] = this.podlaha;
-
-        for (int i = 0; i < this.steny.length; i++) {
-            grafika[i] = this.steny[i].getGrafika();
-        }
-
-        return grafika;
     }
 }

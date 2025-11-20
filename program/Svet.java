@@ -84,11 +84,16 @@ public class Svet {
         return this.miestnosti.get(this.indexPociatocnejMiestnosti);
     }
     /**
-     * Ziska Miestnost z pola Miestnosti
+     * Ziska Miestnost z pola Miestnosti, 
+     * ak je index nespravny vrati hodnotu NULL
      * @param index poradove cislo Miestnosti vo Svete 
      * @return Miestnost na mieste index v poli
      */
     public Miestnost getMiestnost(int index) {
-        return this.miestnosti.get(index);
+        if (0 < index && index < this.miestnosti.size()) {
+            return this.miestnosti.get(index);
+        } else {
+            return null;
+        }
     }
 }
