@@ -81,6 +81,7 @@ public class Telo {
      * (normalizuje)
      * @param smerovyVektor novy smerovy Vektor2D
      */
+    // pohybVSmere
     public void pohybVektor(Vektor2D smerovyVektor) {
         this.smer = smerovyVektor.normalizuj();
         Vektor2D pohyb = this.smer.skalarnySucin(this.rychlostPohybu);

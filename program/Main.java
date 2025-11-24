@@ -6,6 +6,7 @@
  * @version 0.1
  */
 public class Main {
+    public static final Vektor2D ROZMER_HRY = new Vektor2D(600, 400);
     /**
      * Sluzi na spustenie Hry 
      */

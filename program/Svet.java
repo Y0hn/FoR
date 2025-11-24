@@ -55,9 +55,6 @@ public class Svet {
                             || 
                         smery.get(dalsi) == Smer.Dole && Smer.opacneSmery(smery.get(predosly), smery.get(dalsi - 1))) {   // alebo spodna pokracuje dole
 
-                        
-
-
                         this.miestnosti.get(predosly).nastavSuseda(dalsi, Smer.Dole);    // do vyssej miestnosti prida cestu dole
                         this.miestnosti.get(dalsi).nastavSuseda(predosly, Smer.Hore);    // do nizsej miestnosti prida cestu hore
                     } else {
@@ -71,7 +68,7 @@ public class Svet {
         // miestnost je medzi prvou 1/5 a 4/5 celkoveho poctu
         this.indexPociatocnejMiestnosti = (int)Math.round(this.miestnosti.size() * 0.2 + random.nextDouble() * (this.miestnosti.size() * 0.6));
 
-        for (Miestnost m : miestnosti) {
+        for (Miestnost m : this.miestnosti) {
             m.vytvorSteny();
         }
     }

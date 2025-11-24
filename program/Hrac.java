@@ -1,6 +1,5 @@
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Vector;
 
 import javax.swing.JFrame;
 
@@ -37,7 +36,7 @@ public class Hrac {
     public void nastavVstup(JFrame okno) {
         KeyAdapter ka = new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
-                vstup(e.getKeyCode());
+                Hrac.this.vstup(e.getKeyCode());
             }
             /*public void keyReleased(KeyEvent e) {
                 koniecVstupu(e.getKeyCode());
@@ -47,12 +46,12 @@ public class Hrac {
     }
 
     private void vstup(int vstup) {
-        telo.pohybVektor(keyToVektor2D(vstup));
+        this.telo.pohybVektor(this.keygetVektor2D(vstup));
     }
     /*private void koniecVstupu(int vstup) {
-        telo.pohybVektor(keyToVektor2D(vstup).skalarnySucin(-1));
+        telo.pohybVektor(keygetVektor2D(vstup).skalarnySucin(-1));
     }*/
-    private Vektor2D keyToVektor2D(int klaves) {   
+    private Vektor2D keygetVektor2D(int klaves) {   
         Vektor2D v = Vektor2D.zero();     
         switch (klaves) {
             case 87: // W

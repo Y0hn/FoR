@@ -31,7 +31,7 @@ public class Miestnost {
      * @return referencia na Stenu
      */
     public Stena getStena(Smer s) {
-        return steny[s.toInt()];
+        return this.steny[s.toInt()];
     }
     /**
      * Nastavi suseda v predom urcenom smere

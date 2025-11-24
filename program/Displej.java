@@ -2,7 +2,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.Color;
-import java.awt.Point;
+//import java.awt.Point;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLayeredPane;
@@ -75,7 +75,7 @@ public class Displej {
         int velkost = (int)Math.round(polomer) * 2;
         this.hrac.setBounds(pozicia.getIntX(), pozicia.getIntY(), velkost, velkost);
         this.hrac.setBackground(Color.red);
-        this.aktivnaMiestnost.setLayer(hrac, 3);
+        this.aktivnaMiestnost.setLayer(this.hrac, 3);
         this.aktivnaMiestnost.add(this.hrac);
         this.hrac = (JPanel)this.aktivnaMiestnost.getComponentAt(pozicia.getIntX(), pozicia.getIntY());
     }
@@ -95,7 +95,7 @@ public class Displej {
         if (this.aktivnaMiestnost != null) {
             this.okno.remove(this.aktivnaMiestnost);
         }
-        this.aktivnaMiestnost = vytvorGrafikuMiestnosti(m);
+        this.aktivnaMiestnost = this.vytvorGrafikuMiestnosti(m);
         this.aktivnaMiestnost.setLayout(null);
         this.okno.setContentPane(this.aktivnaMiestnost);
     }
@@ -109,7 +109,7 @@ public class Displej {
 
             for (int ii = 0; ii < rozmery.length; ii++) {
                 // planovana zmena
-                JPanel stena = this.vytvorGrafikuMuru(rozmery[ii], (ii+1)*(i+1)*10);
+                JPanel stena = this.vytvorGrafikuMuru(rozmery[ii], (ii + 1) * (i + 1) * 10);
                 miestnost.setLayer(stena, 1);
                 miestnost.add(stena);
             }
@@ -127,7 +127,7 @@ public class Displej {
     private JPanel vytvorGrafikuMuru(Rozmer2D rozmer, int i) {
         JPanel stena = new JPanel();
         stena.setBounds(rozmer.vytvorRectangle());
-        Color c = new Color(i,i,i); // docasne
+        Color c = new Color(i, i, i); // docasne
         stena.setBackground(c);
         return stena;
     }

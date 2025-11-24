@@ -4,7 +4,7 @@ import java.awt.Dimension;
  * 2D Vektor2D (reprezentuje bod v Kartezianskej suradnicovej sustave so suradnicami [x,y])
  * 
  * @author y0hn
- * @version v0.6
+ * @version v0.7
  */
 public class Vektor2D {
     private double x;
@@ -135,9 +135,9 @@ public class Vektor2D {
      * @return Vektor2D s dlzkou 1
      */
     public Vektor2D normalizuj() {
-        double uhol = (this.x == 0) ? (0 < this.y ? Math.PI / 2 : (Math.PI / 2) * 3) : Math.atan(this.y / this.x);
-        double noveX = Math.signum(this.x) * Math.cos(uhol);
-        double noveY = Math.sin(uhol);
+        double dlzka = this.dlzka();
+        double noveX = this.x / dlzka;
+        double noveY = this.y / dlzka;
         return new Vektor2D(noveX, noveY);
     }
     /**

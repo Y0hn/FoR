@@ -1,76 +1,28 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Enumeration trieda Smer
- * Obsahuje popisuje smer (pohybu) v rovine
+ * Obsahuje a popisuje smer (pohybu) v rovine
  * 
  * @author y0hn
- * @version v0.1
+ * @version v0.2
  */
 public enum Smer {
-    Hore,
-    Lavo,
-    Pravo,
-    Dole;
+    Hore(0, 1),
+    PravoHore(1, 1),
+    Pravo(1, 0),
+    PravoDole(1, -1),
+    Dole(0, -1),
+    LavoDole(-1, -1),
+    Lavo(-1, 0),
+    LavoHore(-1, 1);
 
-    /**
-     * Priradi zo smeru hodnotu int 
-     * @return hodnota v tvare int
-     */
-    public int toInt() {
-        int i = -1;
-        switch (this) {
-            case Hore:
-                i = 0;                
-                break;
-            case Lavo:
-                i = 1;                
-                break;
-            case Pravo:
-                i = 2;                
-                break;
-            case Dole:
-                i = 3;                
-                break;
-        
-            default:
-                break;
-        }
-        return i;
+    private Vektor2D vektor;
+    Smer(double x, double y) {
+        this.vektor = new Vektor2D(x, y).normalizuj();
     }
-    /**
-     * Priradi zo smeru hodnotu Vektor2D 
-     * @return hodnota v tvare int
-     */
-    public Vektor2D toVektor2D() {
-        Vektor2D v = Vektor2D.zero();
-        switch (this) {
-            case Hore:
-                v = Vektor2D.hore();                
-                break;
-            case Lavo:
-                v = Vektor2D.lavo();                
-                break;
-            case Pravo:
-                v = Vektor2D.pravo();                
-                break;
-            case Dole:
-                v = Vektor2D.dole();                
-                break;
-        
-            default:
-                break;
-        }
-        return v;
-    }
-    /**
-     * Vytvara opacny smer ku smeru 
-     * @param smer vlozeny smer
-     * @return opacny smer
-     */
-    public Smer opacny() {
-        Smer novySmer = toSmer(Math.abs(this.toInt() - 3));
-        return novySmer;
-    }
+
     /**
      * Vytvori Smer na zaklade priradenej hodnoty
      * @param smernik
@@ -97,7 +49,6 @@ public enum Smer {
         }
         return s;
     }
-
     /**
      * Kontroluje vztah medzi smermi
      * @param s1 prvy smer
@@ -113,5 +64,30 @@ public enum Smer {
         opacne |= (s2 == Dole && Hore == s1);
 
         return opacne;
+    }
+
+    /**
+     * Priradi zo smeru hodnotu Vektor2D 
+     * @return hodnota v tvare int
+     */
+    public Vektor2D getVektor2D() {
+        return this.vektor;
+    }
+    /**
+     * Vytvara opacny smer ku smeru 
+     * @param smer vlozeny smer
+     * @return opacny smer
+     */
+    public Smer opacny() {
+        Smer novySmer = toSmer(Math.abs(this.toInt() - 3));
+        return novySmer;
+    }
+    /**
+     * Priradi zo smeru hodnotu int 
+     * @return hodnota v tvare int
+     */
+    public int toInt() {
+        ArrayList<Smer> list = new ArrayList<Smer>(Arrays.asList(Smer.values()));
+        return list.indexOf(this);
     }
 }

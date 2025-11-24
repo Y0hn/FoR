@@ -3,46 +3,43 @@
  * Trieda pre zjednotenie vsetkych komponentov Hry
  * 
  * @author y0hn 
- * @version 0.3
+ * @version 0.4
  */
 public class Hra {
-    private static Hra singleton;
-
-    private boolean hranieSa;
-    private Svet svet;
-    private Hrac hrac;
-    private Displej displej;
+    private static Hra instancia;
 
     /**
      * Zacne novu Hru iba pripade ak uz nebezi ina
      * @return beziacu Hru
      */
     public static Hra start() {
-        if (singleton == null) {
-            Vektor2D rozmerDisplej =  new Vektor2D(600, 400);
-            singleton = new Hra(rozmerDisplej);
+        if (instancia == null) {
+            instancia = new Hra();
         }
-        return singleton;
+        return instancia;
     }
     /**
      * Nastavi aktivnu Miestnost podla jej indexu vo Svete
      * @param indexAktivnejMiestnosti index novej aktivnej Miestnosti
      */
     public static void nastavAktivnuMiestnost(int indexAktivnejMiestnosti) {
-        singleton.nacitajMiestnost(indexAktivnejMiestnosti);
+        instancia.nacitajMiestnost(indexAktivnejMiestnosti);
     }
+
+    private Svet svet;
+    private Hrac hrac;
+    private Displej displej;
 
     /**
      * Sluzi na vytvorenie Hry 
      * @param rozmery su rozmery Displeja v tvare Vektor2D2
      */
-    public Hra(Vektor2D rozmery) {
-        this.hranieSa = true;
-        this.displej = new Displej("", "FrontRooms", rozmery);
+    private Hra() {
+        this.displej = new Displej("", "FrontRooms", Main.ROZMER_HRY);
         this.svet = new Svet(50);
         this.hrac = new Hrac();
         
-        this.nacitajMiestnost(svet.getZaciatocnaMiestnost());
+        this.nacitajMiestnost(this.svet.getZaciatocnaMiestnost());
         this.hrac.nastavVstup(this.displej.getOkno());
         this.displej.nastavHraca(this.hrac);
     }
@@ -66,7 +63,7 @@ public class Hra {
      * @param indexMiestnosti vo Svete
      */
     private void nacitajMiestnost(int indexMiestnosti) {
-        Miestnost m = svet.getMiestnost(indexMiestnosti);
+        Miestnost m = this.svet.getMiestnost(indexMiestnosti);
         this.nacitajMiestnost(m);
     }
 }

@@ -5,15 +5,15 @@ import javax.swing.Timer;
 /**
  * Obnovuje Hru
  * 
- * @author y0hn (not totaly)
- * @version v0.1
+ * @author y0hn
+ * @version v0.2
  */
 public class Casovac implements ActionListener {
-    private Timer timer;
+    private Timer casovac;
     private Hra hra;
     
-    private long oldTick;    
-    private static final long TICK_LENGTH = 100;   
+    private long poslednyTik;    
+    private static final long DLZKA_TIKU = 100;   
 
     /**
      * Vytvori casovac
@@ -23,17 +23,17 @@ public class Casovac implements ActionListener {
     public Casovac(Hra hra) {
         this.hra = hra;
         
-        this.timer = new javax.swing.Timer(25, null);        
-        this.timer.addActionListener(this);      
+        this.casovac = new javax.swing.Timer(25, null);        
+        this.casovac.addActionListener(this);      
         
-        this.oldTick = 0;
-        this.timer.start();
+        this.poslednyTik = 0;
+        this.casovac.start();
     }
     
     public void actionPerformed(ActionEvent event) {
         long newTick = System.nanoTime();
-        if (Casovac.TICK_LENGTH <= newTick - this.oldTick  || newTick < Casovac.TICK_LENGTH) {
-            this.oldTick = (newTick / Casovac.TICK_LENGTH) * Casovac.TICK_LENGTH;
+        if (Casovac.DLZKA_TIKU <= newTick - this.poslednyTik  || newTick < Casovac.DLZKA_TIKU) {
+            this.poslednyTik = (newTick / Casovac.DLZKA_TIKU) * Casovac.DLZKA_TIKU;
             this.hra.tik(); 
         }
     }  
