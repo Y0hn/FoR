@@ -116,4 +116,32 @@ public class Rozmer2D {
     public Rectangle vytvorRectangle() {
         return new Rectangle(this.getIntPoX(), this.getIntPoY(), this.getIntVeX(), this.getIntVeY());
     }
+    /**
+     * Zisti ci sa pozicia nachadza v rozmere
+     * @param pozicia Vektor2D
+     * @return PRANDA ak je cast Tela v stene
+     */
+    public boolean jePoziciaVnutri(Vektor2D pozicia) {
+        boolean kolizuje = true;
+        /*
+        Vektor2D polohaMuru = this.rozmer.getPozicia();
+        Vektor2D velkostMuru = this.rozmer.getVelkost();
+        Vektor2D polohaTela = telo.getPozicia();
+        double polomer = telo.getPolomer();
+        // ak hrac prechadza dverami prepne aktivnu Miestnost
+        if (!this.aktivny && 0 <= this.vedieDoMiestnosti) {
+            Hra.nastavAktivnuMiestnost(this.vedieDoMiestnosti);
+        }
+        */       
+        kolizuje &= pozicia.getX() > this.poziciaX; // kolizia z lava
+        kolizuje &= pozicia.getX() < this.poziciaX + this.velkostX; // kolizia z prava
+        kolizuje &= pozicia.getY() > this.poziciaY; // kolizia z hora
+        kolizuje &= pozicia.getY() < this.poziciaY + this.velkostY; // kolizia z hora
+
+        return kolizuje;
+    }
+    
+    public static Rozmer2D zero() {
+        return new Rozmer2D(0, 0, 0, 0);
+    }
 }

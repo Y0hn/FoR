@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Miestnost vo svete, ktora ma susedne miestnosti a obsahuje nieco
  * Po vojdeni hraca do miestnosti sa aktivuje
@@ -14,12 +16,14 @@ public class Miestnost {
      */
     private int[] susedneMiestnosti;
     private Stena[] steny;
+    private ArrayList<Telo> nepriatelia;
     /**
      * Konstruktor triedy Miestnost
      */
     public Miestnost() {
         this.susedneMiestnosti = new int[4];
         this.steny = new Stena[4];
+        this.nepriatelia = new ArrayList<Telo>();
 
         for (int i = 0; i < this.susedneMiestnosti.length; i++) {
             this.susedneMiestnosti[i] = -1;
@@ -32,6 +36,16 @@ public class Miestnost {
      */
     public Stena getStena(Smer s) {
         return this.steny[s.toInt()];
+    }
+    public ArrayList<Telo> getNepriatelia() {
+        return this.nepriatelia;
+    }
+    public Rozmer2D[][] getRozmery2D() {
+        Rozmer2D[][] rozmery = new Rozmer2D[this.steny.length][];
+        for (int i = 0; i < rozmery.length; i++) {
+            rozmery[i] = this.steny[i].getRozmery();
+        }
+        return rozmery;
     }
     /**
      * Nastavi suseda v predom urcenom smere

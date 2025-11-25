@@ -28,9 +28,9 @@ public class Stena {
 
         // absolutna poloha ku lavemu-hronemu rohu okna
         Vektor2D polohaMuru = Vektor2D.zero();
-        if (smer == Smer.Pravo) {
+        if (smer == Smer.PRAVO) {
             polohaMuru = new Vektor2D(rozmer.getX() - SIRKA_STENY, 0);
-        } else if (smer == Smer.Dole) {
+        } else if (smer == Smer.DOLE) {
             polohaMuru = new Vektor2D(0, rozmer.getY() - SIRKA_STENY);
         }
 
@@ -58,9 +58,9 @@ public class Stena {
         for (int i = 0; i < 3; i++) {
             // absolutna poloha ku lavemu-hronemu rohu okna
             Vektor2D polohaMuru = Vektor2D.zero();
-            if (smer == Smer.Pravo) {
+            if (smer == Smer.PRAVO) {
                 polohaMuru = new Vektor2D(rozmer.getX() - SIRKA_STENY, 0);
-            } else if (smer == Smer.Dole) {
+            } else if (smer == Smer.DOLE) {
                 polohaMuru = new Vektor2D(0, rozmer.getY() - SIRKA_STENY);
             }
 
@@ -72,9 +72,9 @@ public class Stena {
             // posun dveri
             Vektor2D posunDveri = Vektor2D.zero();
             if (i == 1) {
-                if (smer == Smer.Pravo) {
+                if (smer == Smer.PRAVO) {
                     posunDveri = new Vektor2D(SIRKA_STENY * pomerPosunuDveri, 0);
-                } else if (smer == Smer.Dole) {
+                } else if (smer == Smer.DOLE) {
                     posunDveri = new Vektor2D(0, SIRKA_STENY - SIRKA_DVERI * SIRKA_STENY);
                 }
             }
@@ -89,8 +89,6 @@ public class Stena {
 
             this.mury[i] = new Mur(new Rozmer2D(polohaMuru, velkostMuru));
         }
- 
-        this.mury[1].vedieDoMiestnosti(sused);
     }
     /**
      * Vrati Rozmery vsetkych Murov v Stene
@@ -119,7 +117,6 @@ public class Stena {
     public class Mur {
         private Rozmer2D rozmer;
         private boolean aktivny;
-        private int vedieDoMiestnosti;
 
         /**
          * Vytvori cast Steny
@@ -127,7 +124,6 @@ public class Stena {
          * @param velkost velkost obdlznika
          */
         public Mur(Rozmer2D rozmer) {
-            this.vedieDoMiestnosti = -1;
             this.rozmer = rozmer;
             this.aktivny = true;
         }
@@ -136,6 +132,9 @@ public class Stena {
          * @return [pozicia, velkost]
          */
         public Rozmer2D getRozmer() {
+            if (!this.aktivny) {
+                return Rozmer2D.zero();
+            }
             return this.rozmer;
         }
         /**
@@ -152,38 +151,6 @@ public class Stena {
          */
         public void nastavAktivny(boolean aktivny) {
             this.aktivny = aktivny;
-        }
-        /**
-         * Nastavi index Miestnosti za Murom
-         * @param index index do ktorej Dvere vedu
-         */
-        public void vedieDoMiestnosti(int index) {
-            this.vedieDoMiestnosti = index;
-        }
-        /**
-         * Zisti ci sa Mur prekryva s Telom
-         * @param telo kruhove telo
-         * @return PRANDA ak je cast Tela v stene
-         */
-        public boolean koliziaSTelom(Telo telo) {
-            boolean kolizuje = true;
-            Vektor2D polohaMuru = this.rozmer.getPozicia();
-            Vektor2D velkostMuru = this.rozmer.getVelkost();
-            Vektor2D polohaTela = telo.getPozicia();
-            double polomer = telo.getPolomer();
-
-            // ak hrac prechadza dverami prepne aktivnu Miestnost
-            if (!this.aktivny && 0 <= this.vedieDoMiestnosti) {
-                Hra.nastavAktivnuMiestnost(this.vedieDoMiestnosti);
-            }
-
-            kolizuje &= polohaTela.getX() + polomer > polohaMuru.getX(); // kolizia z lava
-            kolizuje &= polohaTela.getX() - polomer < polohaMuru.getX() + velkostMuru.getX(); // kolizia z prava
-
-            kolizuje &= polohaTela.getY() + polomer > polohaMuru.getY(); // kolizia z hora
-            kolizuje &= polohaTela.getY() - polomer < polohaMuru.getY() + velkostMuru.getY(); // kolizia z hora
-
-            return kolizuje;
         }
     }
 }

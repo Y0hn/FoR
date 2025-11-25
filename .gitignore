@@ -1,5 +1,9 @@
-# All compiled java files 
-*.class
-# Sensitive information
-program/doc/logfile.txt
+# Check style Program
 FRICheckstyle-standalone.jar
+
+# Binaries
+bin/
+program/*.class
+
+# Logs
+program/doc/logfile.txt

@@ -1,15 +1,14 @@
-
 /**
  * Reprezentacia postavy vo svete
  * 
  * @author y0hn 
- * @version v0.2
+ * @version v0.3
  */
 public class Telo {
     private int maxZdravie;
     private int zdravie;
     private Vektor2D pozicia;
-    private Vektor2D smer;
+    private Vektor2D smerovyVektor2D;
     private double rychlostPohybu;
     private double polomerTela;
     /**
@@ -24,7 +23,7 @@ public class Telo {
         this.maxZdravie = maxZdravie;
         this.zdravie = maxZdravie;
         this.pozicia = pozicia;
-        this.smer = smer;
+        this.smerovyVektor2D = smer;
         this.rychlostPohybu = rychlost;
         this.polomerTela = polomerTela;
     }
@@ -37,7 +36,7 @@ public class Telo {
      */
     public Telo(Vektor2D pozicia, Vektor2D smer, double rychlost, double polomerTela) {
         this.pozicia = pozicia;
-        this.smer = smer;
+        this.smerovyVektor2D = smer;
         this.rychlostPohybu = rychlost;
         this.polomerTela = polomerTela;
     }
@@ -55,7 +54,28 @@ public class Telo {
     public double getPolomer() {
         return this.polomerTela;
     }
+    /**
+     * Natstavi smerovy Vektor2D Tela
+     * 
+     * @param smerovyVektor novy smerovy Vektor2D
+     */
+    public void setPohybVektor(Vektor2D smerovyVektor) {
+        this.smerovyVektor2D = smerovyVektor.normalizuj();
+    }
+    public void nastavPoziciu(Vektor2D novaPozicia) {
+        this.pozicia = novaPozicia;
+    }
 
+    
+    /**
+     * Obnovi Telo
+     */
+    public void tik(Miestnost aktMiest) {
+        Vektor2D v = this.ziskajPoziciuDalsiehoPohybu();
+        if (jePohybMozny(v, aktMiest)) {
+            nastavPoziciu(v);
+        }
+    }
     /**
      * Zisti ci sa Tela dotykaju
      * @param druheTelo referencia na merany objekt
@@ -76,15 +96,35 @@ public class Telo {
         }
         return this.zdravie <= 0;
     }
-    /**
-     * Usmerni smerovy Vektor2D Tela smerom Vektor2D
-     * (normalizuje)
-     * @param smerovyVektor novy smerovy Vektor2D
-     */
-    // pohybVSmere
-    public void pohybVektor(Vektor2D smerovyVektor) {
-        this.smer = smerovyVektor.normalizuj();
-        Vektor2D pohyb = this.smer.skalarnySucin(this.rychlostPohybu);
-        this.pozicia = this.pozicia.sucet(pohyb);
+
+    private Vektor2D ziskajPoziciuDalsiehoPohybu() {        
+        Vektor2D pohyb = this.smerovyVektor2D.skalarnySucin(this.rychlostPohybu);
+        pohyb = this.pozicia.sucet(pohyb);
+        return pohyb;
+    }
+    private boolean jePohybMozny(Vektor2D novaPozicia, Miestnost aktivMiestnost) {
+        boolean mozne = true;
+        novaPozicia = novaPozicia.sucet(new Vektor2D(this.polomerTela, this.polomerTela));
+
+        Vektor2D[] okraje = new Vektor2D[4];
+        for (int i = 0; i < okraje.length; i++) {
+            double x = (i < 2) ? this.polomerTela : -this.polomerTela;
+            double y = (i % 2 == 0) ? this.polomerTela : -this.polomerTela;
+            Vektor2D okraj = new Vektor2D(x, y);            
+            okraje[i] = novaPozicia.sucet(okraj);
+        }
+
+        for (Telo t : aktivMiestnost.getNepriatelia()) {
+            mozne &= !this.dotykaSa(t);
+        }
+        for (int i = 0; mozne && i < okraje.length; i++) {
+            for (Rozmer2D[] rozmerySteny : aktivMiestnost.getRozmery2D()){
+                for (Rozmer2D rozmer : rozmerySteny) {
+                    mozne &= !rozmer.jePoziciaVnutri(okraje[i]);
+                }
+            }
+        }
+
+        return mozne;
     }
 }

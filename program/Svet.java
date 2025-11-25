@@ -49,14 +49,14 @@ public class Svet {
 
         // Prida mozne prechody medzi miestnostami
         for (int i = 0; i < smery.size(); i++) {
-            if (smery.get(i) == Smer.Dole) {
+            if (smery.get(i) == Smer.DOLE) {
                 for (int predosly = i - 1, dalsi = i + 2; 0 < predosly && dalsi < smery.size(); predosly--, dalsi++) {
                     if (Smer.opacneSmery(smery.get(predosly), smery.get(dalsi)) // kontroluje ci su protichodne miestnosti pod sebou
                             || 
-                        smery.get(dalsi) == Smer.Dole && Smer.opacneSmery(smery.get(predosly), smery.get(dalsi - 1))) {   // alebo spodna pokracuje dole
+                        smery.get(dalsi) == Smer.DOLE && Smer.opacneSmery(smery.get(predosly), smery.get(dalsi - 1))) {   // alebo spodna pokracuje dole
 
-                        this.miestnosti.get(predosly).nastavSuseda(dalsi, Smer.Dole);    // do vyssej miestnosti prida cestu dole
-                        this.miestnosti.get(dalsi).nastavSuseda(predosly, Smer.Hore);    // do nizsej miestnosti prida cestu hore
+                        this.miestnosti.get(predosly).nastavSuseda(dalsi, Smer.DOLE);    // do vyssej miestnosti prida cestu dole
+                        this.miestnosti.get(dalsi).nastavSuseda(predosly, Smer.HORE);    // do nizsej miestnosti prida cestu hore
                     } else {
                         break;
                     }

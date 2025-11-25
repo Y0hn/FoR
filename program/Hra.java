@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 /**
  * Trieda pre zjednotenie vsetkych komponentov Hry
@@ -6,6 +7,7 @@
  * @version 0.4
  */
 public class Hra {
+    public static final Vektor2D ROZMER_HRY = new Vektor2D(600, 400);
     private static Hra instancia;
 
     /**
@@ -29,13 +31,14 @@ public class Hra {
     private Svet svet;
     private Hrac hrac;
     private Displej displej;
+    private Miestnost aktivnaMiestnost;
 
     /**
      * Sluzi na vytvorenie Hry 
      * @param rozmery su rozmery Displeja v tvare Vektor2D2
      */
     private Hra() {
-        this.displej = new Displej("", "FrontRooms", Main.ROZMER_HRY);
+        this.displej = new Displej("", "FrontRooms", Hra.ROZMER_HRY);
         this.svet = new Svet(50);
         this.hrac = new Hrac();
         
@@ -48,7 +51,7 @@ public class Hra {
      * Obnovi Hru
      */
     public void tik() {
-        this.hrac.tik();
+        this.hrac.tik(this.aktivnaMiestnost);
         this.displej.obnovHraca(this.hrac);
     }
     /**
@@ -57,6 +60,7 @@ public class Hra {
      */
     private void nacitajMiestnost(Miestnost m) {
         this.displej.zmenAktivnuMiestnost(m);
+        this.aktivnaMiestnost = m;
     }
     /**
      * Zmeni aktivnu Miestnost zobrazovanu na Displeji

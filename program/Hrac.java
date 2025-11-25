@@ -1,5 +1,6 @@
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
@@ -7,10 +8,11 @@ import javax.swing.JFrame;
  * Drzi informacie o hracovi vo Svete
  * 
  * @author y0hn 
- * @version v0.2
+ * @version v0.3
  */
 public class Hrac {
     private Telo telo;
+    private boolean[] pohybVSmere;
     /**
      * Vytvori hraca vo svete
      * @param svet Svet v ktorom hrac zacina hru 
@@ -18,6 +20,11 @@ public class Hrac {
     public Hrac() {
         Vektor2D pozicia = Displej.getRozmer().getVelkost().skalarnySucin(0.5);
         this.telo = new Telo(10, pozicia, Vektor2D.zero(), 5, 20);
+
+        this.pohybVSmere = new boolean[Smer.values().length];
+        for (int i = 0; i < this.pohybVSmere.length; i++) {
+            this.pohybVSmere[i] = false;
+        }
     }
     /**
      * Vrati Telo Hraca
@@ -26,8 +33,10 @@ public class Hrac {
     public Telo getTelo() {
         return this.telo;
     }
-    public void tik() {
-        //this.telo.pohybVSmere();
+    public void tik(Miestnost aktMiest) {
+        Vektor2D v = this.ziskajPohybovyVektor2D();
+        this.telo.setPohybVektor(v);
+        this.telo.tik(aktMiest);
     }
     /**
      * Nastavi odposluch na klavesove vstupy k oknu
@@ -38,51 +47,63 @@ public class Hrac {
             public void keyPressed(KeyEvent e) {
                 Hrac.this.vstup(e.getKeyCode());
             }
-            /*public void keyReleased(KeyEvent e) {
+            public void keyReleased(KeyEvent e) {
                 koniecVstupu(e.getKeyCode());
-            }*/
+            }
         };
         okno.addKeyListener(ka);
     }
 
     private void vstup(int vstup) {
-        this.telo.pohybVektor(this.keygetVektor2D(vstup));
+        this.keySetSmer(vstup, true);
+
     }
-    /*private void koniecVstupu(int vstup) {
-        telo.pohybVektor(keygetVektor2D(vstup).skalarnySucin(-1));
-    }*/
-    private Vektor2D keygetVektor2D(int klaves) {   
-        Vektor2D v = Vektor2D.zero();     
+    private void koniecVstupu(int vstup) {
+        this.keySetSmer(vstup, false);
+    }
+    private void keySetSmer(int klaves, boolean pridaj) {   
+        int index = -1;
+
         switch (klaves) {
             case 87: // W
-                v = Vektor2D.dole();
+                index = Smer.HORE.ordinal();
                 break;
             case 65: // A
-                v = Vektor2D.lavo();
+                index = Smer.LAVO.ordinal();
                 break;
             case 83: // S
-                v = Vektor2D.hore();
+                index = Smer.DOLE.ordinal();
                 break;
             case 68: // D
-                v = Vektor2D.pravo();
+                index = Smer.PRAVO.ordinal();
                 break;
 
             case 38: // sipka Hore
-                v = Vektor2D.dole();
                 break;
             case 37: // sipka Lavo
-                v = Vektor2D.lavo();
                 break;
             case 40: // sipka Dole
-                v = Vektor2D.hore();
                 break;
             case 39: // sipka Pravo
-                v = Vektor2D.pravo();
                 break;
 
             default:
                 break;
         }
+
+        if (index != -1) {
+            this.pohybVSmere[index] = pridaj;
+        }
+    }
+    private Vektor2D ziskajPohybovyVektor2D() {   
+        Vektor2D v = Vektor2D.zero();
+
+        for (int i = 0; i < this.pohybVSmere.length; i++) {
+            if (this.pohybVSmere[i]) {
+                v= v.sucet(Smer.values()[i].getVektor2D());
+            }
+        }
+        
         return v;
     }
 }

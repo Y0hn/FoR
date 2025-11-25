@@ -136,6 +136,9 @@ public class Vektor2D {
      */
     public Vektor2D normalizuj() {
         double dlzka = this.dlzka();
+        if (dlzka == 0) {
+            return Vektor2D.zero();
+        }
         double noveX = this.x / dlzka;
         double noveY = this.y / dlzka;
         return new Vektor2D(noveX, noveY);
