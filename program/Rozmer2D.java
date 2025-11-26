@@ -141,6 +141,10 @@ public class Rozmer2D {
         return kolizuje;
     }
     
+    /**
+     * Vrati nulovy rozmer
+     * @return Rozmer2D[0,0][0,0]
+     */
     public static Rozmer2D zero() {
         return new Rozmer2D(0, 0, 0, 0);
     }

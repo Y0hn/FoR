@@ -6,4 +6,5 @@ comment1.target=Casovac(Hra)
 comment1.text=\r\n\ Vytvori\ casovac\r\n\ \ \r\n\ @param\ hra\ \ \ \r\n
 comment2.params=event
 comment2.target=void\ actionPerformed(java.awt.event.ActionEvent)
+comment2.text=\r\n\ Volane\ ked\ sa\ aktualizuje\ cas\ v\ casovaci\r\n
 numComments=3

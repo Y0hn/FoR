@@ -8,26 +8,32 @@ import java.util.ArrayList;
  * @version v0.5
  */
 public class Miestnost {
-    /**
-     * Hrona 0
-     * Lava  1
-     * Prava 2
-     * Dolna 3
-     */
+    
+    private int indexMiestnosti;
     private int[] susedneMiestnosti;
     private Stena[] steny;
     private ArrayList<Telo> nepriatelia;
     /**
      * Konstruktor triedy Miestnost
      */
-    public Miestnost() {
-        this.susedneMiestnosti = new int[4];
-        this.steny = new Stena[4];
+    public Miestnost(int index) {
+        this.indexMiestnosti = index;
+        int pocetStien = Smer.values().length;
+
+        this.susedneMiestnosti = new int[pocetStien];
+        this.steny = new Stena[pocetStien];
         this.nepriatelia = new ArrayList<Telo>();
 
-        for (int i = 0; i < this.susedneMiestnosti.length; i++) {
+        for (int i = 0; i < pocetStien; i++) {
             this.susedneMiestnosti[i] = -1;
         }
+    }
+    /**
+     * Vrati cislo Miestnosti v poradi
+     * @return ciselna referencia na Miestnost vo Svete 
+     */
+    public int getIndex() {
+        return this.indexMiestnosti;
     }
     /**
      * Vrati Stenu v Smere 
@@ -35,11 +41,19 @@ public class Miestnost {
      * @return referencia na Stenu
      */
     public Stena getStena(Smer s) {
-        return this.steny[s.toInt()];
+        return this.steny[s.ordinal()];
     }
+    /**
+     * Ziska list Nepriatelov
+     * @return list Nepriatelov
+     */
     public ArrayList<Telo> getNepriatelia() {
         return this.nepriatelia;
     }
+    /**
+     * Ziska Rozmery2D vsetkych Stien (Murov) v Miestnosti
+     * @return rozmery v tvare Rozmer2D[stena][mur]
+     */
     public Rozmer2D[][] getRozmery2D() {
         Rozmer2D[][] rozmery = new Rozmer2D[this.steny.length][];
         for (int i = 0; i < rozmery.length; i++) {
@@ -52,13 +66,8 @@ public class Miestnost {
      * @param sused index susednej Miestnosti
      * @param smer smer v ktorom lezi v zavislosti od stredu sucasnej miestnosti
      */
-    public void nastavSuseda(int sused, Smer smer) {
-        int s = smer.toInt();
-        if (s < 0 || 3 < s) {
-            System.out.println("Zly smer: " + s);
-            return;
-        }
-        this.susedneMiestnosti[s] = sused;
+    public void setSused(int sused, Smer smer) {
+        this.susedneMiestnosti[smer.ordinal()] = sused;
     }
     /**
      * Vytvori steny podla existujucich susedov
@@ -66,9 +75,9 @@ public class Miestnost {
     public void vytvorSteny() {
         for (int i = 0; i < 4; i++) {
             if (this.susedneMiestnosti[i] < 0) {
-                this.steny[i] = new Stena(Smer.toSmer(i));
+                this.steny[i] = new Stena(Smer.values()[i]);
             } else {
-                this.steny[i] = new Stena(Smer.toSmer(i), this.susedneMiestnosti[i]);
+                this.steny[i] = new Stena(Smer.values()[i], this.susedneMiestnosti[i]);
             }
         }
     }
@@ -80,5 +89,18 @@ public class Miestnost {
         for (Stena stena : this.steny) {
             stena.nastavDvere(otvorene);
         }
+        Hra.nastavAktivnuMiestnost(this.indexMiestnosti);
+    }
+    /**
+     * Obnovi vsetky objekty v miestnosti
+     */
+    public void tik() {
+        if (this.nepriatelia.size() == 0) {
+            this.nastavVsetkyDvere(true);
+        }
+    }
+    public void prejdiDoDalsejMiestnosti(Smer smer) {
+        int index = smer.ordinal();
+        Hra.nastavAktivnuMiestnost(this.susedneMiestnosti[index]);
     }
 }

@@ -13,7 +13,7 @@ public class Casovac implements ActionListener {
     private Hra hra;
     
     private long poslednyTik;    
-    private static final long DLZKA_TIKU = 100;   
+    private static final long DLZKA_TIKU = 1000;   
 
     /**
      * Vytvori casovac
@@ -29,7 +29,9 @@ public class Casovac implements ActionListener {
         this.poslednyTik = 0;
         this.casovac.start();
     }
-    
+    /**
+     * Volane ked sa aktualizuje cas v casovaci
+     */
     public void actionPerformed(ActionEvent event) {
         long newTick = System.nanoTime();
         if (Casovac.DLZKA_TIKU <= newTick - this.poslednyTik  || newTick < Casovac.DLZKA_TIKU) {

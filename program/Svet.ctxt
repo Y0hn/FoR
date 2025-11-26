@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Svet
-comment0.text=\r\n\ Drzi\ informacie\ o\ celom\ hernom\ Svete\r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ v0.3\r\n
+comment0.text=\r\n\ Drzi\ informacie\ o\ celom\ hernom\ Svete\r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ v0.4\r\n
 comment1.params=velkost
 comment1.target=Svet(int)
 comment1.text=\r\n\ Konstruktor\ Sveta\r\n\ Vytvori\ hreny\ Svet\ so\ stanovenym\ poctom\ miestnosti\r\n\ Taktiez\ vytvori\ prepoje\ (navaznosti)\ medzi\ miestnostami\r\n\ \r\n\ @param\ velkost\ nastavuje\ pocet\ miestnosti\ vo\ svete\r\n
@@ -10,4 +10,6 @@ comment2.text=\r\n\ Vrati\ intdex\ Zacinajej\ Miestnosti\ \r\n\ @return\ index\ 
 comment3.params=index
 comment3.target=Miestnost\ getMiestnost(int)
 comment3.text=\r\n\ Ziska\ Miestnost\ z\ pola\ Miestnosti,\ \r\n\ ak\ je\ index\ nespravny\ vrati\ hodnotu\ NULL\r\n\ @param\ index\ poradove\ cislo\ Miestnosti\ vo\ Svete\ \r\n\ @return\ Miestnost\ na\ mieste\ index\ v\ poli\r\n
-numComments=4
+comment4.params=random
+comment4.target=Smer\ vygenerujNahodnySmer(java.util.Random)
+numComments=5

@@ -5,7 +5,7 @@ import java.util.Random;
  * Drzi informacie o celom hernom Svete
  * 
  * @author y0hn 
- * @version v0.3
+ * @version v0.4
  */
 public class Svet {
     private int indexPociatocnejMiestnosti;
@@ -23,40 +23,43 @@ public class Svet {
 
         ArrayList<Smer> smery = new ArrayList<Smer>();   
 
-        Miestnost miestnost = new Miestnost();        
-        Smer smer; // Urcuje smer dalsej miestnosti (L, P, D)
+        Miestnost miestnost = new Miestnost(0);
+        Smer smer; // Urcuje smer k dalsej miestnosti (L, P, D)
 
-        // Vygeneruje miestnosti
-        while (this.miestnosti.size() < velkost) {
-            Miestnost sused = new Miestnost();
+        // Vygeneruje Suseda Miestnosti
+        while (this.miestnosti.size() + 1 < velkost) {
+            Miestnost sused = new Miestnost(this.miestnosti.size() + 1);
 
             // zabezpecenie aby nesiel naspat z L do P a opacne
             Smer poslednySmer = null;
-            if (0 < smery.size() || this.miestnosti.size() + 1 == velkost) {
+            if (0 < smery.size()) {
                 poslednySmer = smery.get(smery.size() - 1);
             }
+            // Vygeneruje iny smer aby nesiel naspat
             do {
-                smer = Smer.toSmer((int)Math.round(random.nextDouble() * 2) + 1);
-            } while (poslednySmer != null && Smer.opacneSmery(smer, poslednySmer));
+                smer = this.vygenerujNahodnySmer(random);
+            } while (smer == Smer.HORE || poslednySmer != null && smer.jeOpacny(poslednySmer));
 
-            int index = smery.size();
-            miestnost.nastavSuseda(index - 1, smer);
-            sused.nastavSuseda(index, smer.opacny());
+            miestnost.setSused(this.miestnosti.size() + 1, smer);
+            sused.setSused(this.miestnosti.size(), smer.opacny());
+
             this.miestnosti.add(miestnost);
             miestnost = sused;
             smery.add(smer);
         }
+        // prida poslednu miestnost
+        this.miestnosti.add(miestnost);
 
         // Prida mozne prechody medzi miestnostami
         for (int i = 0; i < smery.size(); i++) {
             if (smery.get(i) == Smer.DOLE) {
                 for (int predosly = i - 1, dalsi = i + 2; 0 < predosly && dalsi < smery.size(); predosly--, dalsi++) {
-                    if (Smer.opacneSmery(smery.get(predosly), smery.get(dalsi)) // kontroluje ci su protichodne miestnosti pod sebou
+                    if (smery.get(predosly).jeOpacny(smery.get(dalsi)) // kontroluje ci su protichodne miestnosti pod sebou
                             || 
-                        smery.get(dalsi) == Smer.DOLE && Smer.opacneSmery(smery.get(predosly), smery.get(dalsi - 1))) {   // alebo spodna pokracuje dole
+                        smery.get(dalsi) == Smer.DOLE && smery.get(predosly).jeOpacny(smery.get(dalsi - 1))) {   // alebo spodna pokracuje dole
 
-                        this.miestnosti.get(predosly).nastavSuseda(dalsi, Smer.DOLE);    // do vyssej miestnosti prida cestu dole
-                        this.miestnosti.get(dalsi).nastavSuseda(predosly, Smer.HORE);    // do nizsej miestnosti prida cestu hore
+                        this.miestnosti.get(predosly).setSused(dalsi, Smer.DOLE);    // do vyssej miestnosti prida cestu dole
+                        this.miestnosti.get(dalsi).setSused(predosly, Smer.HORE);    // do nizsej miestnosti prida cestu hore
                     } else {
                         break;
                     }
@@ -87,10 +90,15 @@ public class Svet {
      * @return Miestnost na mieste index v poli
      */
     public Miestnost getMiestnost(int index) {
-        if (0 < index && index < this.miestnosti.size()) {
+        if (0 <= index && index < this.miestnosti.size()) {
             return this.miestnosti.get(index);
         } else {
             return null;
         }
+    }
+
+    private Smer vygenerujNahodnySmer(Random random) {
+        int smernik = random.nextInt(Smer.values().length);
+        return Smer.values()[smernik];
     }
 }

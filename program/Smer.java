@@ -1,25 +1,15 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-
 /**
  * Enumeration trieda Smer
  * Obsahuje a popisuje smer (pohybu) v rovine
  * 
  * @author y0hn
- * @version v0.3
+ * @version v0.5
  */
 public enum Smer {
     HORE(0, -1),
     PRAVO(1, 0),
     DOLE(0, 1),
     LAVO(-1, 0),;
-
-    /*
-    PRAVO_HORE(1, 1),
-    PRAVO_DOLE(1, -1),
-    LAVO_DOLE(-1, -1),
-    LAVO_HORE(-1, 1);
-    */
 
     private Vektor2D vektor;
     Smer(double x, double y) {
@@ -33,47 +23,32 @@ public enum Smer {
      */
     public static Smer toSmer(int smernik) {
         Smer s = null;
-        switch (smernik) {
-            case 0:
-                s = Smer.HORE;                
-                break;
-            case 1:
-                s = Smer.LAVO;                
-                break;
-            case 2:
-                s = Smer.PRAVO;                
-                break;
-            case 3:
-                s = Smer.DOLE;                
-                break;
         
-            default:
-                break;
+        if (0 <= smernik && smernik < Smer.values().length) {
+            s = Smer.values()[smernik];
         }
+
         return s;
     }
     /**
-     * Kontroluje vztah medzi smermi
-     * @param s1 prvy smer
-     * @param s2 druhy smer
-     * @return PRAVDA ak su navzajom protichodne
+     * Vytvori Smer na zaklade priradenej hodnoty
+     * @param smernik
+     * @return priradena hodnota Smer
      */
-    public static boolean opacneSmery(Smer s1, Smer s2) {
-        boolean opacne;
-
-        opacne  = (s1 == Smer.LAVO  && Smer.PRAVO == s2);
-        opacne |= (s2 == Smer.PRAVO && Smer.LAVO == s1);
-        opacne |= (s2 == Smer.HORE  && Smer.DOLE == s1);
-        opacne |= (s2 == Smer.DOLE  && Smer.HORE == s1);
+    public static Smer toSmer(Vektor2D smernik) {
+        Smer s = null;
         
-        /*
-        opacne |= (s1 == Smer.PRAVO_HORE && Smer.LAVO_DOLE == s2);
-        opacne |= (s2 == Smer.LAVO_DOLE  && Smer.PRAVO_HORE == s1);
-        opacne |= (s2 == Smer.PRAVO_DOLE && Smer.LAVO_HORE == s1);
-        opacne |= (s2 == Smer.LAVO_HORE  && Smer.PRAVO_DOLE == s1);
-        */
-
-        return opacne;
+        // kvoli pozicii [0,0] v lavom hornom rohu su HORE a DOLE zamenene
+        if (smernik.equals(Vektor2D.dole())) {
+            s = Smer.HORE;
+        } else if (smernik.equals(Vektor2D.hore())) {
+            s = Smer.DOLE;
+        } else if (smernik.equals(Vektor2D.pravo())) {
+            s = Smer.PRAVO;
+        } else if (smernik.equals(Vektor2D.lavo())) {
+            s = Smer.LAVO;
+        }
+        return s;
     }
 
     /**
@@ -84,20 +59,39 @@ public enum Smer {
         return this.vektor;
     }
     /**
+     * Kontroluje vztah medzi smermi
+     * @param smer druhy smer
+     * @return PRAVDA ak su navzajom protichodne
+     */
+    public boolean jeOpacny(Smer smer) {
+        return this.opacny() == smer;
+    }
+    /**
      * Vytvara opacny smer ku smeru 
      * @param smer vlozeny smer
      * @return opacny smer
      */
     public Smer opacny() {
-        Smer novySmer = toSmer(Math.abs(this.toInt() - 3));
-        return novySmer;
-    }
-    /**
-     * Priradi zo smeru hodnotu int 
-     * @return hodnota v tvare int
-     */
-    public int toInt() {
-        ArrayList<Smer> list = new ArrayList<Smer>(Arrays.asList(Smer.values()));
-        return list.indexOf(this);
+        Smer opacnySmer = null;
+        
+        switch (this) {
+            case HORE:
+                opacnySmer = Smer.DOLE;                
+                break;
+            case LAVO:
+                opacnySmer = Smer.PRAVO;                
+                break;
+            case PRAVO:
+                opacnySmer = Smer.LAVO;                
+                break;
+            case DOLE:
+                opacnySmer = Smer.HORE;                
+                break;
+        
+            default:
+                break;
+        }
+
+        return opacnySmer;
     }
 }

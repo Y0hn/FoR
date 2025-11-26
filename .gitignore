@@ -3,6 +3,7 @@ FRICheckstyle-standalone.jar
 
 # Binaries
 bin/
+builds/
 program/*.class
 
 # Logs

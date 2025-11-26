@@ -1,19 +1,23 @@
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import java.awt.Color;
-//import java.awt.Point;
-
+import javax.swing.SwingConstants;
+import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JLayeredPane;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 
 /**
  * Zobrazovac okna Hry
  * 
  * @author y0hn
- * @version v0.6
+ * @version v0.7
  */
 public class Displej {
+    private static final int POSUN_ROZMERU_X = 10;
+    private static final int POSUN_ROZMERU_Y = 36;
     private static Rozmer2D rozmer;
     /**
      * Vrati Rozmer2D Displeja
@@ -34,6 +38,10 @@ public class Displej {
      */
     public Displej(String ikonaOkna, String nazovOkna, Vektor2D rozmerOkna) {
         Displej.rozmer = new Rozmer2D(Vektor2D.zero(), rozmerOkna);
+        Vektor2D velkost = new Vektor2D(POSUN_ROZMERU_X, POSUN_ROZMERU_Y);
+        velkost = velkost.sucet(Displej.rozmer.getVelkost());
+        Rozmer2D skutocnyRozmer2D = new Rozmer2D(Displej.rozmer.getPozicia(), velkost);
+
         this.okno = new JFrame();
 
         // hlavicka okna
@@ -45,7 +53,7 @@ public class Displej {
         }
 
         // nastavenie suradnic a velkost okna
-        this.okno.setBounds(0, 0, rozmerOkna.getIntX() + 13, rozmerOkna.getIntY() + 36);
+        this.okno.setBounds(skutocnyRozmer2D.vytvorRectangle());
         this.okno.setResizable(false);
         
         // ukoncenie Hry pri zatvoreni okna
@@ -69,14 +77,16 @@ public class Displej {
         this.hrac = new JPanel();
 
         Vektor2D pozicia = h.getTelo().getPozicia();
-        double polomer = h.getTelo().getPolomer();
-        pozicia = new Vektor2D(pozicia.getX() - polomer, pozicia.getY() - polomer);
+        double priemer = h.getTelo().getPolomer() * 2;
 
-        int velkost = (int)Math.round(polomer) * 2;
-        this.hrac.setBounds(pozicia.getIntX(), pozicia.getIntY(), velkost, velkost);
+        Rozmer2D rozmerHraca = new Rozmer2D(pozicia, new Vektor2D(priemer, priemer));
+
+        this.hrac.setBounds(rozmerHraca.vytvorRectangle());
         this.hrac.setBackground(Color.red);
         this.aktivnaMiestnost.setLayer(this.hrac, 3);
         this.aktivnaMiestnost.add(this.hrac);
+
+        // ziska spatnu referenciu
         this.hrac = (JPanel)this.aktivnaMiestnost.getComponentAt(pozicia.getIntX(), pozicia.getIntY());
     }
     /**
@@ -98,18 +108,20 @@ public class Displej {
         this.aktivnaMiestnost = this.vytvorGrafikuMiestnosti(m);
         this.aktivnaMiestnost.setLayout(null);
         this.okno.setContentPane(this.aktivnaMiestnost);
+        
+        if (this.hrac != null) {
+            this.aktivnaMiestnost.setLayer(this.hrac, 3);
+            this.aktivnaMiestnost.add(this.hrac);
+        }
     }
-    
+        
     private JLayeredPane vytvorGrafikuMiestnosti(Miestnost m) {
         JLayeredPane miestnost = new JLayeredPane();
-        miestnost.setBounds(Displej.getRozmer().vytvorRectangle());
+        miestnost.setBounds(Displej.rozmer.vytvorRectangle());
 
-        for (int i = 0; i < 4; i++) {
-            Rozmer2D[] rozmery = m.getStena(Smer.toSmer(i)).getRozmery();
-
-            for (int ii = 0; ii < rozmery.length; ii++) {
-                // planovana zmena
-                JPanel stena = this.vytvorGrafikuMuru(rozmery[ii], (ii + 1) * (i + 1) * 10);
+        for (Rozmer2D[] rozmery : m.getRozmery2D()) {
+            for (Rozmer2D r : rozmery) {
+                JPanel stena = this.vytvorGrafikuMuru(r);
                 miestnost.setLayer(stena, 1);
                 miestnost.add(stena);
             }
@@ -118,17 +130,26 @@ public class Displej {
         JPanel podlaha = new JPanel();
         podlaha.setBackground(Color.GREEN); // docasne
         podlaha.setBounds(Displej.getRozmer().vytvorRectangle());
+        podlaha.setLayout(new BorderLayout());
+
+        JLabel label = new JLabel();
+        label.setText(m.getIndex() + "");
+        label.setForeground(Color.BLUE);
+        label.setLayout(new BorderLayout());;
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        label.setVerticalAlignment(SwingConstants.CENTER);    
+        label.setFont(new Font("Arial", 1, 100));    
+        podlaha.add(label, BorderLayout.CENTER);
+
         miestnost.setLayer(podlaha, 0);
         miestnost.add(podlaha);
 
         return miestnost;
     }
-
-    private JPanel vytvorGrafikuMuru(Rozmer2D rozmer, int i) {
+    private JPanel vytvorGrafikuMuru(Rozmer2D rozmer) {
         JPanel stena = new JPanel();
         stena.setBounds(rozmer.vytvorRectangle());
-        Color c = new Color(i, i, i); // docasne
-        stena.setBackground(c);
+        stena.setBackground(Color.BLACK);
         return stena;
     }
 }

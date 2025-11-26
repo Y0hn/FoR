@@ -2,9 +2,11 @@
  * Reprezentacia postavy vo svete
  * 
  * @author y0hn 
- * @version v0.3
+ * @version v0.4
  */
 public class Telo {
+    private static final double POMER_POSUN = 0.1; 
+
     private int maxZdravie;
     private int zdravie;
     private Vektor2D pozicia;
@@ -65,15 +67,15 @@ public class Telo {
     public void nastavPoziciu(Vektor2D novaPozicia) {
         this.pozicia = novaPozicia;
     }
-
     
     /**
-     * Obnovi Telo
+     * Obnovi Telo -> posunie ho v smere ak je to mozne, pripadne prejde do dalsej miestnosti
      */
     public void tik(Miestnost aktMiest) {
         Vektor2D v = this.ziskajPoziciuDalsiehoPohybu();
-        if (jePohybMozny(v, aktMiest)) {
-            nastavPoziciu(v);
+        if (this.jePohybMozny(v, aktMiest)) {
+            this.nastavPoziciu(v);
+            this.skusIstDoInejMiestnosti(aktMiest);
         }
     }
     /**
@@ -118,7 +120,7 @@ public class Telo {
             mozne &= !this.dotykaSa(t);
         }
         for (int i = 0; mozne && i < okraje.length; i++) {
-            for (Rozmer2D[] rozmerySteny : aktivMiestnost.getRozmery2D()){
+            for (Rozmer2D[] rozmerySteny : aktivMiestnost.getRozmery2D()) {
                 for (Rozmer2D rozmer : rozmerySteny) {
                     mozne &= !rozmer.jePoziciaVnutri(okraje[i]);
                 }
@@ -126,5 +128,49 @@ public class Telo {
         }
 
         return mozne;
+    }
+    private void skusIstDoInejMiestnosti(Miestnost aktualnaMiestnost) {
+        Vektor2D stred = this.pozicia.sucet(new Vektor2D(this.polomerTela, this.polomerTela));
+        
+        if (!Displej.getRozmer().jePoziciaVnutri(stred)) {
+            Vektor2D posun = Displej.getRozmer().getVelkost();
+            posun = posun.skalarnySucin(-0.5);
+
+            stred = stred.sucet(posun);
+            stred = stred.normalizuj();
+
+            double x = (int)Math.round(stred.getX());
+            double y = (int)Math.round(stred.getY());
+            Smer s = Smer.toSmer(new Vektor2D(x, y));
+
+            this.invertujPolohu();
+            aktualnaMiestnost.prejdiDoDalsejMiestnosti(s);
+        }
+    }
+    /**
+     * Zmeni pohohu po vstupe do Miestnosti aby bola na opacnej strane ako pri vstupe
+     */
+    private void invertujPolohu() {
+        Vektor2D stredMiestnost = Displej.getRozmer().getVelkost().skalarnySucin(0.5);
+        Vektor2D velkostTela = new Vektor2D(this.polomerTela, this.polomerTela);
+        
+        // presunie sa do stredu Tela
+        Vektor2D stredovaPozicia = this.pozicia.sucet(velkostTela);
+        // posunie [0,0] do stredu miestnosti
+        stredovaPozicia = stredovaPozicia.rozdiel(stredMiestnost);
+        
+        Vektor2D posun = velkostTela.skalarnySucin(POMER_POSUN);
+        posun = stredovaPozicia.normalizuj().zaokruhli().sucin(posun);
+
+        Vektor2D invert = stredovaPozicia.normalizuj().zaokruhli().absolutny().skalarnySucin(-1);
+        invert = invert.sucet(invert.absolutny().vymeneny());
+
+        // invertuje poziciu v Miestnosti
+        Vektor2D novaPozicia = stredovaPozicia.sucin(invert);
+        novaPozicia = novaPozicia.sucet(posun);
+        novaPozicia = novaPozicia.rozdiel(velkostTela);
+        novaPozicia = novaPozicia.sucet(stredMiestnost);
+
+        this.pozicia = novaPozicia;
     }
 }

@@ -4,7 +4,7 @@ import java.awt.Dimension;
  * 2D Vektor2D (reprezentuje bod v Kartezianskej suradnicovej sustave so suradnicami [x,y])
  * 
  * @author y0hn
- * @version v0.7
+ * @version v0.8
  */
 public class Vektor2D {
     private double x;
@@ -144,6 +144,15 @@ public class Vektor2D {
         return new Vektor2D(noveX, noveY);
     }
     /**
+     * vytvori celo-ciselny (zakokruhleny) Vektor2D z povodneho
+     * @return Vektor2D s dlzkou 1
+     */
+    public Vektor2D zaokruhli() {
+        double noveX = Math.round(this.x);
+        double noveY = Math.round(this.y);
+        return new Vektor2D(noveX, noveY);
+    }
+    /**
      * Vrati rozmer Vektor2Da ako Dimenziu
      * @return Dimenzia (x,y)
      */
@@ -154,10 +163,26 @@ public class Vektor2D {
      * Navratova pre zjednodusenie citatelnosti vo vypise
      * @return [x,y]
      */
+    @Override
     public String toString() {
         return String.format("[%d,%d]", this.getIntX(), this.getIntY());
     }
+    /**
+     * Kontroluje ci sa Vektory2D zhoduju
+     * @param o by mal byt Druhy Vektor2D
+     */
+    @Override
+    public boolean equals(Object o) {
+        boolean eq = o instanceof Vektor2D;
 
+        if (eq) {
+            Vektor2D v = (Vektor2D)o;
+            eq &= v.x == this.x;
+            eq &= v.y == this.y;
+        }
+
+        return eq;
+    }
 
     /**
      * Vytvori nuloy Vektor2D 

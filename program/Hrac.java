@@ -1,7 +1,5 @@
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-
 import javax.swing.JFrame;
 
 /**
@@ -33,6 +31,10 @@ public class Hrac {
     public Telo getTelo() {
         return this.telo;
     }
+    /**
+     * Obnovi vlastnosti Hraca
+     * @param aktMiest sucastna Miestnost
+     */
     public void tik(Miestnost aktMiest) {
         Vektor2D v = this.ziskajPohybovyVektor2D();
         this.telo.setPohybVektor(v);
@@ -48,7 +50,7 @@ public class Hrac {
                 Hrac.this.vstup(e.getKeyCode());
             }
             public void keyReleased(KeyEvent e) {
-                koniecVstupu(e.getKeyCode());
+                Hrac.this.koniecVstupu(e.getKeyCode());
             }
         };
         okno.addKeyListener(ka);
@@ -61,6 +63,11 @@ public class Hrac {
     private void koniecVstupu(int vstup) {
         this.keySetSmer(vstup, false);
     }
+    /**
+     * Mapuje dolezite klavesy na klavesnici ako vstupy pre ovladanie 
+     * @param klaves Index klavesu
+     * @param pridaj PRAVDA ak bol staceny, NEPRAVDA ak pusteny
+     */
     private void keySetSmer(int klaves, boolean pridaj) {   
         int index = -1;
 
@@ -100,7 +107,7 @@ public class Hrac {
 
         for (int i = 0; i < this.pohybVSmere.length; i++) {
             if (this.pohybVSmere[i]) {
-                v= v.sucet(Smer.values()[i].getVektor2D());
+                v = v.sucet(Smer.values()[i].getVektor2D());
             }
         }
         
