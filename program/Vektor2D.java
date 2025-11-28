@@ -4,9 +4,15 @@ import java.awt.Dimension;
  * 2D Vektor2D (reprezentuje bod v Kartezianskej suradnicovej sustave so suradnicami [x,y])
  * 
  * @author y0hn
- * @version v0.8
+ * @version v0.9
  */
 public class Vektor2D {
+    public static final Vektor2D ZERO = new Vektor2D(0, 0);
+    public static final Vektor2D HORE = new Vektor2D(0, 1);
+    public static final Vektor2D DOLE = new Vektor2D(0, -1);
+    public static final Vektor2D PRAVO = new Vektor2D(1, 0);
+    public static final Vektor2D LAVO = new Vektor2D(-1, 0);
+
     private double x;
     private double y;
     /**
@@ -137,7 +143,7 @@ public class Vektor2D {
     public Vektor2D normalizuj() {
         double dlzka = this.dlzka();
         if (dlzka == 0) {
-            return Vektor2D.zero();
+            return Vektor2D.ZERO;
         }
         double noveX = this.x / dlzka;
         double noveY = this.y / dlzka;
@@ -182,41 +188,5 @@ public class Vektor2D {
         }
 
         return eq;
-    }
-
-    /**
-     * Vytvori nuloy Vektor2D 
-     * @return Vektor2D v bode (0,0)
-     */
-    public static Vektor2D zero() {
-        return new Vektor2D(0, 0);
-    }
-    /**
-     * Vytvori nuloy Vektor2D 
-     * @return Vektor2D v bode (0,1)
-     */
-    public static Vektor2D hore() {
-        return new Vektor2D(0, 1);
-    }
-    /**
-     * Vytvori nuloy Vektor2D 
-     * @return Vektor2D v bode (0,-1)
-     */
-    public static Vektor2D dole() {
-        return new Vektor2D(0, -1);
-    }
-    /**
-     * Vytvori nuloy Vektor2D 
-     * @return Vektor2D v bode (-1,0)
-     */
-    public static Vektor2D lavo() {
-        return new Vektor2D(-1, 0);
-    }
-    /**
-     * Vytvori nuloy Vektor2D 
-     * @return Vektor2D v bode (1,0)
-     */
-    public static Vektor2D pravo() {
-        return new Vektor2D(1, 0);
     }
 }

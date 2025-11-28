@@ -39,13 +39,13 @@ public enum Smer {
         Smer s = null;
         
         // kvoli pozicii [0,0] v lavom hornom rohu su HORE a DOLE zamenene
-        if (smernik.equals(Vektor2D.dole())) {
+        if (smernik.equals(Vektor2D.DOLE)) {
             s = Smer.HORE;
-        } else if (smernik.equals(Vektor2D.hore())) {
+        } else if (smernik.equals(Vektor2D.HORE)) {
             s = Smer.DOLE;
-        } else if (smernik.equals(Vektor2D.pravo())) {
+        } else if (smernik.equals(Vektor2D.PRAVO)) {
             s = Smer.PRAVO;
-        } else if (smernik.equals(Vektor2D.lavo())) {
+        } else if (smernik.equals(Vektor2D.LAVO)) {
             s = Smer.LAVO;
         }
         return s;

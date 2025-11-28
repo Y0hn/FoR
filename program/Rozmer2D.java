@@ -4,9 +4,11 @@ import java.awt.Rectangle;
  * Obsahuje informacie o tvare (obdlzniku) v 2D priestore
  * 
  * @author y0hn
- * @version 0.1
+ * @version v0.2
  */
 public class Rozmer2D {
+    public static final Rozmer2D ZERO = new Rozmer2D(0, 0, 0, 0);
+
     private double poziciaX;
     private double poziciaY;
     private double velkostX;
@@ -139,13 +141,5 @@ public class Rozmer2D {
         kolizuje &= pozicia.getY() < this.poziciaY + this.velkostY; // kolizia z hora
 
         return kolizuje;
-    }
-    
-    /**
-     * Vrati nulovy rozmer
-     * @return Rozmer2D[0,0][0,0]
-     */
-    public static Rozmer2D zero() {
-        return new Rozmer2D(0, 0, 0, 0);
     }
 }

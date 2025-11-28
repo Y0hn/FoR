@@ -37,7 +37,7 @@ public class Displej {
      * @param rozmer Vektor2D velkosti okna
      */
     public Displej(String ikonaOkna, String nazovOkna, Vektor2D rozmerOkna) {
-        Displej.rozmer = new Rozmer2D(Vektor2D.zero(), rozmerOkna);
+        Displej.rozmer = new Rozmer2D(Vektor2D.ZERO, rozmerOkna);
         Vektor2D velkost = new Vektor2D(POSUN_ROZMERU_X, POSUN_ROZMERU_Y);
         velkost = velkost.sucet(Displej.rozmer.getVelkost());
         Rozmer2D skutocnyRozmer2D = new Rozmer2D(Displej.rozmer.getPozicia(), velkost);

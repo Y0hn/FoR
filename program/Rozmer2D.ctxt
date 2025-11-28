@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Rozmer2D
-comment0.text=\r\n\ Obsahuje\ informacie\ o\ tvare\ (obdlzniku)\ v\ 2D\ priestore\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ 0.1\r\n
+comment0.text=\r\n\ Obsahuje\ informacie\ o\ tvare\ (obdlzniku)\ v\ 2D\ priestore\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.2\r\n
 comment1.params=x\ y\ vX\ vY
 comment1.target=Rozmer2D(double,\ double,\ double,\ double)
 comment1.text=\r\n\ Vytvori\ Rozmer2D\ popisujuci\ tvar\r\n\ @param\ x\ vzdialenost\ laveho\ rohu\ od\ 0\r\n\ @param\ y\ vzdialenost\ horneho\ rohu\ od\ 0\r\n\ @param\ vX\ sirka\r\n\ @param\ vY\ vyska\r\n
@@ -19,9 +19,6 @@ comment13.text=\r\n\ Vytvori\ obdlznik\ nesuci\ rovnake\ rozmery\ ako\ popisovan
 comment14.params=pozicia
 comment14.target=boolean\ jePoziciaVnutri(Vektor2D)
 comment14.text=\r\n\ Zisti\ ci\ sa\ pozicia\ nachadza\ v\ rozmere\r\n\ @param\ pozicia\ Vektor2D\r\n\ @return\ PRANDA\ ak\ je\ cast\ Tela\ v\ stene\r\n
-comment15.params=
-comment15.target=Rozmer2D\ zero()
-comment15.text=\r\n\ Vrati\ nulovy\ rozmer\r\n\ @return\ Rozmer2D[0,0][0,0]\r\n
 comment2.params=pozicia\ velkost
 comment2.target=Rozmer2D(Vektor2D,\ Vektor2D)
 comment2.text=\r\n\ Vytvori\ Rozmer2D\ popisujuci\ tvar\ z\ Vektorov\r\n\ @param\ pozicia\ [x,y]\r\n\ @param\ velkost\ [sirka,vyska]\r\n
@@ -46,4 +43,4 @@ comment8.text=\r\n\ Vrati\ dimenziu\ zaokruhlenu\ nadol\r\n\ @return\ (int)\ poz
 comment9.params=
 comment9.target=int\ getIntVeX()
 comment9.text=\r\n\ Vrati\ dimenziu\ zaokruhlenu\ nadol\r\n\ @return\ (int)\ sirka\ X\r\n
-numComments=16
+numComments=15

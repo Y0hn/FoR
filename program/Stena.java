@@ -27,7 +27,7 @@ public class Stena {
         Vektor2D rozmer = Displej.getRozmer().getVelkost();
 
         // absolutna poloha ku lavemu-hronemu rohu okna
-        Vektor2D polohaMuru = Vektor2D.zero();
+        Vektor2D polohaMuru = Vektor2D.ZERO;
         if (smer == Smer.PRAVO) {
             polohaMuru = new Vektor2D(rozmer.getX() - SIRKA_STENY, 0);
         } else if (smer == Smer.DOLE) {
@@ -57,7 +57,7 @@ public class Stena {
 
         for (int i = 0; i < 3; i++) {
             // absolutna poloha ku lavemu-hronemu rohu okna
-            Vektor2D polohaMuru = Vektor2D.zero();
+            Vektor2D polohaMuru = Vektor2D.ZERO;
             if (smer == Smer.PRAVO) {
                 polohaMuru = new Vektor2D(rozmer.getX() - SIRKA_STENY, 0);
             } else if (smer == Smer.DOLE) {
@@ -70,7 +70,7 @@ public class Stena {
             posun = new Vektor2D(Math.abs(posun.getX()), Math.abs(posun.getY()));
             polohaMuru = polohaMuru.sucet(posun.sucin(dlzkaMuru));
             // posun dveri
-            Vektor2D posunDveri = Vektor2D.zero();
+            Vektor2D posunDveri = Vektor2D.ZERO;
             if (i == 1) {
                 if (smer == Smer.PRAVO) {
                     posunDveri = new Vektor2D(SIRKA_STENY * pomerPosunuDveri, 0);
@@ -133,7 +133,7 @@ public class Stena {
          */
         public Rozmer2D getRozmer() {
             if (!this.aktivny) {
-                return Rozmer2D.zero();
+                return Rozmer2D.ZERO;
             }
             return this.rozmer;
         }
