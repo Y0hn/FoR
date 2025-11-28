@@ -135,7 +135,7 @@ public class Displej {
         JLabel label = new JLabel();
         label.setText(m.getIndex() + "");
         label.setForeground(Color.BLUE);
-        label.setLayout(new BorderLayout());;
+        label.setLayout(new BorderLayout());
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setVerticalAlignment(SwingConstants.CENTER);    
         label.setFont(new Font("Arial", 1, 100));    

@@ -17,7 +17,7 @@ public class Hrac {
      */
     public Hrac() {
         Vektor2D pozicia = Displej.getRozmer().getVelkost().skalarnySucin(0.5);
-        this.telo = new Telo(10, pozicia, Vektor2D.ZERO, 5, 20);
+        this.telo = new Telo(10, pozicia, Vektor2D.ZERO, 10, 20);
 
         this.pohybVSmere = new boolean[Smer.values().length];
         for (int i = 0; i < this.pohybVSmere.length; i++) {

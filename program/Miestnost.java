@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Miestnost {
     
     private int indexMiestnosti;
-    private int[] susedneMiestnosti;
+    private Miestnost[] susedneMiestnosti;
     private Stena[] steny;
     private ArrayList<Telo> nepriatelia;
     /**
@@ -20,13 +20,9 @@ public class Miestnost {
         this.indexMiestnosti = index;
         int pocetStien = Smer.values().length;
 
-        this.susedneMiestnosti = new int[pocetStien];
         this.steny = new Stena[pocetStien];
         this.nepriatelia = new ArrayList<Telo>();
-
-        for (int i = 0; i < pocetStien; i++) {
-            this.susedneMiestnosti[i] = -1;
-        }
+        this.susedneMiestnosti = new Miestnost[pocetStien];
     }
     /**
      * Vrati cislo Miestnosti v poradi
@@ -66,7 +62,7 @@ public class Miestnost {
      * @param sused index susednej Miestnosti
      * @param smer smer v ktorom lezi v zavislosti od stredu sucasnej miestnosti
      */
-    public void setSused(int sused, Smer smer) {
+    public void setSused(Miestnost sused, Smer smer) {
         this.susedneMiestnosti[smer.ordinal()] = sused;
     }
     /**
@@ -74,10 +70,10 @@ public class Miestnost {
      */
     public void vytvorSteny() {
         for (int i = 0; i < 4; i++) {
-            if (this.susedneMiestnosti[i] < 0) {
-                this.steny[i] = new Stena(Smer.values()[i]);
+            if (this.susedneMiestnosti[i] != null) {
+                this.steny[i] = new Stena(Smer.values()[i], true);
             } else {
-                this.steny[i] = new Stena(Smer.values()[i], this.susedneMiestnosti[i]);
+                this.steny[i] = new Stena(Smer.values()[i], false);
             }
         }
     }
@@ -89,7 +85,7 @@ public class Miestnost {
         for (Stena stena : this.steny) {
             stena.nastavDvere(otvorene);
         }
-        Hra.nastavAktivnuMiestnost(this.indexMiestnosti);
+        Hra.nastavAktivnuMiestnost(this);
     }
     /**
      * Obnovi vsetky objekty v miestnosti

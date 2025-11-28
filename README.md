@@ -9,5 +9,6 @@
   <p>Ukážka 2</p>
   <img alt="ukazka2" src="">
 </div> <hr> <div align="center">
-  <img width="400" height="150" alt="logo" src="https://github.com/user-attachments/assets/ea090ff4-d71c-4036-99bd-c1221ecedfea">
+<div align="center">
+  <img width="60%" alt="FRI logo" src="https://www.uniza.sk/images/fotogaleria/loga/fakulty/FRI/FRI_H_S_sk_f.png">
 </div>

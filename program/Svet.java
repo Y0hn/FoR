@@ -40,8 +40,8 @@ public class Svet {
                 smer = this.vygenerujNahodnySmer(random);
             } while (smer == Smer.HORE || poslednySmer != null && smer.jeOpacny(poslednySmer));
 
-            miestnost.setSused(this.miestnosti.size() + 1, smer);
-            sused.setSused(this.miestnosti.size(), smer.opacny());
+            miestnost.setSused(sused, smer);
+            sused.setSused(miestnost, smer.opacny());
 
             this.miestnosti.add(miestnost);
             miestnost = sused;
@@ -52,14 +52,22 @@ public class Svet {
 
         // Prida mozne prechody medzi miestnostami
         for (int i = 0; i < smery.size(); i++) {
+            // ak sme sa posunuli dole
             if (smery.get(i) == Smer.DOLE) {
-                for (int predosly = i - 1, dalsi = i + 2; 0 < predosly && dalsi < smery.size(); predosly--, dalsi++) {
-                    if (smery.get(predosly).jeOpacny(smery.get(dalsi)) // kontroluje ci su protichodne miestnosti pod sebou
-                            || 
-                        smery.get(dalsi) == Smer.DOLE && smery.get(predosly).jeOpacny(smery.get(dalsi - 1))) {   // alebo spodna pokracuje dole
-
-                        this.miestnosti.get(predosly).setSused(dalsi, Smer.DOLE);    // do vyssej miestnosti prida cestu dole
-                        this.miestnosti.get(dalsi).setSused(predosly, Smer.HORE);    // do nizsej miestnosti prida cestu hore
+                int hornyPosun = -1;
+                int dolnyPosun = 2;
+                
+                // ak sme v ramci pola
+                while (0 <= i + hornyPosun && i + dolnyPosun < smery.size()) {
+                    // ak su rozmery protichodne
+                    if (smery.get(i + hornyPosun).jeOpacny(smery.get(i + dolnyPosun - 1))) {
+                        Miestnost horna = this.miestnosti.get(i + hornyPosun);
+                        Miestnost dolna = this.miestnosti.get(i + dolnyPosun);
+                        horna.setSused(dolna, Smer.DOLE);
+                        dolna.setSused(horna, Smer.HORE);
+                        hornyPosun--;
+                        dolnyPosun++;
+                        System.out.println(horna.getIndex() + " <-> " + dolna.getIndex());
                     } else {
                         break;
                     }

@@ -22,8 +22,8 @@ public class Hra {
      * Nastavi aktivnu Miestnost podla jej indexu vo Svete
      * @param indexAktivnejMiestnosti index novej aktivnej Miestnosti
      */
-    public static void nastavAktivnuMiestnost(int indexAktivnejMiestnosti) {
-        instancia.nacitajMiestnost(indexAktivnejMiestnosti);
+    public static void nastavAktivnuMiestnost(Miestnost miestnost) {
+        instancia.nacitajMiestnost(miestnost);
     }
 
     private Svet svet;
@@ -33,7 +33,7 @@ public class Hra {
 
     private Hra() {
         this.displej = new Displej("", "FrontRooms", Hra.ROZMER_HRY);
-        this.svet = new Svet(10);
+        this.svet = new Svet(50);
         this.hrac = new Hrac();
         
         this.nacitajMiestnost(this.svet.getZaciatocnaMiestnost());
