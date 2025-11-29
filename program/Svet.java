@@ -67,7 +67,6 @@ public class Svet {
                         dolna.setSused(horna, Smer.HORE);
                         hornyPosun--;
                         dolnyPosun++;
-                        System.out.println(horna.getIndex() + " <-> " + dolna.getIndex());
                     } else {
                         break;
                     }

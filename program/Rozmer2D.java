@@ -5,7 +5,7 @@ import java.awt.Rectangle;
  * Obsahuje informacie o tvare (obdlzniku) v 2D priestore
  * 
  * @author y0hn
- * @version v0.3
+ * @version v0.4
  */
 public class Rozmer2D {
     public static final Rozmer2D ZERO = new Rozmer2D(0, 0, 0, 0);
@@ -124,8 +124,8 @@ public class Rozmer2D {
      * @return stred (x,y)
      */
     public Vektor2D ziskajStred() {
-        Vektor2D stred = new Vektor2D(poziciaX, poziciaY);
-        stred = stred.sucet(new Vektor2D(velkostX, velkostY).skalarnySucin(0.5));
+        Vektor2D stred = new Vektor2D(this.poziciaX, this.poziciaY);
+        stred = stred.sucet(new Vektor2D(this.velkostX, this.velkostY).skalarnySucin(0.5));
         return stred;
     }
 
@@ -170,9 +170,6 @@ public class Rozmer2D {
         for (int i = 0; i < 4 && vnutri; i++) {
             Vektor2D posun;            
             switch (i) {
-                default: // 0
-                    posun = Vektor2D.ZERO;
-                    break;
                 case 1:
                     posun = Vektor2D.PRAVO.sucin(rozmer.getVelkost());
                     break;
@@ -181,6 +178,9 @@ public class Rozmer2D {
                     break;
                 case 3:
                     posun = rozmer.getVelkost();
+                    break;
+                default: // 0
+                    posun = Vektor2D.ZERO;
                     break;
             }
             vnutri &= this.jePoziciaVnutri(rozmer.getPozicia().sucet(posun));
@@ -197,9 +197,6 @@ public class Rozmer2D {
         for (int i = 0; i < 4 && !vnutri; i++) {
             Vektor2D posun;            
             switch (i) {
-                default: // 0
-                    posun = Vektor2D.ZERO;
-                    break;
                 case 1:
                     posun = Vektor2D.PRAVO.sucin(rozmer.getVelkost());
                     break;
@@ -208,6 +205,9 @@ public class Rozmer2D {
                     break;
                 case 3:
                     posun = rozmer.getVelkost();
+                    break;
+                default: // 0
+                    posun = Vektor2D.ZERO;
                     break;
             }
             vnutri |= this.jePoziciaVnutri(rozmer.getPozicia().sucet(posun));
@@ -222,6 +222,10 @@ public class Rozmer2D {
     public void pricitajVektor2DKPozicii(Vektor2D posun) {
         this.poziciaX += posun.getX();
         this.poziciaY += posun.getY();
+    }
+
+    public Rozmer2D kopia() {
+        return new Rozmer2D(this.poziciaX, this.poziciaY, this.velkostX, this.velkostY);
     }
 
     @Override

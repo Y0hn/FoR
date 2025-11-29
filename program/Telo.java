@@ -2,10 +2,11 @@
  * Reprezentacia postavy vo svete
  * 
  * @author y0hn 
- * @version v0.5
+ * @version v0.6
  */
 public class Telo {
-    private static final double POMER_POSUN = 0.1; 
+    private static final double POMER_VELKOSTI_POSUN_PRI_ZMENE_MIESTNOSTI = 0.05; 
+    private static final double PRESNOST_POSUNU_K_STENE = 1;
 
     private int maxZdravie;
     private int zdravie;
@@ -56,10 +57,16 @@ public class Telo {
      * Obnovi Telo -> posunie ho v smere ak je to mozne, pripadne prejde do dalsej miestnosti
      */
     public void tik(Miestnost aktMiest) {
-        Vektor2D v = this.ziskajPoziciuDalsiehoPohybu();
-        if (this.jePohybMozny(v, aktMiest)) {
-            this.rozmer.setPozicia(v);
-            this.skusIstDoInejMiestnosti(aktMiest);
+        Vektor2D buducaPozicia = this.ziskajPoziciuDalsiehoPohybu();
+        Rozmer2D buduciRozmer = new Rozmer2D(buducaPozicia, this.rozmer.getVelkost());
+
+        if (this.jePohybMedziStenami(buduciRozmer, aktMiest)) {
+            if (this.jePohybMimoNepriatelov(buduciRozmer, aktMiest)) {
+                this.rozmer.setPozicia(buducaPozicia);
+                this.skusIstDoInejMiestnosti(aktMiest);
+            }
+        } else {
+            this.prijdiKuStene(aktMiest);
         }
     }
     
@@ -81,19 +88,38 @@ public class Telo {
         pohyb = this.rozmer.getPozicia().sucet(pohyb);
         return pohyb;
     }
-    private boolean jePohybMozny(Vektor2D novaPozicia, Miestnost aktivMiestnost) {
-        Rozmer2D novyRozmer = new Rozmer2D(novaPozicia, this.rozmer.getVelkost());
+    private boolean jePohybMedziStenami(Rozmer2D novyRozmer, Miestnost aktivMiestnost) {
         boolean mozne = true;
-        for (Telo t : aktivMiestnost.getNepriatelia()) {
-            mozne &= !t.getRozmer().jeRozmerCiastocneVnutri(novyRozmer);
-        }        
         for (Rozmer2D[] rozmerySteny : aktivMiestnost.getRozmery2D()) {
-            for (Rozmer2D rozmer : rozmerySteny) {
-                mozne &= !rozmer.jeRozmerCiastocneVnutri(novyRozmer);
+            for (Rozmer2D rozmerMuru : rozmerySteny) {
+                mozne &= !rozmerMuru.jeRozmerCiastocneVnutri(novyRozmer);
+                if (!mozne) {
+                    break;
+                }
+            }
+            if (!mozne) {
+                break;
             }
         }
-        return mozne;
+        return mozne;        
     }
+    private boolean jePohybMimoNepriatelov(Rozmer2D novyRozmer, Miestnost aktivMiestnost) {
+        boolean mozne = true;
+        for (Telo t : aktivMiestnost.getNepriatelia()) {
+            mozne &= t.getRozmer().jeRozmerCiastocneVnutri(novyRozmer);
+        }
+        return mozne;        
+    }
+    private void prijdiKuStene(Miestnost aktivMiestnost) {
+        Rozmer2D kopia = this.rozmer.kopia();
+        kopia.setPozicia(kopia.getPozicia().zaokruhli());
+        while (this.jePohybMedziStenami(kopia, aktivMiestnost)) {
+            this.rozmer = kopia.kopia();
+            Vektor2D pohyb = this.smerovyVektor2D.skalarnySucin(PRESNOST_POSUNU_K_STENE);
+            kopia.setPozicia(kopia.getPozicia().sucet(pohyb));
+        }
+    }
+
     private void skusIstDoInejMiestnosti(Miestnost aktualnaMiestnost) {
         Vektor2D stred = this.rozmer.ziskajStred();
         
@@ -122,7 +148,7 @@ public class Telo {
         // posunie [0,0] do stredu miestnosti
         stredovaPozicia = stredovaPozicia.rozdiel(stredMiestnost);
         
-        Vektor2D posun = this.rozmer.getVelkost().skalarnySucin(POMER_POSUN * 0.5);
+        Vektor2D posun = this.rozmer.getVelkost().skalarnySucin(POMER_VELKOSTI_POSUN_PRI_ZMENE_MIESTNOSTI);
         posun = stredovaPozicia.normalizuj().zaokruhli().sucin(posun);
 
         Vektor2D invert = stredovaPozicia.normalizuj().zaokruhli().absolutny().skalarnySucin(-1);

@@ -21,7 +21,7 @@ public class Strela {
         this.grafika = grafika;
     }
     public void tik(Miestnost aktivMiestnost) {
-        this.rozmer.pricitajVektor2DKPozicii(posun);
+        this.rozmer.pricitajVektor2DKPozicii(this.posun);
         this.grafika.setLocation(this.rozmer.vytvorPointPozicie());
 
         if (this.jeKolizia(aktivMiestnost) || this.zasah(aktivMiestnost)) {
@@ -30,11 +30,10 @@ public class Strela {
     }
 
     private boolean jeKolizia(Miestnost aM) {
-        boolean kontorla = true;
-        
+        boolean kontorla = true;        
         for (Rozmer2D[] rozmerySteny : aM.getRozmery2D()) {
-            for (Rozmer2D rozmer : rozmerySteny) {
-                kontorla &= !rozmer.jeRozmerCiastocneVnutri(rozmer);
+            for (Rozmer2D rozmerMuru : rozmerySteny) {
+                kontorla &= !rozmerMuru.jeRozmerCiastocneVnutri(this.rozmer);
             }
         }
         return kontorla;
@@ -43,7 +42,7 @@ public class Strela {
         boolean zasah = false;
 
         for (Telo n : aM.getNepriatelia()) {
-            if (n.getRozmer().jeRozmerCiastocneVnutri(rozmer)) {
+            if (n.getRozmer().jeRozmerCiastocneVnutri(this.rozmer)) {
                 // tu sposobi poskodenie
                 zasah = true;
             }

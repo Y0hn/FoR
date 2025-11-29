@@ -74,7 +74,6 @@ public class Displej {
         this.okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         this.okno.setVisible(true);
-        //System.out.println(rozmer.getPozicia() + " + " + rozmer.getVelkost());
     }
     /**
      * Vrati Hlavne Zobrazovacie Okno
