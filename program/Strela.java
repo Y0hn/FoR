@@ -23,23 +23,35 @@ public class Strela {
     public void tik(Miestnost aktivMiestnost) {
         this.rozmer.pricitajVektor2DKPozicii(posun);
         this.grafika.setLocation(this.rozmer.vytvorPointPozicie());
+
+        if (this.jeKolizia(aktivMiestnost) || this.zasah(aktivMiestnost)) {
+            this.znic();
+        }
     }
 
-    private boolean kontrolaKolizii(Miestnost aM) {
+    private boolean jeKolizia(Miestnost aM) {
         boolean kontorla = true;
         
         for (Rozmer2D[] rozmerySteny : aM.getRozmery2D()) {
             for (Rozmer2D rozmer : rozmerySteny) {
-                kontorla &= !rozmer.jeRozmerVnutri(rozmer);
+                kontorla &= !rozmer.jeRozmerCiastocneVnutri(rozmer);
             }
         }
-
         return kontorla;
     }
-    private boolean zasah(Telo teloNeriatela) {
-        boolean zasah;
+    private boolean zasah(Miestnost aM) {
+        boolean zasah = false;
 
-        this.grafika.getParent().remove(grafika);
-        return true;
+        for (Telo n : aM.getNepriatelia()) {
+            if (n.getRozmer().jeRozmerCiastocneVnutri(rozmer)) {
+                // tu sposobi poskodenie
+                zasah = true;
+            }
+        }
+        return zasah;
+    }
+    private void znic() {
+        this.grafika.getParent().remove(this.grafika);
+        Hra.odstranStrelu(this);
     }
 }

@@ -10,6 +10,10 @@ import javax.swing.JPanel;
  * @version v0.3
  */
 public class Hrac {
+    private static final int MAX_ZIVOT_HRACA = 10;
+    private static final Vektor2D VELKOST_HRACA = new Vektor2D(50, 50);
+    private static final double RYCHLOST_HRACA = 10;
+
     private Telo telo;
     private boolean[] pohybVSmere;
     private JPanel grafika;
@@ -19,8 +23,8 @@ public class Hrac {
      * @param svet Svet v ktorom hrac zacina hru 
      */
     public Hrac() {
-        Vektor2D pozicia = Displej.getRozmer().getVelkost().skalarnySucin(0.5);
-        this.telo = new Telo(10, pozicia, Vektor2D.ZERO, 10, 20);
+        Rozmer2D rozmer = new Rozmer2D(Displej.getStred(), VELKOST_HRACA);
+        this.telo = new Telo(MAX_ZIVOT_HRACA, rozmer, Smer.DOLE.getVektor2D(), RYCHLOST_HRACA);
 
         this.pohybVSmere = new boolean[Smer.values().length];
         for (int i = 0; i < this.pohybVSmere.length; i++) {
@@ -49,7 +53,7 @@ public class Hrac {
 
         // Vykresli zmenu
         if (this.grafika != null && !v.equals(Vektor2D.ZERO)) {
-            this.grafika.setLocation(this.telo.getPozicia().vyvtorPoint());
+            this.grafika.setLocation(this.telo.getRozmer().getPozicia().vyvtorPoint());
         }
     }
     /**

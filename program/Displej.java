@@ -13,7 +13,7 @@ import java.awt.Font;
  * Zobrazovac okna Hry
  * 
  * @author y0hn
- * @version v0.8
+ * @version v0.9
  */
 public class Displej {
     private static final int POSUN_ROZMERU_X = 10;
@@ -31,7 +31,14 @@ public class Displej {
      * @return [0,0]x[vX,vY]
      */
     public static Rozmer2D getRozmer() {
-        return rozmer;
+        return Displej.rozmer;
+    }
+    /**
+     * Vrati Vektor2D stred Displeja
+     * @return [vX/2, vY/2]
+     */
+    public static Vektor2D getStred() {
+        return Displej.rozmer.getVelkost().skalarnySucin(0.5);
     }
 
     private JFrame okno;
@@ -80,21 +87,16 @@ public class Displej {
      * Vytvori Hracovi objekt na Displeji 
      * @param h objekt Hraca
      */
-    public void nastavHraca(Hrac hrac) {
+    public void nastavHraca(Hrac objektHraca) {
         this.hrac = new JPanel();
 
-        Vektor2D pozicia = hrac.getTelo().getPozicia();
-        double priemer = hrac.getTelo().getPolomer() * 2;
-
-        Rozmer2D rozmerHraca = new Rozmer2D(pozicia, new Vektor2D(priemer, priemer));
-
-        this.hrac.setBounds(rozmerHraca.vytvorRectangle());
+        this.hrac.setBounds(objektHraca.getTelo().getRozmer().vytvorRectangle());
         this.hrac.setBackground(Color.red);
         this.aktivnaMiestnost.setLayer(this.hrac, VRSTVA_HRAC);
         this.aktivnaMiestnost.add(this.hrac);
 
         // ziska spatnu referenciu
-        hrac.setGrafika(this.hrac);
+        objektHraca.setGrafika(this.hrac);
     }
 
     /**

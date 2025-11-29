@@ -2,17 +2,17 @@
  * Reprezentacia postavy vo svete
  * 
  * @author y0hn 
- * @version v0.4
+ * @version v0.5
  */
 public class Telo {
     private static final double POMER_POSUN = 0.1; 
 
     private int maxZdravie;
     private int zdravie;
-    private Vektor2D pozicia;
+    private Rozmer2D rozmer;
     private Vektor2D smerovyVektor2D;
     private double rychlostPohybu;
-    private double polomerTela;
+    
     /**
      * Vytvori Telo pre postavu 
      * @param maxZdravie pociatocny pocet zravia
@@ -21,13 +21,12 @@ public class Telo {
      * @param rychlost ovplyvnuje rychlost pohybu tela
      * @param polomerTela polomer kruhoveho tela
      */
-    public Telo(int maxZdravie, Vektor2D pozicia, Vektor2D smer, double rychlost, double polomerTela) {
+    public Telo(int maxZdravie, Rozmer2D rozmer, Vektor2D smer, double rychlost) {
         this.maxZdravie = maxZdravie;
         this.zdravie = maxZdravie;
-        this.pozicia = pozicia;
+        this.rozmer = rozmer;
         this.smerovyVektor2D = smer;
         this.rychlostPohybu = rychlost;
-        this.polomerTela = polomerTela;
     }
     /**
      * Vytvori zjednodusene Telo 
@@ -36,25 +35,13 @@ public class Telo {
      * @param rychlost ovplyvnuje rychlost pohybu tela
      * @param polomerTela polomer kruhoveho tela
      */
-    public Telo(Vektor2D pozicia, Vektor2D smer, double rychlost, double polomerTela) {
-        this.pozicia = pozicia;
+    public Telo(Rozmer2D rozmer, Vektor2D smer, double rychlost) {
+        this.rozmer = rozmer;
         this.smerovyVektor2D = smer;
         this.rychlostPohybu = rychlost;
-        this.polomerTela = polomerTela;
     }
-    /**
-     * Ziska poziciu Tela
-     * @return absolutna pozicia Tela v Miestnosti
-     */
-    public Vektor2D getPozicia() {
-        return this.pozicia;
-    }
-    /**
-     * Ziska polomer Tela
-     * @return polomer kruhoveho Tela
-     */
-    public double getPolomer() {
-        return this.polomerTela;
+    public Rozmer2D getRozmer() {
+        return this.rozmer;
     }
     /**
      * Natstavi smerovy Vektor2D Tela
@@ -64,9 +51,6 @@ public class Telo {
     public void setPohybVektor(Vektor2D smerovyVektor) {
         this.smerovyVektor2D = smerovyVektor.normalizuj();
     }
-    public void nastavPoziciu(Vektor2D novaPozicia) {
-        this.pozicia = novaPozicia;
-    }
     
     /**
      * Obnovi Telo -> posunie ho v smere ak je to mozne, pripadne prejde do dalsej miestnosti
@@ -74,18 +58,11 @@ public class Telo {
     public void tik(Miestnost aktMiest) {
         Vektor2D v = this.ziskajPoziciuDalsiehoPohybu();
         if (this.jePohybMozny(v, aktMiest)) {
-            this.nastavPoziciu(v);
+            this.rozmer.setPozicia(v);
             this.skusIstDoInejMiestnosti(aktMiest);
         }
     }
-    /**
-     * Zisti ci sa Tela dotykaju
-     * @param druheTelo referencia na merany objekt
-     * @return PRAVDA ak je ich vzajomna vzdialenost mensia ako sucet ich polomerov
-     */
-    public boolean dotykaSa(Telo druheTelo) {
-        return this.pozicia.vzdialenostOd(druheTelo.pozicia) < this.polomerTela + druheTelo.polomerTela;
-    }
+    
     /**
      * Zmeni zdravie Tela
      * @param uber velkost zmeny zdravia (+/-)
@@ -101,36 +78,24 @@ public class Telo {
 
     private Vektor2D ziskajPoziciuDalsiehoPohybu() {        
         Vektor2D pohyb = this.smerovyVektor2D.skalarnySucin(this.rychlostPohybu);
-        pohyb = this.pozicia.sucet(pohyb);
+        pohyb = this.rozmer.getPozicia().sucet(pohyb);
         return pohyb;
     }
     private boolean jePohybMozny(Vektor2D novaPozicia, Miestnost aktivMiestnost) {
+        Rozmer2D novyRozmer = new Rozmer2D(novaPozicia, this.rozmer.getVelkost());
         boolean mozne = true;
-        novaPozicia = novaPozicia.sucet(new Vektor2D(this.polomerTela, this.polomerTela));
-
-        Vektor2D[] okraje = new Vektor2D[4];
-        for (int i = 0; i < okraje.length; i++) {
-            double x = (i < 2) ? this.polomerTela : -this.polomerTela;
-            double y = (i % 2 == 0) ? this.polomerTela : -this.polomerTela;
-            Vektor2D okraj = new Vektor2D(x, y);            
-            okraje[i] = novaPozicia.sucet(okraj);
-        }
-
         for (Telo t : aktivMiestnost.getNepriatelia()) {
-            mozne &= !this.dotykaSa(t);
-        }
-        for (int i = 0; mozne && i < okraje.length; i++) {
-            for (Rozmer2D[] rozmerySteny : aktivMiestnost.getRozmery2D()) {
-                for (Rozmer2D rozmer : rozmerySteny) {
-                    mozne &= !rozmer.jePoziciaVnutri(okraje[i]);
-                }
+            mozne &= !t.getRozmer().jeRozmerCiastocneVnutri(novyRozmer);
+        }        
+        for (Rozmer2D[] rozmerySteny : aktivMiestnost.getRozmery2D()) {
+            for (Rozmer2D rozmer : rozmerySteny) {
+                mozne &= !rozmer.jeRozmerCiastocneVnutri(novyRozmer);
             }
         }
-
         return mozne;
     }
     private void skusIstDoInejMiestnosti(Miestnost aktualnaMiestnost) {
-        Vektor2D stred = this.pozicia.sucet(new Vektor2D(this.polomerTela, this.polomerTela));
+        Vektor2D stred = this.rozmer.ziskajStred();
         
         if (!Displej.getRozmer().jePoziciaVnutri(stred)) {
             Vektor2D posun = Displej.getRozmer().getVelkost();
@@ -152,14 +117,12 @@ public class Telo {
      */
     private void invertujPolohu() {
         Vektor2D stredMiestnost = Displej.getRozmer().getVelkost().skalarnySucin(0.5);
-        Vektor2D velkostTela = new Vektor2D(this.polomerTela, this.polomerTela);
-        
-        // presunie sa do stredu Tela
-        Vektor2D stredovaPozicia = this.pozicia.sucet(velkostTela);
+        Vektor2D stredovaPozicia = this.rozmer.ziskajStred();
+
         // posunie [0,0] do stredu miestnosti
         stredovaPozicia = stredovaPozicia.rozdiel(stredMiestnost);
         
-        Vektor2D posun = velkostTela.skalarnySucin(POMER_POSUN);
+        Vektor2D posun = this.rozmer.getVelkost().skalarnySucin(POMER_POSUN * 0.5);
         posun = stredovaPozicia.normalizuj().zaokruhli().sucin(posun);
 
         Vektor2D invert = stredovaPozicia.normalizuj().zaokruhli().absolutny().skalarnySucin(-1);
@@ -168,9 +131,9 @@ public class Telo {
         // invertuje poziciu v Miestnosti
         Vektor2D novaPozicia = stredovaPozicia.sucin(invert);
         novaPozicia = novaPozicia.sucet(posun);
-        novaPozicia = novaPozicia.rozdiel(velkostTela);
+        novaPozicia = novaPozicia.rozdiel(this.rozmer.getVelkost().skalarnySucin(0.5));
         novaPozicia = novaPozicia.sucet(stredMiestnost);
 
-        this.pozicia = novaPozicia;
+        this.rozmer.setPozicia(novaPozicia);
     }
 }

@@ -67,4 +67,7 @@ public class Hra {
         Miestnost m = this.svet.getMiestnost(indexMiestnosti);
         this.nacitajMiestnost(m);
     }
+    public static void odstranStrelu(Strela strela) {
+        
+    }
 }

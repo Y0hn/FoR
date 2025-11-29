@@ -111,6 +111,23 @@ public class Rozmer2D {
     public Vektor2D getVelkost() {
         return new Vektor2D(this.velkostX, this.velkostY);
     }
+    /**
+     * Vyvori Vektor2D s vekostou zodpovedajucou pozicii tvaru
+     * @return [x,y]
+     */
+    public void setPozicia(Vektor2D pozicia) {
+        this.poziciaX = pozicia.getX();
+        this.poziciaY = pozicia.getY();
+    }
+    /**
+     * Vytvori stred pre Rozmer tvaru
+     * @return stred (x,y)
+     */
+    public Vektor2D ziskajStred() {
+        Vektor2D stred = new Vektor2D(poziciaX, poziciaY);
+        stred = stred.sucet(new Vektor2D(velkostX, velkostY).skalarnySucin(0.5));
+        return stred;
+    }
 
     /**
      * Vytvori obdlznik nesuci rovnake rozmery ako popisovany tvar
@@ -150,10 +167,8 @@ public class Rozmer2D {
      */
     public boolean jeRozmerVnutri(Rozmer2D rozmer) {
         boolean vnutri = true;
-
         for (int i = 0; i < 4 && vnutri; i++) {
-            Vektor2D posun;
-            
+            Vektor2D posun;            
             switch (i) {
                 default: // 0
                     posun = Vektor2D.ZERO;
@@ -168,8 +183,34 @@ public class Rozmer2D {
                     posun = rozmer.getVelkost();
                     break;
             }
-
             vnutri &= this.jePoziciaVnutri(rozmer.getPozicia().sucet(posun));
+        }
+        return vnutri;
+    }
+    /**
+     * Zisti ci sa cast Rozmeru2D nachadza v Rozmere
+     * @param pozicia Vektor2D
+     * @return PRAVDA ak je cast Rozmer2D v Rozmere2D
+     */
+    public boolean jeRozmerCiastocneVnutri(Rozmer2D rozmer) {
+        boolean vnutri = false;
+        for (int i = 0; i < 4 && !vnutri; i++) {
+            Vektor2D posun;            
+            switch (i) {
+                default: // 0
+                    posun = Vektor2D.ZERO;
+                    break;
+                case 1:
+                    posun = Vektor2D.PRAVO.sucin(rozmer.getVelkost());
+                    break;
+                case 2:
+                    posun = Vektor2D.HORE.sucin(rozmer.getVelkost());
+                    break;
+                case 3:
+                    posun = rozmer.getVelkost();
+                    break;
+            }
+            vnutri |= this.jePoziciaVnutri(rozmer.getPozicia().sucet(posun));
         }
         return vnutri;
     }
@@ -181,5 +222,22 @@ public class Rozmer2D {
     public void pricitajVektor2DKPozicii(Vektor2D posun) {
         this.poziciaX += posun.getX();
         this.poziciaY += posun.getY();
+    }
+
+    @Override
+    public String toString() {
+        return String.format("(%.0f, %.0f)[%.0f, %.0f]", this.poziciaX, this.poziciaY, this.velkostX, this.velkostY);
+    }
+    @Override
+    public boolean equals(Object object) {
+        boolean rovnake = object instanceof Rozmer2D;
+        if (rovnake) {
+            Rozmer2D rozmer = (Rozmer2D)object;
+            rovnake &= this.poziciaX == rozmer.poziciaX;
+            rovnake &= this.poziciaY == rozmer.poziciaY;
+            rovnake &= this.velkostX == rozmer.velkostX;
+            rovnake &= this.velkostY == rozmer.velkostY;
+        }
+        return rovnake;
     }
 }
