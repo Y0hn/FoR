@@ -1,10 +1,11 @@
+import java.awt.Point;
 import java.awt.Rectangle;
 
 /**
  * Obsahuje informacie o tvare (obdlzniku) v 2D priestore
  * 
  * @author y0hn
- * @version v0.2
+ * @version v0.3
  */
 public class Rozmer2D {
     public static final Rozmer2D ZERO = new Rozmer2D(0, 0, 0, 0);
@@ -118,6 +119,15 @@ public class Rozmer2D {
     public Rectangle vytvorRectangle() {
         return new Rectangle(this.getIntPoX(), this.getIntPoY(), this.getIntVeX(), this.getIntVeY());
     }
+
+    /**
+     * Vytvori bod na rovnakej pozicii ako tvar
+     * @return
+     */
+    public Point vytvorPointPozicie() {
+        return new Point(this.getIntPoX(), this.getIntPoY());
+    }
+
     /**
      * Zisti ci sa pozicia nachadza v rozmere
      * @param pozicia Vektor2D
@@ -125,21 +135,51 @@ public class Rozmer2D {
      */
     public boolean jePoziciaVnutri(Vektor2D pozicia) {
         boolean kolizuje = true;
-        /*
-        Vektor2D polohaMuru = this.rozmer.getPozicia();
-        Vektor2D velkostMuru = this.rozmer.getVelkost();
-        Vektor2D polohaTela = telo.getPozicia();
-        double polomer = telo.getPolomer();
-        // ak hrac prechadza dverami prepne aktivnu Miestnost
-        if (!this.aktivny && 0 <= this.vedieDoMiestnosti) {
-            Hra.nastavAktivnuMiestnost(this.vedieDoMiestnosti);
-        }
-        */       
+        
         kolizuje &= pozicia.getX() > this.poziciaX; // kolizia z lava
         kolizuje &= pozicia.getX() < this.poziciaX + this.velkostX; // kolizia z prava
         kolizuje &= pozicia.getY() > this.poziciaY; // kolizia z hora
         kolizuje &= pozicia.getY() < this.poziciaY + this.velkostY; // kolizia z hora
 
         return kolizuje;
+    }
+    /**
+     * Zisti ci sa cely Rozmer2D nachadza v rozmere
+     * @param pozicia Vektor2D
+     * @return PRAVDA ak je cely Rozmer2D v Rozmere2D
+     */
+    public boolean jeRozmerVnutri(Rozmer2D rozmer) {
+        boolean vnutri = true;
+
+        for (int i = 0; i < 4 && vnutri; i++) {
+            Vektor2D posun;
+            
+            switch (i) {
+                default: // 0
+                    posun = Vektor2D.ZERO;
+                    break;
+                case 1:
+                    posun = Vektor2D.PRAVO.sucin(rozmer.getVelkost());
+                    break;
+                case 2:
+                    posun = Vektor2D.HORE.sucin(rozmer.getVelkost());
+                    break;
+                case 3:
+                    posun = rozmer.getVelkost();
+                    break;
+            }
+
+            vnutri &= this.jePoziciaVnutri(rozmer.getPozicia().sucet(posun));
+        }
+        return vnutri;
+    }
+
+    /**
+     * Zmeni poziciu Rozmeru
+     * @param posun Vektor2D
+     */
+    public void pricitajVektor2DKPozicii(Vektor2D posun) {
+        this.poziciaX += posun.getX();
+        this.poziciaY += posun.getY();
     }
 }

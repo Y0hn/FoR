@@ -46,7 +46,6 @@ public class Hra {
      */
     public void tik() {
         this.hrac.tik(this.aktivnaMiestnost);
-        this.displej.obnovHraca(this.hrac);
         this.aktivnaMiestnost.tik();
     }
     

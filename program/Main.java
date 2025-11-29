@@ -6,7 +6,7 @@
  */
 public class Main {
     /**
-     * Sluzi na spustenie Hry 
+     * Sluzi na spustenie Hry a
      */
     public static void main(String[] args) {
         Hra hra = Hra.start();

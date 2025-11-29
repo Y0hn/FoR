@@ -1,6 +1,7 @@
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * Drzi informacie o hracovi vo Svete
@@ -11,6 +12,8 @@ import javax.swing.JFrame;
 public class Hrac {
     private Telo telo;
     private boolean[] pohybVSmere;
+    private JPanel grafika;
+
     /**
      * Vytvori hraca vo svete
      * @param svet Svet v ktorom hrac zacina hru 
@@ -31,6 +34,10 @@ public class Hrac {
     public Telo getTelo() {
         return this.telo;
     }
+    public void setGrafika(JPanel grafika) {
+        this.grafika = grafika;
+    }
+
     /**
      * Obnovi vlastnosti Hraca
      * @param aktMiest sucastna Miestnost
@@ -39,6 +46,11 @@ public class Hrac {
         Vektor2D v = this.ziskajPohybovyVektor2D();
         this.telo.setPohybVektor(v);
         this.telo.tik(aktMiest);
+
+        // Vykresli zmenu
+        if (this.grafika != null && !v.equals(Vektor2D.ZERO)) {
+            this.grafika.setLocation(this.telo.getPozicia().vyvtorPoint());
+        }
     }
     /**
      * Nastavi odposluch na klavesove vstupy k oknu

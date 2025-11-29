@@ -13,11 +13,18 @@ import java.awt.Font;
  * Zobrazovac okna Hry
  * 
  * @author y0hn
- * @version v0.7
+ * @version v0.8
  */
 public class Displej {
     private static final int POSUN_ROZMERU_X = 10;
     private static final int POSUN_ROZMERU_Y = 36;
+
+    private static final int VRSTVA_PODLAHA = 0;
+    private static final int VRSTVA_STENA = 1;
+
+    private static final int VRSTVA_STRELA = 2;
+    private static final int VRSTVA_HRAC = 3;
+
     private static Rozmer2D rozmer;
     /**
      * Vrati Rozmer2D Displeja
@@ -73,30 +80,23 @@ public class Displej {
      * Vytvori Hracovi objekt na Displeji 
      * @param h objekt Hraca
      */
-    public void nastavHraca(Hrac h) {
+    public void nastavHraca(Hrac hrac) {
         this.hrac = new JPanel();
 
-        Vektor2D pozicia = h.getTelo().getPozicia();
-        double priemer = h.getTelo().getPolomer() * 2;
+        Vektor2D pozicia = hrac.getTelo().getPozicia();
+        double priemer = hrac.getTelo().getPolomer() * 2;
 
         Rozmer2D rozmerHraca = new Rozmer2D(pozicia, new Vektor2D(priemer, priemer));
 
         this.hrac.setBounds(rozmerHraca.vytvorRectangle());
         this.hrac.setBackground(Color.red);
-        this.aktivnaMiestnost.setLayer(this.hrac, 3);
+        this.aktivnaMiestnost.setLayer(this.hrac, VRSTVA_HRAC);
         this.aktivnaMiestnost.add(this.hrac);
 
         // ziska spatnu referenciu
-        this.hrac = (JPanel)this.aktivnaMiestnost.getComponentAt(pozicia.getIntX(), pozicia.getIntY());
+        hrac.setGrafika(this.hrac);
     }
-    /**
-     * Obnovi Hracovi poziciu na Displeji 
-     * @param h objekt Hraca
-     */
-    public void obnovHraca(Hrac h) {
-        Vektor2D pozicia = h.getTelo().getPozicia();
-        this.hrac.setLocation(pozicia.getIntX(), pozicia.getIntY());
-    }
+
     /**
      * Zmeni Miestnost vykreslovanu na Displej
      * @param m nova aktivna Mistnost
@@ -110,7 +110,7 @@ public class Displej {
         this.okno.setContentPane(this.aktivnaMiestnost);
         
         if (this.hrac != null) {
-            this.aktivnaMiestnost.setLayer(this.hrac, 3);
+            this.aktivnaMiestnost.setLayer(this.hrac, VRSTVA_HRAC);
             this.aktivnaMiestnost.add(this.hrac);
         }
     }
@@ -122,7 +122,7 @@ public class Displej {
         for (Rozmer2D[] rozmery : m.getRozmery2D()) {
             for (Rozmer2D r : rozmery) {
                 JPanel stena = this.vytvorGrafikuMuru(r);
-                miestnost.setLayer(stena, 1);
+                miestnost.setLayer(stena, VRSTVA_STENA);
                 miestnost.add(stena);
             }
         }
@@ -131,6 +131,8 @@ public class Displej {
         podlaha.setBackground(Color.GREEN); // docasne
         podlaha.setBounds(Displej.getRozmer().vytvorRectangle());
         podlaha.setLayout(new BorderLayout());
+        miestnost.setLayer(podlaha, VRSTVA_PODLAHA);
+        miestnost.add(podlaha);
 
         JLabel label = new JLabel();
         label.setText(m.getIndex() + "");
@@ -141,8 +143,6 @@ public class Displej {
         label.setFont(new Font("Arial", 1, 100));    
         podlaha.add(label, BorderLayout.CENTER);
 
-        miestnost.setLayer(podlaha, 0);
-        miestnost.add(podlaha);
 
         return miestnost;
     }

@@ -1,10 +1,11 @@
 import java.awt.Dimension;
+import java.awt.Point;
 
 /**
  * 2D Vektor2D (reprezentuje bod v Kartezianskej suradnicovej sustave so suradnicami [x,y])
  * 
  * @author y0hn
- * @version v0.9
+ * @version v0.10
  */
 public class Vektor2D {
     public static final Vektor2D ZERO = new Vektor2D(0, 0);
@@ -159,12 +160,20 @@ public class Vektor2D {
         return new Vektor2D(noveX, noveY);
     }
     /**
-     * Vrati rozmer Vektor2Da ako Dimenziu
+     * Vrati rozmer Vektora2D ako Dimenziu
      * @return Dimenzia (x,y)
      */
-    public Dimension toDimension() {
+    public Dimension vytvorDimension() {
         return new Dimension(this.getIntX(), this.getIntY());
     }
+    /**
+     * Vrati bod so suradnicami Vektora2D
+     * @return Bod (x,y)
+     */
+    public Point vyvtorPoint() {
+        return new Point(this.getIntX(), this.getIntY());
+    }
+
     /**
      * Navratova pre zjednodusenie citatelnosti vo vypise
      * @return [x,y]
