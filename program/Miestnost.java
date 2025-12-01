@@ -13,6 +13,7 @@ public class Miestnost {
     private Miestnost[] susedneMiestnosti;
     private Stena[] steny;
     private ArrayList<Telo> nepriatelia;
+    private boolean dvereOtvorene;
     /**
      * Konstruktor triedy Miestnost
      */
@@ -23,6 +24,7 @@ public class Miestnost {
         this.steny = new Stena[pocetStien];
         this.nepriatelia = new ArrayList<Telo>();
         this.susedneMiestnosti = new Miestnost[pocetStien];
+        this.dvereOtvorene = false;
     }
     /**
      * Vrati cislo Miestnosti v poradi
@@ -86,15 +88,20 @@ public class Miestnost {
             stena.nastavDvere(otvorene);
         }
         Hra.nastavAktivnuMiestnost(this);
+        this.dvereOtvorene = true;
     }
     /**
      * Obnovi vsetky objekty v miestnosti
      */
     public void tik() {
-        if (this.nepriatelia.size() == 0) {
+        if (!this.dvereOtvorene && this.nepriatelia.size() == 0) {
             this.nastavVsetkyDvere(true);
         }
     }
+    /**
+     * Presunie hraca do Miestnosti
+     * @param smer od stredu sucastnej Miestnosti
+     */
     public void prejdiDoDalsejMiestnosti(Smer smer) {
         int index = smer.ordinal();
         Hra.nastavAktivnuMiestnost(this.susedneMiestnosti[index]);

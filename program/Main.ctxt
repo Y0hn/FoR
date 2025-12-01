@@ -3,5 +3,5 @@ comment0.target=Main
 comment0.text=\r\n\ Write\ a\ description\ of\ class\ Main\ here.\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ 0.1\r\n
 comment1.params=args
 comment1.target=void\ main(java.lang.String[])
-comment1.text=\r\n\ Sluzi\ na\ spustenie\ Hry\ a\r\n
+comment1.text=\r\n\ Sluzi\ na\ spustenie\ Hry\ a\ Cosovaca\r\n
 numComments=2

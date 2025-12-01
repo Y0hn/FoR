@@ -10,6 +10,7 @@ import java.util.Random;
 public class Svet {
     private int indexPociatocnejMiestnosti;
     private ArrayList<Miestnost> miestnosti;
+    
     /**
      * Konstruktor Sveta
      * Vytvori hreny Svet so stanovenym poctom miestnosti

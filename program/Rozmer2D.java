@@ -131,7 +131,7 @@ public class Rozmer2D {
 
     /**
      * Vytvori obdlznik nesuci rovnake rozmery ako popisovany tvar
-     * @return [x,y]x[vX,vY]
+     * @return (x,y)x[vX,vY]
      */
     public Rectangle vytvorRectangle() {
         return new Rectangle(this.getIntPoX(), this.getIntPoY(), this.getIntVeX(), this.getIntVeY());
@@ -224,14 +224,27 @@ public class Rozmer2D {
         this.poziciaY += posun.getY();
     }
 
+    /**
+     * Vytvori kopiu Rozmeru
+     * @return novy Rozmer s rovnakymi atributmi
+     */
     public Rozmer2D kopia() {
         return new Rozmer2D(this.poziciaX, this.poziciaY, this.velkostX, this.velkostY);
     }
 
+    /**
+     * Navratova pre zjednodusenie citatelnosti vo vypise
+     * @return (x,y)[xV,yV]
+     */
     @Override
     public String toString() {
         return String.format("(%.0f, %.0f)[%.0f, %.0f]", this.poziciaX, this.poziciaY, this.velkostX, this.velkostY);
     }
+    /**
+     * Kontroluje ci sa Rozmery2D zhoduju
+     * @param o by mal byt Druhy Rozmery2D
+     * @return PRAVDA ak sa hodnoty ich atributov zhoduju
+     */
     @Override
     public boolean equals(Object object) {
         boolean rovnake = object instanceof Rozmer2D;

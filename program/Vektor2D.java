@@ -176,15 +176,16 @@ public class Vektor2D {
 
     /**
      * Navratova pre zjednodusenie citatelnosti vo vypise
-     * @return [x,y]
+     * @return (x,y)
      */
     @Override
     public String toString() {
-        return String.format("[%d,%d]", this.getIntX(), this.getIntY());
+        return String.format("(%.0f,%.0f)", this.x, this.y);
     }
     /**
      * Kontroluje ci sa Vektory2D zhoduju
      * @param o by mal byt Druhy Vektor2D
+     * @return PRAVDA ak sa hodnoty ich atributov zhoduju
      */
     @Override
     public boolean equals(Object o) {

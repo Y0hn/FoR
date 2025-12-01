@@ -22,7 +22,7 @@ public class Displej {
     private static final int VRSTVA_PODLAHA = 0;
     private static final int VRSTVA_STENA = 1;
 
-    private static final int VRSTVA_STRELA = 2;
+    public static final int VRSTVA_STRELA = 2;
     private static final int VRSTVA_HRAC = 3;
 
     private static Rozmer2D rozmer;
@@ -97,7 +97,6 @@ public class Displej {
         // ziska spatnu referenciu
         objektHraca.setGrafika(this.hrac);
     }
-
     /**
      * Zmeni Miestnost vykreslovanu na Displej
      * @param m nova aktivna Mistnost

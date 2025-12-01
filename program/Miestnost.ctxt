@@ -6,6 +6,7 @@ comment1.target=Miestnost(int)
 comment1.text=\r\n\ Konstruktor\ triedy\ Miestnost\r\n
 comment10.params=smer
 comment10.target=void\ prejdiDoDalsejMiestnosti(Smer)
+comment10.text=\r\n\ Presunie\ hraca\ do\ Miestnosti\r\n\ @param\ smer\ od\ stredu\ sucastnej\ Miestnosti\r\n
 comment2.params=
 comment2.target=int\ getIndex()
 comment2.text=\r\n\ Vrati\ cislo\ Miestnosti\ v\ poradi\r\n\ @return\ ciselna\ referencia\ na\ Miestnost\ vo\ Svete\ \r\n

@@ -59,15 +59,4 @@ public class Hra {
             this.aktivnaMiestnost = m;
         }
     }
-    /**
-     * Zmeni aktivnu Miestnost zobrazovanu na Displeji
-     * @param indexMiestnosti vo Svete
-     */
-    private void nacitajMiestnost(int indexMiestnosti) {
-        Miestnost m = this.svet.getMiestnost(indexMiestnosti);
-        this.nacitajMiestnost(m);
-    }
-    public static void odstranStrelu(Strela strela) {
-        
-    }
 }

@@ -18,15 +18,10 @@ public class Stena {
     private Mur[] mury;
 
     /**
-     * Vytvori celistvu Stenu pre Miestnost v Smere
-     * @param smer od stredu miestnosti
-     * @param rozmer urcuje velkost displaya
-     */
-    /**
-     * Vytvori clenitu Stenu medzi Miestnost a jej Suseda.
+     * Vytvori Stenu medzi Miestnost a jej Suseda.
      * Stena obsahuje dvere, ktore vedu do susednej Miestnosti
      * @param smer od stredu sucastnej Miestnosti
-     * @param sused susedna Miestnost
+     * @param dvere PRAVDA ak ma Stena obsahovat dvere
      */
     public Stena(Smer smer, boolean dvere) {
         this.mury = dvere ? this.vygenerujMurSDveramiVSmere(smer) : this.vygenerujMurBezDveriVSmere(smer);

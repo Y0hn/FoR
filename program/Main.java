@@ -1,15 +1,15 @@
 /**
- * Write a description of class Main here.
+ * Hlavna spustacia trieda
  * 
  * @author y0hn
- * @version 0.1
+ * @version 0.2
  */
 public class Main {
     /**
-     * Sluzi na spustenie Hry a
+     * Sluzi na spustenie Hry a Cosovaca
      */
     public static void main(String[] args) {
         Hra hra = Hra.start();
-        Casovac casovac = new Casovac(hra);
+        new Casovac(hra);
     }
 }
