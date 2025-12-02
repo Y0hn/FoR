@@ -2,7 +2,7 @@
  * Trieda pre zjednotenie vsetkych komponentov Hry
  * 
  * @author y0hn 
- * @version 0.4
+ * @version v0.4
  */
 public class Hra {
     private static final Vektor2D ROZMER_HRY = new Vektor2D(600, 400);
@@ -46,7 +46,7 @@ public class Hra {
      */
     public void tik() {
         this.hrac.tik(this.aktivnaMiestnost);
-        this.aktivnaMiestnost.tik();
+        this.aktivnaMiestnost.tik(this.hrac);
     }
     
     /**

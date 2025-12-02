@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -12,9 +13,9 @@ import javax.swing.JPanel;
  * @version v0.4
  */
 public class Hrac {
-    private static final int MAX_ZIVOT_HRACA = 10;
-    private static final Vektor2D VELKOST_HRACA = new Vektor2D(50, 50);
-    private static final double RYCHLOST_HRACA = 10;
+    private static final int MAX_ZIVOT = 10;
+    private static final Vektor2D VELKOST = new Vektor2D(50, 50);
+    private static final double RYCHLOST = 10;
     private static final double RYCHLOST_STRELBY = 2;
 
     private Telo telo;
@@ -29,8 +30,8 @@ public class Hrac {
      * @param svet Svet v ktorom hrac zacina hru 
      */
     public Hrac() {
-        Rozmer2D rozmer = new Rozmer2D(Displej.getStred(), VELKOST_HRACA);
-        this.telo = new Telo(MAX_ZIVOT_HRACA, rozmer, Smer.DOLE.getVektor2D(), RYCHLOST_HRACA);
+        Rozmer2D rozmer = new Rozmer2D(Displej.getStred(), VELKOST);
+        this.telo = new Telo(MAX_ZIVOT, rozmer, RYCHLOST);
 
         this.pohybVSmere = new boolean[Smer.values().length];
         this.strelbaVSmere = new boolean[Smer.values().length];
@@ -51,6 +52,8 @@ public class Hrac {
      * @param grafika JPanel
      */
     public void setGrafika(JPanel grafika) {
+        grafika.setBounds(this.telo.getRozmer().vytvorRectangle());
+        grafika.setBackground(Color.GREEN);
         this.grafika = grafika;
     }
     /**
@@ -76,8 +79,14 @@ public class Hrac {
     public void tik(Miestnost aktMiest) {
         Vektor2D v = this.ziskajSmerovyVektor2D(this.pohybVSmere);
         this.telo.setPohybVektor(v);
-        this.telo.tik(aktMiest);
 
+        boolean moznyPohyb = this.telo.tik(aktMiest);
+        if (!moznyPohyb && v.equals(Vektor2D.ZERO)) {
+            this.telo.setPozicia(Displej.getStred());
+        } else {
+            
+        }
+        
         Vektor2D s = this.ziskajSmerovyVektor2D(this.strelbaVSmere);
         if (this.buducaStrela <= System.nanoTime()) {
             this.vystrel(s);
@@ -86,7 +95,7 @@ public class Hrac {
 
         // Vykresli zmenu
         if (this.grafika != null && !v.equals(Vektor2D.ZERO)) {
-            this.grafika.setLocation(this.telo.getRozmer().getPozicia().vyvtorPoint());
+            this.grafika.setLocation(this.telo.getRozmer().getPozicia().vytvorPoint());
         }
 
         ArrayList<Strela> tentoTik = new ArrayList<Strela>(this.strely);

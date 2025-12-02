@@ -170,7 +170,7 @@ public class Vektor2D {
      * Vrati bod so suradnicami Vektora2D
      * @return Bod (x,y)
      */
-    public Point vyvtorPoint() {
+    public Point vytvorPoint() {
         return new Point(this.getIntX(), this.getIntY());
     }
 

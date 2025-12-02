@@ -5,7 +5,7 @@ import java.awt.Rectangle;
  * Obsahuje informacie o tvare (obdlzniku) v 2D priestore
  * 
  * @author y0hn
- * @version v0.4
+ * @version v0.5
  */
 public class Rozmer2D {
     public static final Rozmer2D ZERO = new Rozmer2D(0, 0, 0, 0);
@@ -194,23 +194,27 @@ public class Rozmer2D {
      */
     public boolean jeRozmerCiastocneVnutri(Rozmer2D rozmer) {
         boolean vnutri = false;
-        for (int i = 0; i < 4 && !vnutri; i++) {
-            Vektor2D posun;            
-            switch (i) {
-                case 1:
-                    posun = Vektor2D.PRAVO.sucin(rozmer.getVelkost());
-                    break;
-                case 2:
-                    posun = Vektor2D.HORE.sucin(rozmer.getVelkost());
-                    break;
-                case 3:
-                    posun = rozmer.getVelkost();
-                    break;
-                default: // 0
-                    posun = Vektor2D.ZERO;
-                    break;
+        for (double i = 1; i < 3; i++) {            
+            for (int ii = 0; ii < 4 && !vnutri; ii++) {
+                Vektor2D posun;            
+                switch (ii) {
+                    case 1:
+                        posun = Vektor2D.PRAVO.sucin(rozmer.getVelkost());
+                        break;
+                    case 2:
+                        posun = Vektor2D.HORE.sucin(rozmer.getVelkost());
+                        break;
+                    case 3:
+                        posun = rozmer.getVelkost();
+                        break;
+                    default: // 0
+                        posun = Vektor2D.ZERO;
+                        break;
+                }
+                // zkontroluje aj stredy stran a stred
+                posun = posun.skalarnySucin(1 / i);
+                vnutri |= this.jePoziciaVnutri(rozmer.getPozicia().sucet(posun));
             }
-            vnutri |= this.jePoziciaVnutri(rozmer.getPozicia().sucet(posun));
         }
         return vnutri;
     }

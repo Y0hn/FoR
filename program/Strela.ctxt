@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Strela
-comment0.text=\r\n\ Projektil\ vytvoreny\ hracom\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.1\r\n
+comment0.text=\r\n\ Projektil\ vytvoreny\ hracom\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.2\r\n
 comment1.params=pozicia\ smerovyVektor\ hrac
 comment1.target=Strela(Vektor2D,\ Vektor2D,\ Hrac)
 comment1.text=\r\n\ Vytvori\ Strelu\ iducu\ jednym\ smerom\ od\ hraca\r\n\ @param\ pozicia\ pozicia\ stredu\ Strely\r\n\ @param\ smerovyVektor\ smer\ vystrelu\r\n\ @param\ hrac\ je\ referencia\ na\ objekt,\ ktory\ vytvoril\ Strelu\r\n

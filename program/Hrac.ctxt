@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Hrac
-comment0.text=\r\n\ Drzi\ informacie\ o\ hracovi\ vo\ Svete\r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ v0.3\r\n
+comment0.text=\r\n\ Drzi\ informacie\ o\ hracovi\ vo\ Svete\r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ v0.4\r\n
 comment1.params=
 comment1.target=Hrac()
 comment1.text=\r\n\ Vytvori\ hraca\ vo\ svete\r\n\ @param\ svet\ Svet\ v\ ktorom\ hrac\ zacina\ hru\ \r\n

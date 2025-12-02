@@ -24,6 +24,7 @@ public class Displej {
 
     public static final int VRSTVA_STRELA = 2;
     private static final int VRSTVA_HRAC = 3;
+    private static final int VRSTVA_NEPRIATEL = 3;
 
     private static Rozmer2D rozmer;
     /**
@@ -88,13 +89,8 @@ public class Displej {
      */
     public void nastavHraca(Hrac objektHraca) {
         this.hrac = new JPanel();
-
-        this.hrac.setBounds(objektHraca.getTelo().getRozmer().vytvorRectangle());
-        this.hrac.setBackground(Color.red);
         this.aktivnaMiestnost.setLayer(this.hrac, VRSTVA_HRAC);
         this.aktivnaMiestnost.add(this.hrac);
-
-        // ziska spatnu referenciu
         objektHraca.setGrafika(this.hrac);
     }
     /**
@@ -127,8 +123,15 @@ public class Displej {
             }
         }
 
+        for (Nepriatel nepriatel : m.getNepriatelia()) {
+            JPanel grafika = new JPanel();
+            miestnost.setLayer(grafika, VRSTVA_NEPRIATEL);
+            miestnost.add(grafika);
+            nepriatel.setGrafika(grafika);
+        }
+
         JPanel podlaha = new JPanel();
-        podlaha.setBackground(Color.GREEN); // docasne
+        podlaha.setBackground(Color.GRAY); // docasne
         podlaha.setBounds(Displej.getRozmer().vytvorRectangle());
         podlaha.setLayout(new BorderLayout());
         miestnost.setLayer(podlaha, VRSTVA_PODLAHA);
@@ -136,7 +139,7 @@ public class Displej {
 
         JLabel label = new JLabel();
         label.setText(m.getIndex() + "");
-        label.setForeground(Color.BLUE);
+        label.setForeground(Color.DARK_GRAY);
         label.setLayout(new BorderLayout());
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setVerticalAlignment(SwingConstants.CENTER);    

@@ -5,7 +5,7 @@ import java.util.Random;
  * Drzi informacie o celom hernom Svete
  * 
  * @author y0hn 
- * @version v0.4
+ * @version v0.5
  */
 public class Svet {
     private int indexPociatocnejMiestnosti;
@@ -81,6 +81,9 @@ public class Svet {
 
         for (Miestnost m : this.miestnosti) {
             m.vytvorSteny();
+            if (m.getIndex() != this.indexPociatocnejMiestnosti) {
+                m.vytvorNepriatelov();
+            }
         }
     }
 

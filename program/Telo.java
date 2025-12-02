@@ -2,7 +2,7 @@
  * Reprezentacia postavy vo svete
  * 
  * @author y0hn 
- * @version v0.6
+ * @version v0.7
  */
 public class Telo {
     private static final double POMER_VELKOSTI_POSUN_PRI_ZMENE_MIESTNOSTI = 0.05; 
@@ -22,27 +22,20 @@ public class Telo {
      * @param rychlost ovplyvnuje rychlost pohybu tela
      * @param polomerTela polomer kruhoveho tela
      */
-    public Telo(int maxZdravie, Rozmer2D rozmer, Vektor2D smer, double rychlost) {
+    public Telo(int maxZdravie, Rozmer2D rozmer, double rychlost) {
+        this.smerovyVektor2D = Vektor2D.ZERO;
+        this.rychlostPohybu = rychlost;
         this.maxZdravie = maxZdravie;
         this.zdravie = maxZdravie;
         this.rozmer = rozmer;
-        this.smerovyVektor2D = smer;
-        this.rychlostPohybu = rychlost;
     }
-    /**
-     * Vytvori zjednodusene Telo 
-     * @param pozicia polohovy Vektor2D - zacinajuca polaha v miestnosti
-     * @param smer normalizovany smerovy Vektor2D pohybu
-     * @param rychlost ovplyvnuje rychlost pohybu tela
-     * @param polomerTela polomer kruhoveho tela
-     */
-    public Telo(Rozmer2D rozmer, Vektor2D smer, double rychlost) {
-        this.rozmer = rozmer;
-        this.smerovyVektor2D = smer;
-        this.rychlostPohybu = rychlost;
-    }
+    
     public Rozmer2D getRozmer() {
         return this.rozmer;
+    }
+    public void setPozicia(Vektor2D pozicia) {
+        this.rozmer.setPozicia(pozicia);
+        this.smerovyVektor2D = Vektor2D.ZERO;
     }
     /**
      * Natstavi smerovy Vektor2D Tela
@@ -55,19 +48,42 @@ public class Telo {
     
     /**
      * Obnovi Telo -> posunie ho v smere ak je to mozne, pripadne prejde do dalsej miestnosti
+     * @param aktMiest Miestnost v ktorej sa telo nachadza
+     * @return
      */
-    public void tik(Miestnost aktMiest) {
+    public boolean tik(Miestnost aktMiest) {
         Vektor2D buducaPozicia = this.ziskajPoziciuDalsiehoPohybu();
         Rozmer2D buduciRozmer = new Rozmer2D(buducaPozicia, this.rozmer.getVelkost());
+        
+        boolean moznyPohyb = this.jePohybMedziStenami(buduciRozmer, aktMiest);
 
-        if (this.jePohybMedziStenami(buduciRozmer, aktMiest)) {
-            if (this.jePohybMimoNepriatelov(buduciRozmer, aktMiest)) {
+        if (moznyPohyb) {
+            if (this.jePohybMimoNepriatelov(buduciRozmer, aktMiest, null)) {
                 this.rozmer.setPozicia(buducaPozicia);
                 this.skusIstDoInejMiestnosti(aktMiest);
             }
         } else {
             this.prijdiKuStene(aktMiest);
         }
+        return moznyPohyb;
+    }
+
+    public boolean tik(Miestnost aM, Hrac hrac) {
+        Vektor2D buducaPozicia = this.ziskajPoziciuDalsiehoPohybu();
+        Rozmer2D buduciRozmer = new Rozmer2D(buducaPozicia, this.rozmer.getVelkost());
+        
+        boolean koliziaHrac = hrac.getTelo().getRozmer().jeRozmerCiastocneVnutri(buduciRozmer);
+        boolean moznyPohyb = this.jePohybMedziStenami(buduciRozmer, aM);
+
+        if (moznyPohyb && !koliziaHrac) {
+            if (this.jePohybMimoNepriatelov(buduciRozmer, aM, this.rozmer)) {
+                this.rozmer.setPozicia(buducaPozicia);
+                this.skusIstDoInejMiestnosti(aM);
+            }
+        } else if (!koliziaHrac) {
+            this.prijdiKuStene(aM);
+        }
+        return moznyPohyb && !koliziaHrac;
     }
     
     /**
@@ -103,10 +119,12 @@ public class Telo {
         }
         return mozne;        
     }
-    private boolean jePohybMimoNepriatelov(Rozmer2D novyRozmer, Miestnost aktivMiestnost) {
+    private boolean jePohybMimoNepriatelov(Rozmer2D novyRozmer, Miestnost aktivMiestnost, Rozmer2D okrem) {
         boolean mozne = true;
-        for (Telo t : aktivMiestnost.getNepriatelia()) {
-            mozne &= t.getRozmer().jeRozmerCiastocneVnutri(novyRozmer);
+        for (Nepriatel n : aktivMiestnost.getNepriatelia()) {
+            if (okrem == null || n.getTelo().getRozmer() != okrem) {
+                mozne &= !n.getTelo().getRozmer().jeRozmerCiastocneVnutri(novyRozmer);
+            } 
         }
         return mozne;        
     }

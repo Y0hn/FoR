@@ -31,7 +31,7 @@ public class Strela {
 
         this.grafika = new JPanel();
         this.grafika.setBounds(this.rozmer.vytvorRectangle());
-        this.grafika.setBackground(Color.GRAY);
+        this.grafika.setBackground(Color.BLACK);
         
         JLayeredPane vrstvenaPlocha = (JLayeredPane)hrac.getGrafika().getParent();
         vrstvenaPlocha.setLayer(this.grafika, Displej.VRSTVA_STRELA);
@@ -68,8 +68,8 @@ public class Strela {
     }
     private boolean zasah(Miestnost aM) {
         boolean zasah = false;
-        for (Telo n : aM.getNepriatelia()) {
-            if (n.getRozmer().jeRozmerCiastocneVnutri(this.rozmer)) {
+        for (Nepriatel n : aM.getNepriatelia()) {
+            if (n.getTelo().getRozmer().jeRozmerCiastocneVnutri(this.rozmer)) {
                 // tu sposobi poskodenie
                 zasah = true;
             }

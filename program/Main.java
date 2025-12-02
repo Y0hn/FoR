@@ -2,7 +2,7 @@
  * Hlavna spustacia trieda
  * 
  * @author y0hn
- * @version 0.2
+ * @version v0.2
  */
 public class Main {
     /**
