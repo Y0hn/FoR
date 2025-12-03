@@ -94,7 +94,7 @@ public class Miestnost {
             do {
                 Vektor2D pozicia = ziskajNahodnuPoziciuVnutri();
                 rozmer = new Rozmer2D(pozicia, Nepriatel.VELKOST);
-            } while (!this.jePlochaRozmeruMimoStien(rozmer) || !this.jePlochaRozmeruMimoNepriatelov(rozmer));
+            } while (!this.jePlochaRozmeruMimoStien(rozmer) || !this.jePlochaRozmeruMimoNepriatelov(rozmer, null));
             this.nepriatelia.add(new Nepriatel(rozmer.getPozicia()));
         }
     }
@@ -152,12 +152,16 @@ public class Miestnost {
     /**
      * Zkontroluje ci sa prelina Rozmer s Rozmermi Nepriatelov v Miestnosti
      * @param rozmer kontrlovany rozmer
+     * @param okrem ignorovany rozmer Nepiratela
      * @return PRAVDA ak sa neprekryva so ziadnym Nepriatelom
      */
-    public boolean jePlochaRozmeruMimoNepriatelov(Rozmer2D rozmer) {
+    public boolean jePlochaRozmeruMimoNepriatelov(Rozmer2D rozmer, Rozmer2D okrem) {
         boolean volne = true;
         for (Nepriatel n : this.nepriatelia) {
-            volne &= !n.getTelo().getRozmer().jeRozmerCiastocneVnutri(rozmer);
+            Rozmer2D r = n.getTelo().getRozmer();
+            if (okrem == null || okrem != r) {
+                volne &= !r.jeRozmerCiastocneVnutri(rozmer);
+            }
         }
         return volne;        
     }

@@ -11,13 +11,12 @@ import javax.swing.JPanel;
 public class Nepriatel {
     private static final int MAX_POCET_ZIVOTOV = 10; 
     private static final int RYCHLOST = 5; 
-    private static final double RYCHLOST_UTOKU = 0.5;
+    //private static final double RYCHLOST_UTOKU = 0.5;
     public static final Vektor2D VELKOST = new Vektor2D(50, 50);
     
     private Telo telo;
-    private JPanel grafika;
-    private long buduciUtok;
-    private Rozmer2D rozmerCiela;
+    //private long buduciUtok;
+    //private Rozmer2D rozmerCiela;
 
     /**
      * Vytvori nepriatela s Telom
@@ -26,7 +25,7 @@ public class Nepriatel {
     public Nepriatel(Vektor2D pozicia) {
         Rozmer2D rozmer = new Rozmer2D(pozicia, VELKOST);
         this.telo = new Telo(MAX_POCET_ZIVOTOV, rozmer, RYCHLOST);
-        buduciUtok = 0;
+        //this.buduciUtok = 0;
     }
     /**
      * Vrati Telo Nepriatela
@@ -42,7 +41,7 @@ public class Nepriatel {
     public void setGrafika(JPanel grafika) {
         grafika.setBounds(this.telo.getRozmer().vytvorRectangle());
         grafika.setBackground(Color.RED);
-        this.grafika = grafika;
+        this.telo.setGrafika(grafika, Color.RED);
     }
     /**
      * Obnovi spravanie nepiratela
@@ -57,10 +56,5 @@ public class Nepriatel {
         this.telo.setPohybVektor(smer);
         
         this.telo.tik(aM, hrac);
-
-        // Vykresli zmenu
-        if (this.grafika != null /*&& !v.equals(Vektor2D.ZERO)*/) {
-            this.grafika.setLocation(this.telo.getRozmer().getPozicia().vytvorPoint());
-        }
     }
 }

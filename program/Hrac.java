@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -21,7 +20,6 @@ public class Hrac {
     private Telo telo;
     private boolean[] pohybVSmere;
     private boolean[] strelbaVSmere;
-    private JPanel grafika;
     private ArrayList<Strela> strely;
     private long buducaStrela;
 
@@ -48,20 +46,11 @@ public class Hrac {
         return this.telo;
     }
     /**
-     * Nastavi grafiku hraca
-     * @param grafika JPanel
-     */
-    public void setGrafika(JPanel grafika) {
-        grafika.setBounds(this.telo.getRozmer().vytvorRectangle());
-        grafika.setBackground(Color.GREEN);
-        this.grafika = grafika;
-    }
-    /**
      * Ziska grafiku hraca
      * @return JPanel hraca
      */
     public JPanel getGrafika() {
-        return this.grafika;
+        return this.telo.getGrafika();
     }
     /**
      * Odstani Strelu z obnovovacieho listu
@@ -80,22 +69,12 @@ public class Hrac {
         Vektor2D v = this.ziskajSmerovyVektor2D(this.pohybVSmere);
         this.telo.setPohybVektor(v);
 
-        boolean moznyPohyb = this.telo.tik(aktMiest);
-        if (!moznyPohyb && v.equals(Vektor2D.ZERO)) {
-            this.telo.setPozicia(Displej.getStred());
-        } else {
-            
-        }
-        
+        this.telo.tik(aktMiest);
+
         Vektor2D s = this.ziskajSmerovyVektor2D(this.strelbaVSmere);
         if (this.buducaStrela <= System.nanoTime()) {
             this.vystrel(s);
             this.buducaStrela = System.nanoTime() + Math.round(1 / RYCHLOST_STRELBY * Math.pow(10, 9));
-        }
-
-        // Vykresli zmenu
-        if (this.grafika != null && !v.equals(Vektor2D.ZERO)) {
-            this.grafika.setLocation(this.telo.getRozmer().getPozicia().vytvorPoint());
         }
 
         ArrayList<Strela> tentoTik = new ArrayList<Strela>(this.strely);

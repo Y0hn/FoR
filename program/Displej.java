@@ -39,7 +39,7 @@ public class Displej {
      * @return [vX/2, vY/2]
      */
     public static Vektor2D getStred() {
-        return Displej.rozmer.getVelkost().skalarnySucin(0.5);
+        return Displej.rozmer.ziskajStred();
     }
 
     private JFrame okno;
@@ -91,7 +91,7 @@ public class Displej {
         this.hrac = new JPanel();
         this.aktivnaMiestnost.setLayer(this.hrac, VRSTVA_HRAC);
         this.aktivnaMiestnost.add(this.hrac);
-        objektHraca.setGrafika(this.hrac);
+        objektHraca.getTelo().setGrafika(this.hrac, Color.GREEN);
     }
     /**
      * Zmeni Miestnost vykreslovanu na Displej
