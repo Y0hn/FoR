@@ -1,4 +1,6 @@
 import java.awt.Color;
+import java.util.ArrayList;
+
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
@@ -16,6 +18,7 @@ public class Strela {
     private Vektor2D posun;
     private JPanel grafika;
     private Hrac hrac;
+    private int poskodenie;
 
     /**
      * Vytvori Strelu iducu jednym smerom od hraca
@@ -27,6 +30,7 @@ public class Strela {
         pozicia = pozicia.sucet(VELKOST.skalarnySucin(-0.5));
         this.rozmer = new Rozmer2D(pozicia, VELKOST);
         this.posun = smerovyVektor.skalarnySucin(RYCHLOST);
+        this.poskodenie = hrac.getTelo().getPoskodenie();
         this.hrac = hrac;
 
         this.grafika = new JPanel();
@@ -52,25 +56,19 @@ public class Strela {
     }
 
     private boolean jeVStene(Miestnost aM) {
-        boolean kontorla = false;        
-        for (Rozmer2D[] rozmerySteny : aM.getRozmery2D()) {
-            for (Rozmer2D rozmerMuru : rozmerySteny) {
-                kontorla |= rozmerMuru.jeRozmerCiastocneVnutri(this.rozmer);
-                if (kontorla) {
-                    break;
-                }
-            }
-            if (kontorla) {
-                break;
-            }
-        }
-        return kontorla;
+        boolean vStene = !aM.jePlochaRozmeruMimoStien(this.rozmer);
+        return vStene;
     }
     private boolean zasah(Miestnost aM) {
         boolean zasah = false;
-        for (Nepriatel n : aM.getNepriatelia()) {
-            if (n.getTelo().getRozmer().jeRozmerCiastocneVnutri(this.rozmer)) {
-                // tu sposobi poskodenie
+        ArrayList<Nepriatel> nepriatelia = new ArrayList<>(aM.getNepriatelia());
+
+        for (Nepriatel n : nepriatelia) {
+            Telo t = n.getTelo();
+            if (t.getRozmer().jeRozmerCiastocneVnutri(this.rozmer)) {
+                if (!t.zmenZdravie(-poskodenie)) {
+                    aM.odstranNepriatela(n);
+                }
                 zasah = true;
             }
         }

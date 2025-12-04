@@ -54,6 +54,13 @@ public class Miestnost {
         return this.nepriatelia;
     }
     /**
+     * Odstrani Nepriatela z listu Nepriatelov v Miestnosti
+     * @param nepriatel referencia na nepriatela
+     */
+    public void odstranNepriatela(Nepriatel nepriatel) {
+        this.nepriatelia.remove(nepriatel);
+    }
+    /**
      * Ziska Rozmery2D vsetkych Stien (Murov) v Miestnosti
      * @return rozmery v tvare Rozmer2D[stena][mur]
      */

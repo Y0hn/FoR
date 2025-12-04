@@ -9,9 +9,10 @@ import javax.swing.JPanel;
  * @version v0.1
  */
 public class Nepriatel {
-    private static final int MAX_POCET_ZIVOTOV = 10; 
+    private static final int MAX_POCET_ZIVOTOV = 1; 
     private static final int RYCHLOST = 5; 
     //private static final double RYCHLOST_UTOKU = 0.5;
+    private static final int POSKODENIE_UTOKU = 1;
     public static final Vektor2D VELKOST = new Vektor2D(50, 50);
     
     private Telo telo;
@@ -24,7 +25,7 @@ public class Nepriatel {
      */
     public Nepriatel(Vektor2D pozicia) {
         Rozmer2D rozmer = new Rozmer2D(pozicia, VELKOST);
-        this.telo = new Telo(MAX_POCET_ZIVOTOV, rozmer, RYCHLOST);
+        this.telo = new Telo(MAX_POCET_ZIVOTOV, rozmer, RYCHLOST, POSKODENIE_UTOKU);
         //this.buduciUtok = 0;
     }
     /**

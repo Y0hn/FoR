@@ -16,6 +16,7 @@ public class Hrac {
     private static final Vektor2D VELKOST = new Vektor2D(50, 50);
     private static final double RYCHLOST = 10;
     private static final double RYCHLOST_STRELBY = 2;
+    private static final int POSKODENIE_STERLY = 1;
 
     private Telo telo;
     private boolean[] pohybVSmere;
@@ -29,7 +30,7 @@ public class Hrac {
      */
     public Hrac() {
         Rozmer2D rozmer = new Rozmer2D(Displej.getStred(), VELKOST);
-        this.telo = new Telo(MAX_ZIVOT, rozmer, RYCHLOST);
+        this.telo = new Telo(MAX_ZIVOT, rozmer, RYCHLOST, POSKODENIE_STERLY);
 
         this.pohybVSmere = new boolean[Smer.values().length];
         this.strelbaVSmere = new boolean[Smer.values().length];
@@ -72,9 +73,9 @@ public class Hrac {
         this.telo.tik(aktMiest);
 
         Vektor2D s = this.ziskajSmerovyVektor2D(this.strelbaVSmere);
-        if (this.buducaStrela <= System.nanoTime()) {
+        if (!s.equals(Vektor2D.ZERO) && this.buducaStrela <= System.currentTimeMillis()) {
             this.vystrel(s);
-            this.buducaStrela = System.nanoTime() + Math.round(1 / RYCHLOST_STRELBY * Math.pow(10, 9));
+            this.buducaStrela = System.currentTimeMillis() + Math.round(1 / RYCHLOST_STRELBY * Math.pow(10, 3));
         }
 
         ArrayList<Strela> tentoTik = new ArrayList<Strela>(this.strely);
@@ -88,9 +89,11 @@ public class Hrac {
      */
     public void nastavVstup(JFrame okno) {
         KeyAdapter ka = new KeyAdapter() {
+            @Override
             public void keyPressed(KeyEvent e) {
                 Hrac.this.vstup(e.getKeyCode());
             }
+            @Override
             public void keyReleased(KeyEvent e) {
                 Hrac.this.koniecVstupu(e.getKeyCode());
             }

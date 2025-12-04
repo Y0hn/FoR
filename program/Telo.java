@@ -15,6 +15,7 @@ public class Telo {
 
     private int maxZdravie;
     private int zdravie;
+    private int poskodenie;
     private Rozmer2D rozmer;
     private Vektor2D smerovyVektor2D;
     private double rychlostPohybu;
@@ -28,9 +29,10 @@ public class Telo {
      * @param rychlost ovplyvnuje rychlost pohybu tela
      * @param polomerTela polomer kruhoveho tela
      */
-    public Telo(int maxZdravie, Rozmer2D rozmer, double rychlost) {
+    public Telo(int maxZdravie, Rozmer2D rozmer, double rychlost, int poskodenie) {
         this.smerovyVektor2D = Vektor2D.ZERO;
         this.rychlostPohybu = rychlost;
+        this.poskodenie = poskodenie;
         this.maxZdravie = maxZdravie;
         this.zdravie = maxZdravie;
         this.rozmer = rozmer;
@@ -41,6 +43,13 @@ public class Telo {
      */
     public Rozmer2D getRozmer() {
         return this.rozmer;
+    }
+    /**
+     * Ziska poskodenie sposobovane Tymto Telom
+     * @return velkost poskodenia
+     */
+    public int getPoskodenie() {
+        return this.poskodenie;
     }
     /**
      * Nastavi poziciu a obnovi grafiku tela
@@ -89,7 +98,7 @@ public class Telo {
         if (aktMiest.jePlochaRozmeruMimoStien(buduciRozmer)) {
             this.setPozicia(buducaPozicia);
             this.skusIstDoInejMiestnosti(aktMiest);
-        } else if (this.smerovyVektor2D.equals(Vektor2D.ZERO)) {
+            } else if (!aktMiest.jePlochaRozmeruMimoStien(this.rozmer)) {
             this.opravPoziciu(aktMiest);
         } else {
             this.prijdiKuStene(aktMiest);
@@ -126,7 +135,11 @@ public class Telo {
         if (this.maxZdravie < this.zdravie) {
             this.zdravie = this.maxZdravie;
         }
-        return this.zdravie <= 0;
+        boolean zijem = 0 < this.zdravie;
+        if (!zijem) {
+            this.zomri();
+        }
+        return zijem;
     }
 
     private Vektor2D ziskajPoziciuDalsiehoPohybu() {        
@@ -196,5 +209,9 @@ public class Telo {
             pozicia = pozicia.sucet(this.rozmer.getVelkost().skalarnySucin(-0.5));
             this.setPozicia(pozicia);
         }
+    }
+    private void zomri() {
+        this.grafika.setBounds(Rozmer2D.ZERO.vytvorRectangle());
+        this.grafika.getParent().remove(this.grafika);
     }
 }
