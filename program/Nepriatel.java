@@ -6,18 +6,17 @@ import javax.swing.JPanel;
  * Write a description of class Nepriatel here.
  * 
  * @author y0hn
- * @version v0.1
+ * @version v0.2
  */
 public class Nepriatel {
     private static final int MAX_POCET_ZIVOTOV = 1; 
     private static final int RYCHLOST = 5; 
-    //private static final double RYCHLOST_UTOKU = 0.5;
+    private static final double RYCHLOST_UTOKU = 1;
     private static final int POSKODENIE_UTOKU = 1;
     public static final Vektor2D VELKOST = new Vektor2D(50, 50);
     
     private Telo telo;
-    //private long buduciUtok;
-    //private Rozmer2D rozmerCiela;
+    private long buduciUtok;
 
     /**
      * Vytvori nepriatela s Telom
@@ -49,13 +48,21 @@ public class Nepriatel {
      * @param aM aktualna Miestnost
      * @param hrac objekt Hraca
      */
-    public void tik(Miestnost aM, Hrac hrac) {
-        
+    public void tik(Miestnost aM, Hrac hrac) {        
         Vektor2D smer = this.telo.getRozmer().getPozicia();
         smer = smer.rozdiel(hrac.getTelo().getRozmer().getPozicia());
         smer = smer.skalarnySucin(-1);
         this.telo.setPohybVektor(smer);
         
-        this.telo.tik(aM, hrac);
+        if (this.telo.tik(aM, hrac) && this.buduciUtok <= System.currentTimeMillis()) {
+            this.zautoc(hrac);
+            this.buduciUtok = System.currentTimeMillis() + Math.round(1 / RYCHLOST_UTOKU * Math.pow(10, 3)); 
+        }
+    }
+
+    private void zautoc(Hrac hrac) {
+        if (!hrac.getTelo().zmenZdravie(-this.telo.getPoskodenie())) {
+            Hra.hracZomrel();
+        }        
     }
 }

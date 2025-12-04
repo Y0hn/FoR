@@ -13,7 +13,7 @@ import java.awt.Font;
  * Zobrazovac okna Hry
  * 
  * @author y0hn
- * @version v0.9
+ * @version v0.10
  */
 public class Displej {
     private static final int POSUN_ROZMERU_X = 10;
@@ -21,10 +21,11 @@ public class Displej {
 
     private static final int VRSTVA_PODLAHA = 0;
     private static final int VRSTVA_STENA = 1;
-
     public static final int VRSTVA_STRELA = 2;
     private static final int VRSTVA_HRAC = 3;
     private static final int VRSTVA_NEPRIATEL = 3;
+    private static final int VRSTVA_UI = 5;
+
 
     private static Rozmer2D rozmer;
     /**
@@ -43,7 +44,6 @@ public class Displej {
     }
 
     private JFrame okno;
-    private JPanel hrac;
     private JLayeredPane aktivnaMiestnost;
 
     /**
@@ -88,16 +88,31 @@ public class Displej {
      * @param h objekt Hraca
      */
     public void nastavHraca(Hrac objektHraca) {
-        this.hrac = new JPanel();
-        this.aktivnaMiestnost.setLayer(this.hrac, VRSTVA_HRAC);
-        this.aktivnaMiestnost.add(this.hrac);
-        objektHraca.getTelo().setGrafika(this.hrac, Color.GREEN);
+        JPanel grafika = new JPanel();
+        this.aktivnaMiestnost.setLayer(grafika, VRSTVA_HRAC);
+        this.aktivnaMiestnost.add(grafika);
+        objektHraca.getTelo().setGrafika(grafika, Color.GREEN);
+        
+        JPanel[] zivotyUI = new JPanel[objektHraca.getTelo().getMaxZdravie()];
+        Rozmer2D rozmerZivota = Hrac.GRAFIKA_ZIVOTOV_HRACA;
+        for (int i = 0; i < zivotyUI.length; i++) {
+            JPanel zivot = new JPanel();
+            zivot.setBackground(Color.PINK);
+            zivot.setBounds(rozmerZivota.vytvorRectangle());
+            this.aktivnaMiestnost.setLayer(zivot, VRSTVA_UI);
+            this.aktivnaMiestnost.add(zivot);
+            zivotyUI[i] = zivot;
+
+            Vektor2D novaPozica = new Vektor2D(rozmerZivota.getPoziciaX() + rozmerZivota.getIntVeX(), rozmerZivota.getPoziciaY());
+            rozmerZivota.setPozicia(novaPozica);
+        }
+        objektHraca.setUI(zivotyUI);
     }
     /**
      * Zmeni Miestnost vykreslovanu na Displej
      * @param m nova aktivna Mistnost
      */
-    public void zmenAktivnuMiestnost(Miestnost m) {
+    public void zmenAktivnuMiestnost(Miestnost m, Hrac h) {
         if (this.aktivnaMiestnost != null) {
             this.okno.remove(this.aktivnaMiestnost);
         }
@@ -105,9 +120,18 @@ public class Displej {
         this.aktivnaMiestnost.setLayout(null);
         this.okno.setContentPane(this.aktivnaMiestnost);
         
-        if (this.hrac != null) {
-            this.aktivnaMiestnost.setLayer(this.hrac, VRSTVA_HRAC);
-            this.aktivnaMiestnost.add(this.hrac);
+        JPanel grafika = h.getTelo().getGrafika();
+        if (null != grafika) {
+            this.aktivnaMiestnost.setLayer(grafika, VRSTVA_HRAC);
+            this.aktivnaMiestnost.add(grafika);
+
+            JPanel[] ui = h.getUI();
+            if (ui != null) {
+                for (int i = 0; i < ui.length; i++) {
+                    this.aktivnaMiestnost.setLayer(ui[i], VRSTVA_UI);
+                    this.aktivnaMiestnost.add(ui[i]);
+                }
+            }
         }
     }
         

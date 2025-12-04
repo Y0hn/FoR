@@ -1,4 +1,4 @@
-/**
+    /**
  * Hlavna spustacia trieda
  * 
  * @author y0hn

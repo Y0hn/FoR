@@ -25,6 +25,12 @@ public class Hra {
     public static void nastavAktivnuMiestnost(Miestnost miestnost) {
         instancia.nacitajMiestnost(miestnost);
     }
+    /**
+     * Volane po odcitani posledneho zivota Hraca
+     */
+    public static void hracZomrel() {
+        System.exit(0);
+    }
 
     private Svet svet;
     private Hrac hrac;
@@ -55,7 +61,7 @@ public class Hra {
      */
     private void nacitajMiestnost(Miestnost m) {
         if (m != null) {
-            this.displej.zmenAktivnuMiestnost(m);
+            this.displej.zmenAktivnuMiestnost(m, this.hrac);
             this.aktivnaMiestnost = m;
         }
     }

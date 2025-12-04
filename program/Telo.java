@@ -6,7 +6,7 @@ import javax.swing.JPanel;
  * Reprezentacia postavy vo svete
  * 
  * @author y0hn 
- * @version v0.7
+ * @version v0.8
  */
 public class Telo {
     private static final double POMER_VELKOSTI_POSUN_PRI_ZMENE_MIESTNOSTI = 0.05; 
@@ -20,7 +20,7 @@ public class Telo {
     private Vektor2D smerovyVektor2D;
     private double rychlostPohybu;
     private JPanel grafika;
-    
+    private boolean zmenaZdravia;
     /**
      * Vytvori Telo pre postavu 
      * @param maxZdravie pociatocny pocet zravia
@@ -36,6 +36,7 @@ public class Telo {
         this.maxZdravie = maxZdravie;
         this.zdravie = maxZdravie;
         this.rozmer = rozmer;
+        this.zmenaZdravia = false;
     }
     /**
      * Ziska Rozmer2D Tela
@@ -50,6 +51,20 @@ public class Telo {
      */
     public int getPoskodenie() {
         return this.poskodenie;
+    }
+    /**
+     * Ziska aktualne zdravie
+     * @return zdravie
+     */
+    public int getZdravie() {
+        return this.zdravie;
+    }
+    /**
+     * Ziska Maximalne zdravie
+     * @return maxZdravie
+     */
+    public int getMaxZdravie() {
+        return this.maxZdravie;
     }
     /**
      * Nastavi poziciu a obnovi grafiku tela
@@ -91,7 +106,7 @@ public class Telo {
      * Obnovi Telo (Hraca) -> posunie ho v smere ak je to mozne, pripadne prejde do dalsej miestnosti
      * @param aktMiest Miestnost v ktorej sa telo nachadza
      */
-    public void tik(Miestnost aktMiest) {
+    public boolean tik(Miestnost aktMiest) {
         Vektor2D buducaPozicia = this.ziskajPoziciuDalsiehoPohybu();
         Rozmer2D buduciRozmer = new Rozmer2D(buducaPozicia, this.rozmer.getVelkost());
         
@@ -103,6 +118,12 @@ public class Telo {
         } else {
             this.prijdiKuStene(aktMiest);
         }
+
+        boolean zdravieZmenene = this.zmenaZdravia;
+        if (zdravieZmenene) {
+            this.zmenaZdravia = false;
+        }
+        return zdravieZmenene;
     }
     /**
      * Obnovi Telo (Nepriatela) -> posunie ho v smere ak je to mozne
@@ -139,6 +160,7 @@ public class Telo {
         if (!zijem) {
             this.zomri();
         }
+        this.zmenaZdravia = true;
         return zijem;
     }
 

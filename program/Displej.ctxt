@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Displej
-comment0.text=\r\n\ Zobrazovac\ okna\ Hry\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.9\r\n
+comment0.text=\r\n\ Zobrazovac\ okna\ Hry\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.10\r\n
 comment1.params=
 comment1.target=Rozmer2D\ getRozmer()
 comment1.text=\r\n\ Vrati\ Rozmer2D\ Displeja\r\n\ @return\ [0,0]x[vX,vY]\r\n
@@ -16,8 +16,8 @@ comment4.text=\r\n\ Vrati\ Hlavne\ Zobrazovacie\ Okno\r\n\ @return\ hlave\ okno\
 comment5.params=objektHraca
 comment5.target=void\ nastavHraca(Hrac)
 comment5.text=\r\n\ Vytvori\ Hracovi\ objekt\ na\ Displeji\ \r\n\ @param\ h\ objekt\ Hraca\r\n
-comment6.params=m
-comment6.target=void\ zmenAktivnuMiestnost(Miestnost)
+comment6.params=m\ h
+comment6.target=void\ zmenAktivnuMiestnost(Miestnost,\ Hrac)
 comment6.text=\r\n\ Zmeni\ Miestnost\ vykreslovanu\ na\ Displej\r\n\ @param\ m\ nova\ aktivna\ Mistnost\r\n
 comment7.params=m
 comment7.target=javax.swing.JLayeredPane\ vytvorGrafikuMiestnosti(Miestnost)

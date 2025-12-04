@@ -9,7 +9,7 @@ import javax.swing.JPanel;
  * Drzi informacie o hracovi vo Svete
  * 
  * @author y0hn 
- * @version v0.4
+ * @version v0.5
  */
 public class Hrac {
     private static final int MAX_ZIVOT = 10;
@@ -17,12 +17,15 @@ public class Hrac {
     private static final double RYCHLOST = 10;
     private static final double RYCHLOST_STRELBY = 2;
     private static final int POSKODENIE_STERLY = 1;
+    public static final Rozmer2D GRAFIKA_ZIVOTOV_HRACA = new Rozmer2D(5, 5, 20, 20);
 
     private Telo telo;
     private boolean[] pohybVSmere;
     private boolean[] strelbaVSmere;
     private ArrayList<Strela> strely;
     private long buducaStrela;
+
+    private JPanel[] ui;
 
     /**
      * Vytvori hraca vo svete
@@ -54,6 +57,20 @@ public class Hrac {
         return this.telo.getGrafika();
     }
     /**
+     * Nastavi grafiku uzivatelskeho rozhrania
+     * @param ui
+     */
+    public void setUI(JPanel[] ui) {
+        this.ui = ui;
+    }
+    /**
+     * Ziska grafiku uzivatelskeho rozhrania
+     * @param ui
+     */
+    public JPanel[] getUI() {
+        return this.ui;
+    }
+    /**
      * Odstani Strelu z obnovovacieho listu
      * @param strela
      */
@@ -70,7 +87,12 @@ public class Hrac {
         Vektor2D v = this.ziskajSmerovyVektor2D(this.pohybVSmere);
         this.telo.setPohybVektor(v);
 
-        this.telo.tik(aktMiest);
+        if (this.telo.tik(aktMiest)) {
+            int zivoty = this.telo.getZdravie();
+            for (int i = 1; i - 1 < this.ui.length; i++) {
+                this.ui[i - 1].setVisible(i <= zivoty);
+            }
+        }
 
         Vektor2D s = this.ziskajSmerovyVektor2D(this.strelbaVSmere);
         if (!s.equals(Vektor2D.ZERO) && this.buducaStrela <= System.currentTimeMillis()) {
@@ -170,6 +192,9 @@ public class Hrac {
             Vektor2D pozicia = this.telo.getRozmer().ziskajStred();
             Strela strela = new Strela(pozicia, smer, this);
             this.strely.add(strela);
-        }
+
+            // prida jednu sekundu vydelenu rychlostou strelby
+            this.buducaStrela = System.nanoTime() + Math.round(1 / RYCHLOST_STRELBY * Math.pow(10, 9));
+        }            
     }
 }

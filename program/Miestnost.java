@@ -183,8 +183,10 @@ public class Miestnost {
         maxY -= steny[Smer.DOLE.ordinal()].getRozmery()[0].getIntVeY();
 
         //System.out.format("(%d, %d)(%d, %d)", minX, maxX, minY, maxY);
-        int x = this.nahoda.nextInt(minX, maxX);
-        int y = this.nahoda.nextInt(minY, maxY);
+        maxX -= minX;
+        maxY -= minY;
+        int x = minX + this.nahoda.nextInt(maxX);
+        int y = minY + this.nahoda.nextInt(maxY);
         return new Vektor2D(x, y);
     }
 }

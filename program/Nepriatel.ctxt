@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.target=Nepriatel
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Nepriatel\ here.\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.2\r\n
+comment1.params=pozicia
+comment1.target=Nepriatel(Vektor2D)
+comment1.text=\r\n\ Vytvori\ nepriatela\ s\ Telom\r\n\ @param\ rozmerTela\ pozicia\ a\ velkost\ nepriatela\r\n
+comment2.params=
+comment2.target=Telo\ getTelo()
+comment2.text=\r\n\ Vrati\ Telo\ Nepriatela\r\n\ @return\ reprazentacia\ Nepriatela\ vo\ Svete\r\n
+comment3.params=grafika
+comment3.target=void\ setGrafika(javax.swing.JPanel)
+comment3.text=\r\n\ Nastav\ grafiku\ pre\ nepiratela\r\n\ @param\ grafika\r\n
+comment4.params=aM\ hrac
+comment4.target=void\ tik(Miestnost,\ Hrac)
+comment4.text=\r\n\ Obnovi\ spravanie\ nepiratela\r\n\ @param\ aM\ aktualna\ Miestnost\r\n\ @param\ hrac\ objekt\ Hraca\r\n
+comment5.params=hrac
+comment5.target=void\ zautoc(Hrac)
+numComments=6
