@@ -22,10 +22,13 @@ public class Displej {
     private static final int VRSTVA_PODLAHA = 0;
     private static final int VRSTVA_STENA = 1;
     public static final int VRSTVA_STRELA = 2;
+    private static final int VRSTVA_VYHRA = 2;
     private static final int VRSTVA_HRAC = 3;
     private static final int VRSTVA_NEPRIATEL = 3;
+    private static final int VRSTVA_UI_HRAC = 4;
     private static final int VRSTVA_UI = 5;
 
+    private static final Font FONT = new Font("Arial", 1, 100);
 
     private static Rozmer2D rozmer;
     /**
@@ -45,6 +48,7 @@ public class Displej {
 
     private JFrame okno;
     private JLayeredPane aktivnaMiestnost;
+    private JPanel[] uzivatelskeRozhranie;
 
     /**
      * Vytvori okno Displeja 
@@ -72,9 +76,10 @@ public class Displej {
         this.okno.setResizable(false);
         
         // ukoncenie Hry pri zatvoreni okna
-        this.okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+        this.okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
         this.okno.setVisible(true);
+
+        this.uzivatelskeRozhranie = this.vytvorGrafikuUI();
     }
     /**
      * Vrati Hlavne Zobrazovacie Okno
@@ -95,11 +100,14 @@ public class Displej {
         
         JPanel[] zivotyUI = new JPanel[objektHraca.getTelo().getMaxZdravie()];
         Rozmer2D rozmerZivota = Hrac.GRAFIKA_ZIVOTOV_HRACA;
+        Vektor2D velkostZivota = new Vektor2D(rozmerZivota.getVelkostX()/zivotyUI.length, rozmerZivota.getVelkostY());
+        rozmerZivota = new Rozmer2D(rozmerZivota.getPozicia(), velkostZivota);
+
         for (int i = 0; i < zivotyUI.length; i++) {
             JPanel zivot = new JPanel();
             zivot.setBackground(Color.PINK);
             zivot.setBounds(rozmerZivota.vytvorRectangle());
-            this.aktivnaMiestnost.setLayer(zivot, VRSTVA_UI);
+            this.aktivnaMiestnost.setLayer(zivot, VRSTVA_UI_HRAC);
             this.aktivnaMiestnost.add(zivot);
             zivotyUI[i] = zivot;
 
@@ -125,14 +133,23 @@ public class Displej {
             this.aktivnaMiestnost.setLayer(grafika, VRSTVA_HRAC);
             this.aktivnaMiestnost.add(grafika);
 
-            JPanel[] ui = h.getUI();
-            if (ui != null) {
-                for (int i = 0; i < ui.length; i++) {
-                    this.aktivnaMiestnost.setLayer(ui[i], VRSTVA_UI);
-                    this.aktivnaMiestnost.add(ui[i]);
+            int[] vrstvy = { VRSTVA_UI_HRAC, VRSTVA_UI };
+            JPanel[][] rozhrania = { h.getUI(), this.uzivatelskeRozhranie };
+            for (int i = 0; i < rozhrania.length; i++) {
+                for (JPanel cast : rozhrania[i]) {
+                    this.aktivnaMiestnost.setLayer(cast, vrstvy[i]);
+                    this.aktivnaMiestnost.add(cast);
                 }
             }
         }
+    }
+    /**
+     * Nastavi konecnu grafiku podla stavu hry
+     * @param stav 
+     */
+    public void nastavGrafikuPreStavHry(StavHry stav, boolean zapni) {
+        Rozmer2D r = zapni ? Displej.getRozmer() : Rozmer2D.ZERO;
+        this.uzivatelskeRozhranie[stav.ordinal()].setBounds(r.vytvorRectangle());
     }
         
     private JLayeredPane vytvorGrafikuMiestnosti(Miestnost m) {
@@ -167,9 +184,17 @@ public class Displej {
         label.setLayout(new BorderLayout());
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setVerticalAlignment(SwingConstants.CENTER);    
-        label.setFont(new Font("Arial", 1, 100));    
+        label.setFont(FONT);    
         podlaha.add(label, BorderLayout.CENTER);
 
+        Rozmer2D vyhra = m.getVyhernaPlocha();
+        if (vyhra != null) {
+            JPanel vyhernaPlocha = new JPanel();
+            vyhernaPlocha.setBackground(Color.YELLOW);
+            vyhernaPlocha.setBounds(vyhra.vytvorRectangle());
+            miestnost.setLayer(vyhernaPlocha, VRSTVA_VYHRA);
+            miestnost.add(vyhernaPlocha);
+        }
 
         return miestnost;
     }
@@ -178,5 +203,29 @@ public class Displej {
         stena.setBounds(rozmer.vytvorRectangle());
         stena.setBackground(Color.BLACK);
         return stena;
+    }
+    private JPanel[] vytvorGrafikuUI() {
+        JPanel[] grafika = new JPanel[StavHry.values().length - 1];
+        
+        for (int i = 0; i < StavHry.values().length; i++) {
+            StavHry sh = StavHry.values()[i]; 
+            if (sh.getText() != "") {
+                JPanel jp = new JPanel();
+                jp.setLayout(null);
+                jp.setBounds(Rozmer2D.ZERO.vytvorRectangle());
+                jp.setBackground(sh.getFarbaPozadia());
+                grafika[i] = jp;
+                
+                JLabel jl = new JLabel();
+                jl.setFont(FONT);
+                jl.setBounds(Displej.getRozmer().vytvorRectangle());
+                jl.setHorizontalAlignment(SwingConstants.CENTER);
+                jl.setVerticalAlignment(SwingConstants.CENTER);
+                jl.setForeground(sh.getFarbaTextu());
+                jl.setText(sh.getText());
+                jp.add(jl, BorderLayout.CENTER);
+            }
+        }
+        return grafika;
     }
 }

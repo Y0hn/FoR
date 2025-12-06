@@ -17,7 +17,7 @@ public class Hrac {
     private static final double RYCHLOST = 10;
     private static final double RYCHLOST_STRELBY = 2;
     private static final int POSKODENIE_STERLY = 1;
-    public static final Rozmer2D GRAFIKA_ZIVOTOV_HRACA = new Rozmer2D(5, 5, 20, 20);
+    public static final Rozmer2D GRAFIKA_ZIVOTOV_HRACA = new Rozmer2D(5, 5, 150, 20);
 
     private Telo telo;
     private boolean[] pohybVSmere;
@@ -33,6 +33,7 @@ public class Hrac {
      */
     public Hrac() {
         Rozmer2D rozmer = new Rozmer2D(Displej.getStred(), VELKOST);
+        rozmer.setPozicia(rozmer.getPozicia().rozdiel(VELKOST.skalarnySucin(0.5)));
         this.telo = new Telo(MAX_ZIVOT, rozmer, RYCHLOST, POSKODENIE_STERLY);
 
         this.pohybVSmere = new boolean[Smer.values().length];

@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=StavHry
+comment0.text=\r\n\ Zoskupuje\ stavy\ v\ ktorych\ sa\ Hra\ moze\ nachadzat\ pocas\ svojho\ trvania\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ 0.1\r\n
+comment1.params=farbaPozadia\ farbaTextu\ text
+comment1.target=StavHry(java.awt.Color,\ java.awt.Color,\ java.lang.String)
+comment2.params=
+comment2.target=java.awt.Color\ getFarbaPozadia()
+comment2.text=\r\n\ Vrati\ farbu\ pozadia\r\n\ @return\ Color\ pozadia\r\n
+comment3.params=
+comment3.target=java.awt.Color\ getFarbaTextu()
+comment3.text=\r\n\ Vrati\ farbu\ textu\ na\ grafike\r\n\ @return\ Color\ textu\r\n
+comment4.params=
+comment4.target=java.lang.String\ getText()
+comment4.text=\r\n\ Vrati\ text\ pre\ grafiku\r\n\ @return\ textovy\ retazec\r\n
+numComments=5

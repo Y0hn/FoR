@@ -10,6 +10,7 @@ import java.util.Random;
  */
 public class Miestnost {
     private static final int MAX_POCET_NEPIRATELOV = 5;
+    private static final Vektor2D VELKOST_VYHRY = new Vektor2D(50, 50);
     
     private int indexMiestnosti;
     private Miestnost[] susedneMiestnosti;
@@ -17,6 +18,7 @@ public class Miestnost {
     private ArrayList<Nepriatel> nepriatelia;
     private boolean dvereOtvorene;
     private Random nahoda;
+    private Rozmer2D vyhernaPlocha;
 
     /**
      * Konstruktor triedy Miestnost
@@ -30,6 +32,7 @@ public class Miestnost {
         this.susedneMiestnosti = new Miestnost[pocetStien];
         this.dvereOtvorene = false;
         this.nahoda = new Random();
+        this.vyhernaPlocha = null;
     }
     /**
      * Vrati cislo Miestnosti v poradi
@@ -72,6 +75,13 @@ public class Miestnost {
         return rozmery;
     }
     /**
+     * Ziska Rozmer vyhernej plochy v Miestnosti
+     * @return vrati hodnotu iba v pripade ak je Miestnost konecna inak ma hodnotu NULL
+     */
+    public Rozmer2D getVyhernaPlocha() {
+        return this.vyhernaPlocha;
+    }
+    /**
      * Nastavi suseda v predom urcenom smere
      * @param sused index susednej Miestnosti
      * @param smer smer v ktorom lezi v zavislosti od stredu sucasnej miestnosti
@@ -106,6 +116,14 @@ public class Miestnost {
         }
     }
     /**
+     * Nastavi Miestnost ako vyhernu miestnost 
+     */
+    public void nastavKonecnuMiestnost() {
+        Vektor2D pozicia = Displej.getStred();
+        pozicia = pozicia.rozdiel(VELKOST_VYHRY.skalarnySucin(0.5));
+        this.vyhernaPlocha = new Rozmer2D(pozicia, VELKOST_VYHRY);
+    }
+    /**
      * Nastavi stav pre vsetky dvere v Miestnosti
      * @param otvorene ak PRAVDA dvere sa otvoria (vypnu)
      */
@@ -118,15 +136,29 @@ public class Miestnost {
     }
     /**
      * Obnovi vsetky objekty v miestnosti
+     * @param hrac Objekt hraca
+     * @return novy Stav Hry
      */
-    public void tik(Hrac hrac) {
+    public StavHry tik(Hrac hrac) {
+        StavHry stavHry = StavHry.HRA;
+
         if (!this.dvereOtvorene && this.nepriatelia.size() == 0) {
             this.nastavVsetkyDvere(true);
         } else {
             for (Nepriatel n : nepriatelia) {
-                n.tik(this, hrac);
+                if (n.tik(this, hrac)) {
+                    stavHry = StavHry.PREHRA;
+                    break;
+                }
             }
         }
+
+        if (this.vyhernaPlocha != null) {
+            if (this.vyhernaPlocha.jeRozmerCiastocneVnutri(hrac.getTelo().getRozmer())) {
+                stavHry = StavHry.VYHRA;
+            }
+        }
+        return stavHry;
     }
     /**
      * Presunie hraca do Miestnosti
@@ -189,4 +221,14 @@ public class Miestnost {
         int y = minY + this.nahoda.nextInt(maxY);
         return new Vektor2D(x, y);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        boolean rovnake = false;
+        if (o instanceof Miestnost) {
+            Miestnost m = (Miestnost)o;
+            rovnake = m.indexMiestnosti == this.indexMiestnosti;
+        }
+        return rovnake;
+    } 
 }

@@ -47,22 +47,28 @@ public class Nepriatel {
      * Obnovi spravanie nepiratela
      * @param aM aktualna Miestnost
      * @param hrac objekt Hraca
+     * @return PRAVDA ak Hrac stratil posledny zivot
      */
-    public void tik(Miestnost aM, Hrac hrac) {        
+    public boolean tik(Miestnost aM, Hrac hrac) {
+        boolean znicilTeloHraca = false;
+
         Vektor2D smer = this.telo.getRozmer().getPozicia();
         smer = smer.rozdiel(hrac.getTelo().getRozmer().getPozicia());
         smer = smer.skalarnySucin(-1);
         this.telo.setPohybVektor(smer);
         
         if (this.telo.tik(aM, hrac) && this.buduciUtok <= System.currentTimeMillis()) {
-            this.zautoc(hrac);
+            znicilTeloHraca = this.zautoc(hrac);
             this.buduciUtok = System.currentTimeMillis() + Math.round(1 / RYCHLOST_UTOKU * Math.pow(10, 3)); 
         }
+        return znicilTeloHraca;
     }
-
-    private void zautoc(Hrac hrac) {
-        if (!hrac.getTelo().zmenZdravie(-this.telo.getPoskodenie())) {
-            Hra.hracZomrel();
-        }        
+    /**
+     * Zautoci na Telo Hraca (uberie mu zdravie) 
+     * @param hrac Objekt Hraca
+     * @return PRAVDA ak Hrac stratil posledny zivot
+     */
+    private boolean zautoc(Hrac hrac) {
+        return !hrac.getTelo().zmenZdravie(-this.telo.getPoskodenie());
     }
 }

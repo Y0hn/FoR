@@ -8,6 +8,7 @@ import java.util.Random;
  * @version v0.5
  */
 public class Svet {
+    private int indexKonecnejMiestnosti;
     private int indexPociatocnejMiestnosti;
     private ArrayList<Miestnost> miestnosti;
     
@@ -20,7 +21,7 @@ public class Svet {
      */
     public Svet(int velkost) {
         this.miestnosti = new ArrayList<Miestnost>();
-        Random random = new Random();
+        Random nahoda = new Random();
 
         ArrayList<Smer> smery = new ArrayList<Smer>();   
 
@@ -38,7 +39,7 @@ public class Svet {
             }
             // Vygeneruje iny smer aby nesiel naspat
             do {
-                smer = this.vygenerujNahodnySmer(random);
+                smer = this.vygenerujNahodnySmer(nahoda);
             } while (smer == Smer.HORE || poslednySmer != null && smer.jeOpacny(poslednySmer));
 
             miestnost.setSused(sused, smer);
@@ -77,22 +78,33 @@ public class Svet {
 
         // nastavi miestnost v krotrej hrac zacne hru
         // miestnost je medzi prvou 1/5 a 4/5 celkoveho poctu
-        this.indexPociatocnejMiestnosti = (int)Math.round(this.miestnosti.size() * 0.2 + random.nextDouble() * (this.miestnosti.size() * 0.6));
+        this.indexPociatocnejMiestnosti = (int)Math.round(this.miestnosti.size() * 0.2 + nahoda.nextDouble() * (this.miestnosti.size() * 0.6));
+        this.indexKonecnejMiestnosti = (nahoda.nextBoolean()) ? 0 : this.miestnosti.size() - 1;
+
+        this.miestnosti.get(this.indexKonecnejMiestnosti).nastavKonecnuMiestnost();
 
         for (Miestnost m : this.miestnosti) {
             m.vytvorSteny();
-            if (m.getIndex() != this.indexPociatocnejMiestnosti) {
+            int index = m.getIndex();
+            if (index != this.indexKonecnejMiestnosti && this.indexPociatocnejMiestnosti != index) {
                 m.vytvorNepriatelov();
             }
         }
     }
 
     /**
-     * Vrati intdex Zacinajej Miestnosti 
+     * Vrati index Zacinajej Miestnosti 
      * @return index Miesnosti v kotorej zacina hra 
      */
     public Miestnost getZaciatocnaMiestnost() {
         return this.miestnosti.get(this.indexPociatocnejMiestnosti);
+    }
+    /**
+     * Vrati index Vyhernej Miestnosti 
+     * @return index Miesnosti v kotorej konci hra 
+     */
+    public Miestnost getKonecnaMiestnost() {
+        return this.miestnosti.get(this.indexKonecnejMiestnosti);
     }
     /**
      * Ziska Miestnost z pola Miestnosti, 
@@ -108,8 +120,8 @@ public class Svet {
         }
     }
 
-    private Smer vygenerujNahodnySmer(Random random) {
-        int smernik = random.nextInt(Smer.values().length);
+    private Smer vygenerujNahodnySmer(Random nahoda) {
+        int smernik = nahoda.nextInt(Smer.values().length);
         return Smer.values()[smernik];
     }
 }

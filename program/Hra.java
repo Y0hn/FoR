@@ -25,17 +25,12 @@ public class Hra {
     public static void nastavAktivnuMiestnost(Miestnost miestnost) {
         instancia.nacitajMiestnost(miestnost);
     }
-    /**
-     * Volane po odcitani posledneho zivota Hraca
-     */
-    public static void hracZomrel() {
-        System.exit(0);
-    }
 
     private Svet svet;
     private Hrac hrac;
     private Displej displej;
     private Miestnost aktivnaMiestnost;
+    private StavHry stavHry;
 
     private Hra() {
         this.displej = new Displej("", "FrontRooms", Hra.ROZMER_HRY);
@@ -45,14 +40,19 @@ public class Hra {
         this.nacitajMiestnost(this.svet.getZaciatocnaMiestnost());
         this.hrac.nastavVstup(this.displej.getOkno());
         this.displej.nastavHraca(this.hrac);
+        this.stavHry = StavHry.HRA;
     }
     
     /**
      * Obnovi vsetky objekty v Hre
      */
     public void tik() {
-        this.hrac.tik(this.aktivnaMiestnost);
-        this.aktivnaMiestnost.tik(this.hrac);
+        if (this.stavHry == StavHry.HRA) {
+            this.stavHry = this.aktivnaMiestnost.tik(this.hrac);
+            this.hrac.tik(this.aktivnaMiestnost);
+        } else {
+            this.displej.nastavGrafikuPreStavHry(this.stavHry, true);
+        }
     }
     
     /**
