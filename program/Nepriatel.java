@@ -59,7 +59,7 @@ public class Nepriatel {
 
         Vektor2D smer = this.telo.getRozmer().getPozicia();
         smer = smer.rozdiel(hrac.getTelo().getRozmer().getPozicia());
-        smer = smer.skalarnySucin(-1);
+        smer = smer.sucinSoSkalarom(-1);
         this.telo.setPohybVektor(smer);
         
         if (this.telo.tik(aM, hrac) && this.buduciUtok <= System.currentTimeMillis()) {

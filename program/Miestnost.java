@@ -11,6 +11,7 @@ import java.util.Random;
 public class Miestnost {
     private static final int MAX_POCET_NEPIRATELOV = 5;
     private static final Vektor2D VELKOST_VYHRY = new Vektor2D(50, 50);
+    private static final double DOSAH_DVERI = 100;
     
     private int indexMiestnosti;
     private Miestnost[] susedneMiestnosti;
@@ -108,11 +109,19 @@ public class Miestnost {
     public void vytvorNepriatelov() {
         int pocet = this.nahoda.nextInt(MAX_POCET_NEPIRATELOV);
         Rozmer2D rozmer;
+
         for (int i = 0; i < pocet; i++) {
+            boolean mimoStien;
+            boolean mimoDveri;
+            boolean mimoOstatnych;
             do {
                 Vektor2D pozicia = this.ziskajNahodnuPoziciuVnutri();
                 rozmer = new Rozmer2D(pozicia, Nepriatel.VELKOST);
-            } while (!this.jePlochaRozmeruMimoStien(rozmer) || !this.jePlochaRozmeruMimoNepriatelov(rozmer, null));
+
+                mimoDveri = this.jePlochaMimoDosahuDveri(rozmer);
+                mimoStien = this.jePlochaRozmeruMimoStien(rozmer);
+                mimoOstatnych = this.jePlochaRozmeruMimoNepriatelov(rozmer, null);
+            } while (!mimoStien || !mimoDveri || !mimoOstatnych);
             this.nepriatelia.add(new Nepriatel(rozmer.getPozicia()));
         }
     }
@@ -121,7 +130,7 @@ public class Miestnost {
      */
     public void nastavKonecnuMiestnost() {
         Vektor2D pozicia = Displej.getStred();
-        pozicia = pozicia.rozdiel(VELKOST_VYHRY.skalarnySucin(0.5));
+        pozicia = pozicia.rozdiel(VELKOST_VYHRY.sucinSoSkalarom(0.5));
         this.vyhernaPlocha = new Rozmer2D(pozicia, VELKOST_VYHRY);
     }
     /**
@@ -221,6 +230,19 @@ public class Miestnost {
         int x = minX + this.nahoda.nextInt(maxX);
         int y = minY + this.nahoda.nextInt(maxY);
         return new Vektor2D(x, y);
+    }
+    private boolean jePlochaMimoDosahuDveri(Rozmer2D rozmer) {
+        boolean mimoDosah = true;
+        for (Stena s : this.steny) {
+            Rozmer2D r = s.getRozmerDveri();
+            if (!r.equals(Rozmer2D.ZERO)) {
+                mimoDosah &= DOSAH_DVERI < r.najkratsiaVzdialenostKu(rozmer);
+            }
+            if (mimoDosah) {
+                break;
+            }
+        }
+        return mimoDosah;
     }
 
     @Override

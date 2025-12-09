@@ -160,7 +160,7 @@ public class Telo {
     }
 
     private Vektor2D ziskajPoziciuDalsiehoPohybu() {        
-        Vektor2D pohyb = this.smerovyVektor2D.skalarnySucin(this.rychlostPohybu);
+        Vektor2D pohyb = this.smerovyVektor2D.sucinSoSkalarom(this.rychlostPohybu);
         pohyb = this.rozmer.getPozicia().sucet(pohyb);
         return pohyb;
     }    
@@ -169,7 +169,7 @@ public class Telo {
         kopia.setPozicia(kopia.getPozicia().zaokruhli());
         while (aktivMiestnost.jePlochaRozmeruMimoStien(kopia)) {
             this.rozmer = kopia.kopia();
-            Vektor2D pohyb = this.smerovyVektor2D.skalarnySucin(PRESNOST_POSUNU_K_STENE);
+            Vektor2D pohyb = this.smerovyVektor2D.sucinSoSkalarom(PRESNOST_POSUNU_K_STENE);
             kopia.setPozicia(kopia.getPozicia().sucet(pohyb));
         }
     }
@@ -178,7 +178,7 @@ public class Telo {
         
         if (!Displej.getRozmer().jePoziciaVnutri(stred)) {
             Vektor2D posun = Displej.getRozmer().getVelkost();
-            posun = posun.skalarnySucin(-0.5);
+            posun = posun.sucinSoSkalarom(-0.5);
 
             stred = stred.sucet(posun);
             stred = stred.normalizuj();
@@ -195,22 +195,22 @@ public class Telo {
      * Zmeni pohohu po vstupe do Miestnosti aby bola na opacnej strane ako pri vstupe
      */
     private void invertujPolohu() {
-        Vektor2D stredMiestnost = Displej.getRozmer().getVelkost().skalarnySucin(0.5);
+        Vektor2D stredMiestnost = Displej.getRozmer().getVelkost().sucinSoSkalarom(0.5);
         Vektor2D stredovaPozicia = this.rozmer.ziskajStred();
 
         // posunie [0,0] do stredu miestnosti
         stredovaPozicia = stredovaPozicia.rozdiel(stredMiestnost);
         
-        Vektor2D posun = this.rozmer.getVelkost().skalarnySucin(POMER_VELKOSTI_POSUN_PRI_ZMENE_MIESTNOSTI);
-        posun = stredovaPozicia.normalizuj().zaokruhli().sucin(posun);
+        Vektor2D posun = this.rozmer.getVelkost().sucinSoSkalarom(POMER_VELKOSTI_POSUN_PRI_ZMENE_MIESTNOSTI);
+        posun = stredovaPozicia.normalizuj().zaokruhli().roznasobenie(posun);
 
-        Vektor2D invert = stredovaPozicia.normalizuj().zaokruhli().absolutny().skalarnySucin(-1);
+        Vektor2D invert = stredovaPozicia.normalizuj().zaokruhli().absolutny().sucinSoSkalarom(-1);
         invert = invert.sucet(invert.absolutny().vymeneny());
 
         // invertuje poziciu v Miestnosti
-        Vektor2D novaPozicia = stredovaPozicia.sucin(invert);
+        Vektor2D novaPozicia = stredovaPozicia.roznasobenie(invert);
         novaPozicia = novaPozicia.sucet(posun);
-        novaPozicia = novaPozicia.rozdiel(this.rozmer.getVelkost().skalarnySucin(0.5));
+        novaPozicia = novaPozicia.rozdiel(this.rozmer.getVelkost().sucinSoSkalarom(0.5));
         novaPozicia = novaPozicia.sucet(stredMiestnost);
 
         this.setPozicia(novaPozicia);
@@ -218,12 +218,12 @@ public class Telo {
     private void opravPoziciu(Miestnost aM) {
         Vektor2D stredMiestnosti = Displej.getStred();
         Vektor2D smerPosunu = stredMiestnosti.rozdiel(this.rozmer.ziskajStred());
-        smerPosunu = smerPosunu.normalizuj().skalarnySucin(PRESNOST_OPRAVY_POSUNU);
+        smerPosunu = smerPosunu.normalizuj().sucinSoSkalarom(PRESNOST_OPRAVY_POSUNU);
 
         // Posuva poziciu ku stredu Miestnosti kym kolizuje so stenou
         while (!(aM.jePlochaRozmeruMimoStien(this.rozmer) && aM.jePlochaRozmeruMimoNepriatelov(this.rozmer, null))) {
             Vektor2D pozicia = this.rozmer.ziskajStred().sucet(smerPosunu);
-            pozicia = pozicia.sucet(this.rozmer.getVelkost().skalarnySucin(-0.5));
+            pozicia = pozicia.sucet(this.rozmer.getVelkost().sucinSoSkalarom(-0.5));
             this.setPozicia(pozicia);
         }
     }

@@ -27,9 +27,9 @@ public class Strela {
      * @param hrac je referencia na objekt, ktory vytvoril Strelu
      */
     public Strela(Vektor2D pozicia, Vektor2D smerovyVektor, Hrac hrac) {
-        pozicia = pozicia.sucet(VELKOST.skalarnySucin(-0.5));
+        pozicia = pozicia.sucet(VELKOST.sucinSoSkalarom(-0.5));
         this.rozmer = new Rozmer2D(pozicia, VELKOST);
-        this.posun = smerovyVektor.skalarnySucin(RYCHLOST);
+        this.posun = smerovyVektor.sucinSoSkalarom(RYCHLOST);
         this.poskodenie = hrac.getTelo().getPoskodenie();
         this.hrac = hrac;
 

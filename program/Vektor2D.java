@@ -5,7 +5,7 @@ import java.awt.Point;
  * 2D Vektor2D (reprezentuje bod v Kartezianskej suradnicovej sustave so suradnicami [x,y])
  * 
  * @author y0hn
- * @version v0.10
+ * @version v0.11
  */
 public class Vektor2D {
     public static final Vektor2D ZERO = new Vektor2D(0, 0);
@@ -83,7 +83,7 @@ public class Vektor2D {
      * @param druhyVektor2D Vektor2D
      * @return scitany Vektor2D (x1+x2, y1+y2)
      */
-    public Vektor2D skalarnySucet(double skalar) {
+    public Vektor2D sucetSoSkalarom(double skalar) {
         double noveX = this.x + skalar;
         double noveY = this.y + skalar;
         return new Vektor2D(noveX, noveY);
@@ -113,7 +113,7 @@ public class Vektor2D {
      * @param skalar skalarny cinitel
      * @return rozsireny Vektor2D (x*skalar, y*skalar)
      */
-    public Vektor2D skalarnySucin(double skalar) {
+    public Vektor2D sucinSoSkalarom(double skalar) {
         double noveX = this.x * skalar;
         double noveY = this.y * skalar;
         return new Vektor2D(noveX, noveY);
@@ -123,7 +123,7 @@ public class Vektor2D {
      * @param druhyVektor2D rozsirujuci Vektor2D
      * @return rozsireny Vektor2D (x1*x2, y1*y2)
      */
-    public Vektor2D sucin(Vektor2D druhyVektor2D) {
+    public Vektor2D roznasobenie(Vektor2D druhyVektor2D) {
         double noveX = this.x * druhyVektor2D.x;
         double noveY = this.y * druhyVektor2D.y;
         return new Vektor2D(noveX, noveY);
@@ -152,11 +152,20 @@ public class Vektor2D {
     }
     /**
      * vytvori celo-ciselny (zakokruhleny) Vektor2D z povodneho
-     * @return Vektor2D s dlzkou 1
+     * @return zaokruhleny Vektor2D 
      */
     public Vektor2D zaokruhli() {
         double noveX = Math.round(this.x);
         double noveY = Math.round(this.y);
+        return new Vektor2D(noveX, noveY);
+    }
+    /**
+     * vytvori celo-ciselny (nahor zakokruhleny) Vektor2D z povodneho
+     * @return nahor zaokruhleny Vektor2D 
+     */
+    public Vektor2D zaokruhliNahor() {
+        double noveX = Math.ceil(this.x);
+        double noveY = Math.ceil(this.y);
         return new Vektor2D(noveX, noveY);
     }
     /**
@@ -180,7 +189,7 @@ public class Vektor2D {
      */
     @Override
     public String toString() {
-        return String.format("(%.0f,%.0f)", this.x, this.y);
+        return String.format("(%.2f|%.2f)", this.x, this.y);
     }
     /**
      * Kontroluje ci sa Vektory2D zhoduju

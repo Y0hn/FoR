@@ -2,10 +2,11 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 /**
- * Obsahuje informacie o tvare (obdlzniku) v 2D priestore
+ * Stara sa o fyzicku reperezenaciu objektu 
+ * popisaneho obdlznikom v 2D priestore
  * 
  * @author y0hn
- * @version v0.5
+ * @version v0.6
  */
 public class Rozmer2D {
     public static final Rozmer2D ZERO = new Rozmer2D(0, 0, 0, 0);
@@ -125,7 +126,7 @@ public class Rozmer2D {
      */
     public Vektor2D ziskajStred() {
         Vektor2D stred = new Vektor2D(this.poziciaX, this.poziciaY);
-        stred = stred.sucet(new Vektor2D(this.velkostX, this.velkostY).skalarnySucin(0.5));
+        stred = stred.sucet(new Vektor2D(this.velkostX, this.velkostY).sucinSoSkalarom(0.5));
         return stred;
     }
 
@@ -153,9 +154,11 @@ public class Rozmer2D {
     public boolean jePoziciaVnutri(Vektor2D pozicia) {
         boolean kolizuje = true;
         
+        // kolizie prisposobene pre zobrazenie v okne (lavy horny roh) (+y => nizsie)
+
         kolizuje &= pozicia.getX() > this.poziciaX; // kolizia z lava
         kolizuje &= pozicia.getX() < this.poziciaX + this.velkostX; // kolizia z prava
-        kolizuje &= pozicia.getY() > this.poziciaY; // kolizia z hora
+        kolizuje &= pozicia.getY() > this.poziciaY; // kolizia z dola
         kolizuje &= pozicia.getY() < this.poziciaY + this.velkostY; // kolizia z hora
 
         return kolizuje;
@@ -171,10 +174,10 @@ public class Rozmer2D {
             Vektor2D posun;            
             switch (i) {
                 case 1:
-                    posun = Vektor2D.PRAVO.sucin(rozmer.getVelkost());
+                    posun = Vektor2D.PRAVO.roznasobenie(rozmer.getVelkost());
                     break;
                 case 2:
-                    posun = Vektor2D.HORE.sucin(rozmer.getVelkost());
+                    posun = Vektor2D.HORE.roznasobenie(rozmer.getVelkost());
                     break;
                 case 3:
                     posun = rozmer.getVelkost();
@@ -199,10 +202,10 @@ public class Rozmer2D {
                 Vektor2D posun;            
                 switch (ii) {
                     case 1:
-                        posun = Vektor2D.PRAVO.sucin(rozmer.getVelkost());
+                        posun = Vektor2D.PRAVO.roznasobenie(rozmer.getVelkost());
                         break;
                     case 2:
-                        posun = Vektor2D.HORE.sucin(rozmer.getVelkost());
+                        posun = Vektor2D.HORE.roznasobenie(rozmer.getVelkost());
                         break;
                     case 3:
                         posun = rozmer.getVelkost();
@@ -212,7 +215,7 @@ public class Rozmer2D {
                         break;
                 }
                 // zkontroluje aj stredy stran a stred
-                posun = posun.skalarnySucin(1 / i);
+                posun = posun.sucinSoSkalarom(1 / i);
                 vnutri |= this.jePoziciaVnutri(rozmer.getPozicia().sucet(posun));
             }
         }
@@ -229,6 +232,32 @@ public class Rozmer2D {
     }
 
     /**
+     * Ziska priblizne najkratsiu vzdialenost medzi Rozmermi
+     * (ma problem s velkymi Rozmermy daleko od seba)
+     * @param rozmer
+     * @return najkratsia vzdialenost
+     */
+    public double najkratsiaVzdialenostKu(Rozmer2D rozmer) {
+        double vzdialenost = 0;
+        if (!this.jeRozmerCiastocneVnutri(rozmer)) {
+            Vektor2D poziciaToto = this.ziskajStred();
+            Vektor2D poziciaRozmer = rozmer.ziskajStred();
+            
+            Vektor2D smer = poziciaRozmer.rozdiel(poziciaToto).normalizuj().zaokruhli();
+            Vektor2D opacnySmer = smer.sucinSoSkalarom(-1);
+            
+            poziciaToto = poziciaToto.sucet(smer.roznasobenie(this.getVelkost().sucinSoSkalarom(0.5)));
+            poziciaRozmer = poziciaRozmer.sucet(opacnySmer.roznasobenie(rozmer.getVelkost().sucinSoSkalarom(0.5)));
+
+            poziciaToto = smer.absolutny().roznasobenie(poziciaToto);
+            poziciaRozmer = smer.absolutny().roznasobenie(poziciaRozmer);
+            
+            vzdialenost = poziciaToto.vzdialenostOd(poziciaRozmer);
+        }
+        return vzdialenost;
+    }
+
+    /**
      * Vytvori kopiu Rozmeru
      * @return novy Rozmer s rovnakymi atributmi
      */
@@ -242,7 +271,7 @@ public class Rozmer2D {
      */
     @Override
     public String toString() {
-        return String.format("(%.0f, %.0f)[%.0f, %.0f]", this.poziciaX, this.poziciaY, this.velkostX, this.velkostY);
+        return String.format("(%.2f, %.2f)[%.2f, %.2f]", this.poziciaX, this.poziciaY, this.velkostX, this.velkostY);
     }
     /**
      * Kontroluje ci sa Rozmery2D zhoduju
@@ -260,5 +289,21 @@ public class Rozmer2D {
             rovnake &= this.velkostY == rozmer.velkostY;
         }
         return rovnake;
+    }
+
+    private Vektor2D[] ziskajKrajneBody() {
+        Vektor2D[] body = new Vektor2D[4];
+        for (int i = 0; i < body.length; i++) {
+            double x = this.poziciaX;
+            double y = this.poziciaY;
+            if (i % 2 == 1) {
+                x += this.velkostX;
+            }
+            if (1 < i) {
+                y += this.velkostY;
+            }
+            body[i] = new Vektor2D(x, y);
+        }
+        return body;
     }
 }

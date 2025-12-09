@@ -33,7 +33,7 @@ public class Hrac {
      */
     public Hrac() {
         Rozmer2D rozmer = new Rozmer2D(Displej.getStred(), VELKOST);
-        rozmer.setPozicia(rozmer.getPozicia().rozdiel(VELKOST.skalarnySucin(0.5)));
+        rozmer.setPozicia(rozmer.getPozicia().rozdiel(VELKOST.sucinSoSkalarom(0.5)));
         this.telo = new Telo(MAX_ZIVOT, rozmer, RYCHLOST, POSKODENIE_STERLY);
 
         this.pohybVSmere = new boolean[Smer.values().length];
@@ -83,7 +83,7 @@ public class Hrac {
      */
     public void ozivHraca() {
         this.telo.zmenZdravie(Integer.MAX_VALUE);
-        this.telo.setPozicia(Displej.getStred().rozdiel(VELKOST.skalarnySucin(0.5)));
+        this.telo.setPozicia(Displej.getStred().rozdiel(VELKOST.sucinSoSkalarom(0.5)));
     }
 
     /**

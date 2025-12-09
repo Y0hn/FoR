@@ -3,7 +3,7 @@
  * Brani Hracovi opustit z heraciu plochu
  * 
  * @author y0hn
- * @version v0.7
+ * @version v0.8
  */
 public class Stena {
     public static final int SIRKA_STENY = 50;
@@ -37,6 +37,13 @@ public class Stena {
         }
         return rozmery;
     }
+    public Rozmer2D getRozmerDveri() {
+        Rozmer2D dvere = Rozmer2D.ZERO;
+        if (this.mury.length == 3) {
+            dvere = this.mury[2].getRozmer();
+        }
+        return dvere;
+    }
 
     /**
      * Nastavi stav dveri
@@ -61,9 +68,9 @@ public class Stena {
 
         // nastavi velkost Muru
         Vektor2D absSmerVektor2D = smer.getVektor2D().absolutny();                     // ziska Vektor2D (0,1) alebo (1,0)
-        Vektor2D velkostMuru = absSmerVektor2D.skalarnySucin(SIRKA_STENY);           // nastavi sirku Muru
+        Vektor2D velkostMuru = absSmerVektor2D.sucinSoSkalarom(SIRKA_STENY);           // nastavi sirku Muru
         absSmerVektor2D = absSmerVektor2D.vymeneny();                               // vymeni hodnoty
-        velkostMuru = velkostMuru.sucet(absSmerVektor2D.sucin(rozmer));    // natiahne Mur na celu Stenu Miestnosti (Display)
+        velkostMuru = velkostMuru.sucet(absSmerVektor2D.roznasobenie(rozmer));    // natiahne Mur na celu Stenu Miestnosti (Display)
 
         Mur[] castiSteny = new Mur[1];
         castiSteny[0] = new Mur(new Rozmer2D(polohaMuru, velkostMuru));
@@ -74,7 +81,7 @@ public class Stena {
         Vektor2D smerovyVektor2D = smer.getVektor2D();
         Mur[] castiSteny = new Mur[3];
         double pomerPosunuDveri = 1 - SIRKA_DVERI;
-        Vektor2D dlzkaMuru = rozmer.skalarnySucin(POMER_MUROV);
+        Vektor2D dlzkaMuru = rozmer.sucinSoSkalarom(POMER_MUROV);
 
         for (int i = 0; i < 3; i++) {
             // absolutna poloha ku lavemu-hronemu rohu okna
@@ -86,10 +93,10 @@ public class Stena {
             }
 
             // posun oproti predchadzajucemu ziskame rozsirenim vymeneneho sVektor2Da
-            Vektor2D posun = smerovyVektor2D.vymeneny().skalarnySucin(i);
+            Vektor2D posun = smerovyVektor2D.vymeneny().sucinSoSkalarom(i);
             // posun bude absolutny (nezalezi na +/-)
             posun = new Vektor2D(Math.abs(posun.getX()), Math.abs(posun.getY()));
-            polohaMuru = polohaMuru.sucet(posun.sucin(dlzkaMuru));
+            polohaMuru = polohaMuru.sucet(posun.roznasobenie(dlzkaMuru));
             // posun dveri
             Vektor2D posunDveri = Vektor2D.ZERO;
             if (i == 1) {
@@ -104,9 +111,9 @@ public class Stena {
             // nastavi velkost Muru
             double sirka = (i == 1) ? SIRKA_STENY * SIRKA_DVERI : SIRKA_STENY;
             Vektor2D absSmerVektor2D = smer.getVektor2D().absolutny();                     // ziska Vektor2D (0,1) alebo (1,0)
-            Vektor2D velkostMuru = absSmerVektor2D.skalarnySucin(sirka);                // nastavi sirku Muru
+            Vektor2D velkostMuru = absSmerVektor2D.sucinSoSkalarom(sirka);                // nastavi sirku Muru
             absSmerVektor2D = absSmerVektor2D.vymeneny();                               // vymeni hodnoty
-            velkostMuru = velkostMuru.sucet(absSmerVektor2D.sucin(dlzkaMuru));        // natiahne Mur na 1/3 Steny Miestnosti (Display)
+            velkostMuru = velkostMuru.sucet(absSmerVektor2D.roznasobenie(dlzkaMuru));        // natiahne Mur na 1/3 Steny Miestnosti (Display)
 
             castiSteny[i] = new Mur(new Rozmer2D(polohaMuru, velkostMuru));
         }
