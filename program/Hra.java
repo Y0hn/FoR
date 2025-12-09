@@ -6,6 +6,7 @@
  */
 public class Hra {
     private static final Vektor2D ROZMER_HRY = new Vektor2D(600, 400);
+    private static final int VELKOST_SVETA = 50;
     private static Hra instancia;
 
     /**
@@ -35,7 +36,7 @@ public class Hra {
 
     private Hra() {
         this.displej = new Displej("", "FrontRooms", Hra.ROZMER_HRY);
-        this.svet = new Svet(50);
+        this.svet = new Svet(VELKOST_SVETA);
         this.hrac = new Hrac();
         
         this.nacitajMiestnost(this.svet.getZaciatocnaMiestnost());
@@ -57,7 +58,7 @@ public class Hra {
             this.koncovaObrazovka = true;
         } else if (this.displej.ziskajRestart()) {
             this.displej.nastavGrafikuPreStavHry(this.stavHry, false);            
-            this.svet = new Svet(50);
+            this.svet = new Svet(VELKOST_SVETA);
 
             this.nacitajMiestnost(this.svet.getZaciatocnaMiestnost());
             this.koncovaObrazovka = false;

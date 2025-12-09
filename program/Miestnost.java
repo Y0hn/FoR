@@ -11,7 +11,7 @@ import java.util.Random;
 public class Miestnost {
     private static final int MAX_POCET_NEPIRATELOV = 5;
     private static final Vektor2D VELKOST_VYHRY = new Vektor2D(50, 50);
-    private static final double DOSAH_DVERI = 100;
+    private static final double DOSAH_DVERI = 150;
     
     private int indexMiestnosti;
     private Miestnost[] susedneMiestnosti;
@@ -118,7 +118,7 @@ public class Miestnost {
                 Vektor2D pozicia = this.ziskajNahodnuPoziciuVnutri();
                 rozmer = new Rozmer2D(pozicia, Nepriatel.VELKOST);
 
-                mimoDveri = this.jePlochaMimoDosahuDveri(rozmer);
+                mimoDveri = this.jeRozmerMimoDosahuDveri(rozmer);
                 mimoStien = this.jePlochaRozmeruMimoStien(rozmer);
                 mimoOstatnych = this.jePlochaRozmeruMimoNepriatelov(rozmer, null);
             } while (!mimoStien || !mimoDveri || !mimoOstatnych);
@@ -215,34 +215,27 @@ public class Miestnost {
         return volne;        
     }
 
-    private Vektor2D ziskajNahodnuPoziciuVnutri() {
-        int minX = this.steny[Smer.PRAVO.ordinal()].getRozmery()[0].getIntVeX();
-        int minY = this.steny[Smer.HORE.ordinal()].getRozmery()[0].getIntVeY();
-
-        int maxX = Displej.getRozmer().getIntVeX();
-        int maxY = Displej.getRozmer().getIntVeY();
-        maxX -= this.steny[Smer.LAVO.ordinal()].getRozmery()[0].getIntVeX();
-        maxY -= this.steny[Smer.DOLE.ordinal()].getRozmery()[0].getIntVeY();
-
-        //System.out.format("(%d, %d)(%d, %d)", minX, maxX, minY, maxY);
-        maxX -= minX;
-        maxY -= minY;
-        int x = minX + this.nahoda.nextInt(maxX);
-        int y = minY + this.nahoda.nextInt(maxY);
-        return new Vektor2D(x, y);
-    }
-    private boolean jePlochaMimoDosahuDveri(Rozmer2D rozmer) {
+    private boolean jeRozmerMimoDosahuDveri(Rozmer2D rozmer) {
         boolean mimoDosah = true;
         for (Stena s : this.steny) {
             Rozmer2D r = s.getRozmerDveri();
-            if (!r.equals(Rozmer2D.ZERO)) {
-                mimoDosah &= DOSAH_DVERI < r.najkratsiaVzdialenostKu(rozmer);
-            }
-            if (mimoDosah) {
-                break;
+            if (r != null) {
+                mimoDosah &= DOSAH_DVERI < r.vzdialenostStredov(rozmer);
+                if (!mimoDosah) {
+                    break;
+                }
             }
         }
         return mimoDosah;
+    }
+
+    private Vektor2D ziskajNahodnuPoziciuVnutri() {
+        int maxX = Displej.getRozmer().getIntVeX();
+        int maxY = Displej.getRozmer().getIntVeY();
+
+        int x = this.nahoda.nextInt(maxX);
+        int y = this.nahoda.nextInt(maxY);
+        return new Vektor2D(x, y);
     }
 
     @Override

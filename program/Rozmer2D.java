@@ -232,29 +232,14 @@ public class Rozmer2D {
     }
 
     /**
-     * Ziska priblizne najkratsiu vzdialenost medzi Rozmermi
-     * (ma problem s velkymi Rozmermy daleko od seba)
+     * Ziska vzdialenost stredov Rozmerov
      * @param rozmer
-     * @return najkratsia vzdialenost
+     * @return vzdialenost stredov
      */
-    public double najkratsiaVzdialenostKu(Rozmer2D rozmer) {
-        double vzdialenost = 0;
-        if (!this.jeRozmerCiastocneVnutri(rozmer)) {
-            Vektor2D poziciaToto = this.ziskajStred();
-            Vektor2D poziciaRozmer = rozmer.ziskajStred();
-            
-            Vektor2D smer = poziciaRozmer.rozdiel(poziciaToto).normalizuj().zaokruhli();
-            Vektor2D opacnySmer = smer.sucinSoSkalarom(-1);
-            
-            poziciaToto = poziciaToto.sucet(smer.roznasobenie(this.getVelkost().sucinSoSkalarom(0.5)));
-            poziciaRozmer = poziciaRozmer.sucet(opacnySmer.roznasobenie(rozmer.getVelkost().sucinSoSkalarom(0.5)));
-
-            poziciaToto = smer.absolutny().roznasobenie(poziciaToto);
-            poziciaRozmer = smer.absolutny().roznasobenie(poziciaRozmer);
-            
-            vzdialenost = poziciaToto.vzdialenostOd(poziciaRozmer);
-        }
-        return vzdialenost;
+    public double vzdialenostStredov(Rozmer2D rozmer) {
+        double v = this.ziskajStred().vzdialenostOd(rozmer.ziskajStred());
+        //System.out.println(this + " -> " + rozmer + " >=> " + this.ziskajStred() + " -> " + rozmer.ziskajStred() + " = " + v);
+        return v;
     }
 
     /**
@@ -289,21 +274,5 @@ public class Rozmer2D {
             rovnake &= this.velkostY == rozmer.velkostY;
         }
         return rovnake;
-    }
-
-    private Vektor2D[] ziskajKrajneBody() {
-        Vektor2D[] body = new Vektor2D[4];
-        for (int i = 0; i < body.length; i++) {
-            double x = this.poziciaX;
-            double y = this.poziciaY;
-            if (i % 2 == 1) {
-                x += this.velkostX;
-            }
-            if (1 < i) {
-                y += this.velkostY;
-            }
-            body[i] = new Vektor2D(x, y);
-        }
-        return body;
     }
 }

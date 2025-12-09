@@ -38,9 +38,9 @@ public class Stena {
         return rozmery;
     }
     public Rozmer2D getRozmerDveri() {
-        Rozmer2D dvere = Rozmer2D.ZERO;
+        Rozmer2D dvere = null;
         if (this.mury.length == 3) {
-            dvere = this.mury[2].getRozmer();
+            dvere = this.mury[1].getRozmer();
         }
         return dvere;
     }
