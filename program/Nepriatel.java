@@ -43,6 +43,11 @@ public class Nepriatel {
         grafika.setBackground(Color.RED);
         this.telo.setGrafika(grafika, Color.RED);
     }
+    public void zruzGrafiku() {
+        JPanel grafika = this.telo.getGrafika();
+        grafika.setBounds(Rozmer2D.ZERO.vytvorRectangle());
+        grafika.getParent().remove(grafika);
+    }
     /**
      * Obnovi spravanie nepiratela
      * @param aM aktualna Miestnost

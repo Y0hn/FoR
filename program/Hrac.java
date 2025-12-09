@@ -78,6 +78,13 @@ public class Hrac {
     public void odstranStrelu(Strela strela) {
         this.strely.remove(strela);
     }
+    /**
+     * Ozivy Hraca 
+     */
+    public void ozivHraca() {
+        this.telo.zmenZdravie(Integer.MAX_VALUE);
+        this.telo.setPozicia(Displej.getStred().rozdiel(VELKOST.skalarnySucin(0.5)));
+    }
 
     /**
      * Obnovi vlastnosti Hraca a jeho komponenty.

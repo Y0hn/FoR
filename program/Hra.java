@@ -31,6 +31,7 @@ public class Hra {
     private Displej displej;
     private Miestnost aktivnaMiestnost;
     private StavHry stavHry;
+    private boolean koncovaObrazovka;
 
     private Hra() {
         this.displej = new Displej("", "FrontRooms", Hra.ROZMER_HRY);
@@ -40,6 +41,7 @@ public class Hra {
         this.nacitajMiestnost(this.svet.getZaciatocnaMiestnost());
         this.hrac.nastavVstup(this.displej.getOkno());
         this.displej.nastavHraca(this.hrac);
+        this.koncovaObrazovka = false;
         this.stavHry = StavHry.HRA;
     }
     
@@ -50,8 +52,17 @@ public class Hra {
         if (this.stavHry == StavHry.HRA) {
             this.stavHry = this.aktivnaMiestnost.tik(this.hrac);
             this.hrac.tik(this.aktivnaMiestnost);
-        } else {
+        } else if (!this.koncovaObrazovka) {
             this.displej.nastavGrafikuPreStavHry(this.stavHry, true);
+            this.koncovaObrazovka = true;
+        } else if (this.displej.ziskajRestart()) {
+            this.displej.nastavGrafikuPreStavHry(this.stavHry, false);            
+            this.svet = new Svet(50);
+
+            this.nacitajMiestnost(this.svet.getZaciatocnaMiestnost());
+            this.koncovaObrazovka = false;
+            this.hrac.ozivHraca();
+            this.stavHry = StavHry.HRA;
         }
     }
     

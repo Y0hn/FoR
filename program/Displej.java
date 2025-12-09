@@ -3,6 +3,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLayeredPane;
 
 import java.awt.BorderLayout;
@@ -48,7 +49,8 @@ public class Displej {
 
     private JFrame okno;
     private JLayeredPane aktivnaMiestnost;
-    private JPanel[] uzivatelskeRozhranie;
+    private JButton[] uzivatelskeRozhranie;
+    private boolean restart;
 
     /**
      * Vytvori okno Displeja 
@@ -60,6 +62,8 @@ public class Displej {
         Vektor2D velkost = new Vektor2D(POSUN_ROZMERU_X, POSUN_ROZMERU_Y);
         velkost = velkost.sucet(Displej.rozmer.getVelkost());
         Rozmer2D skutocnyRozmer2D = new Rozmer2D(Displej.rozmer.getPozicia(), velkost);
+
+        this.restart = false;
 
         this.okno = new JFrame();
 
@@ -88,6 +92,13 @@ public class Displej {
     public JFrame getOkno() {
         return this.okno;
     }
+    public boolean ziskajRestart() {
+        boolean restartuj = this.restart;
+        if (restartuj) {
+            this.restart = false;
+        }
+        return restartuj;
+    }
     /**
      * Vytvori Hracovi objekt na Displeji 
      * @param h objekt Hraca
@@ -100,7 +111,7 @@ public class Displej {
         
         JPanel[] zivotyUI = new JPanel[objektHraca.getTelo().getMaxZdravie()];
         Rozmer2D rozmerZivota = Hrac.GRAFIKA_ZIVOTOV_HRACA;
-        Vektor2D velkostZivota = new Vektor2D(rozmerZivota.getVelkostX()/zivotyUI.length, rozmerZivota.getVelkostY());
+        Vektor2D velkostZivota = new Vektor2D(rozmerZivota.getVelkostX() / zivotyUI.length, rozmerZivota.getVelkostY());
         rozmerZivota = new Rozmer2D(rozmerZivota.getPozicia(), velkostZivota);
 
         for (int i = 0; i < zivotyUI.length; i++) {
@@ -133,13 +144,13 @@ public class Displej {
             this.aktivnaMiestnost.setLayer(grafika, VRSTVA_HRAC);
             this.aktivnaMiestnost.add(grafika);
 
-            int[] vrstvy = { VRSTVA_UI_HRAC, VRSTVA_UI };
-            JPanel[][] rozhrania = { h.getUI(), this.uzivatelskeRozhranie };
-            for (int i = 0; i < rozhrania.length; i++) {
-                for (JPanel cast : rozhrania[i]) {
-                    this.aktivnaMiestnost.setLayer(cast, vrstvy[i]);
-                    this.aktivnaMiestnost.add(cast);
-                }
+            for (JPanel cast : h.getUI()) {
+                this.aktivnaMiestnost.setLayer(cast, VRSTVA_UI_HRAC);
+                this.aktivnaMiestnost.add(cast);
+            }
+            for (JButton tlacitko : this.uzivatelskeRozhranie) {
+                this.aktivnaMiestnost.setLayer(tlacitko, VRSTVA_UI);
+                this.aktivnaMiestnost.add(tlacitko);
             }
         }
     }
@@ -204,18 +215,31 @@ public class Displej {
         stena.setBackground(Color.BLACK);
         return stena;
     }
-    private JPanel[] vytvorGrafikuUI() {
-        JPanel[] grafika = new JPanel[StavHry.values().length - 1];
+    private JButton[] vytvorGrafikuUI() {
+        JButton[] tlacitka = new JButton[StavHry.values().length - 1];
         
         for (int i = 0; i < StavHry.values().length; i++) {
             StavHry sh = StavHry.values()[i]; 
-            if (sh.getText() != "") {
-                JPanel jp = new JPanel();
-                jp.setLayout(null);
-                jp.setBounds(Rozmer2D.ZERO.vytvorRectangle());
-                jp.setBackground(sh.getFarbaPozadia());
-                grafika[i] = jp;
-                
+            if (!sh.getText().equals("")) {                
+                JButton jb = new JButton();
+                jb.setBackground(sh.getFarbaPozadia());
+                jb.setBounds(Displej.getRozmer().vytvorRectangle());
+                jb.setHorizontalAlignment(SwingConstants.CENTER);
+                jb.setVerticalAlignment(SwingConstants.CENTER);
+                jb.setLayout(null);
+
+                jb.setFocusable(false);
+                jb.setContentAreaFilled(false);
+                jb.setRolloverEnabled(false);
+                jb.setBorderPainted(false);
+                jb.setFocusPainted(false);
+                jb.setOpaque(true);
+                jb.setBounds(Rozmer2D.ZERO.vytvorRectangle());
+                jb.addActionListener(a -> {
+                    this.restart = true;
+                });
+                tlacitka[i] = jb;
+
                 JLabel jl = new JLabel();
                 jl.setFont(FONT);
                 jl.setBounds(Displej.getRozmer().vytvorRectangle());
@@ -223,9 +247,9 @@ public class Displej {
                 jl.setVerticalAlignment(SwingConstants.CENTER);
                 jl.setForeground(sh.getFarbaTextu());
                 jl.setText(sh.getText());
-                jp.add(jl, BorderLayout.CENTER);
+                jb.add(jl, BorderLayout.CENTER);
             }
         }
-        return grafika;
+        return tlacitka;
     }
 }

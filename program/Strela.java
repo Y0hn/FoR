@@ -66,7 +66,7 @@ public class Strela {
         for (Nepriatel n : nepriatelia) {
             Telo t = n.getTelo();
             if (t.getRozmer().jeRozmerCiastocneVnutri(this.rozmer)) {
-                if (!t.zmenZdravie(-poskodenie)) {
+                if (!t.zmenZdravie(-this.poskodenie)) {
                     aM.odstranNepriatela(n);
                 }
                 zasah = true;

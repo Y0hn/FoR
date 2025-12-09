@@ -62,6 +62,7 @@ public class Miestnost {
      */
     public void odstranNepriatela(Nepriatel nepriatel) {
         this.nepriatelia.remove(nepriatel);
+        nepriatel.zruzGrafiku();
     }
     /**
      * Ziska Rozmery2D vsetkych Stien (Murov) v Miestnosti
@@ -105,11 +106,11 @@ public class Miestnost {
      * Vytvori Nepriatelov na nahodnych suradniciach
      */
     public void vytvorNepriatelov() {
-        int pocet = nahoda.nextInt(MAX_POCET_NEPIRATELOV);
+        int pocet = this.nahoda.nextInt(MAX_POCET_NEPIRATELOV);
         Rozmer2D rozmer;
         for (int i = 0; i < pocet; i++) {
             do {
-                Vektor2D pozicia = ziskajNahodnuPoziciuVnutri();
+                Vektor2D pozicia = this.ziskajNahodnuPoziciuVnutri();
                 rozmer = new Rozmer2D(pozicia, Nepriatel.VELKOST);
             } while (!this.jePlochaRozmeruMimoStien(rozmer) || !this.jePlochaRozmeruMimoNepriatelov(rozmer, null));
             this.nepriatelia.add(new Nepriatel(rozmer.getPozicia()));
@@ -145,7 +146,7 @@ public class Miestnost {
         if (!this.dvereOtvorene && this.nepriatelia.size() == 0) {
             this.nastavVsetkyDvere(true);
         } else {
-            for (Nepriatel n : nepriatelia) {
+            for (Nepriatel n : this.nepriatelia) {
                 if (n.tik(this, hrac)) {
                     stavHry = StavHry.PREHRA;
                     break;
@@ -206,13 +207,13 @@ public class Miestnost {
     }
 
     private Vektor2D ziskajNahodnuPoziciuVnutri() {
-        int minX = steny[Smer.PRAVO.ordinal()].getRozmery()[0].getIntVeX();
-        int minY = steny[Smer.HORE.ordinal()].getRozmery()[0].getIntVeY();
+        int minX = this.steny[Smer.PRAVO.ordinal()].getRozmery()[0].getIntVeX();
+        int minY = this.steny[Smer.HORE.ordinal()].getRozmery()[0].getIntVeY();
 
         int maxX = Displej.getRozmer().getIntVeX();
         int maxY = Displej.getRozmer().getIntVeY();
-        maxX -= steny[Smer.LAVO.ordinal()].getRozmery()[0].getIntVeX();
-        maxY -= steny[Smer.DOLE.ordinal()].getRozmery()[0].getIntVeY();
+        maxX -= this.steny[Smer.LAVO.ordinal()].getRozmery()[0].getIntVeX();
+        maxY -= this.steny[Smer.DOLE.ordinal()].getRozmery()[0].getIntVeY();
 
         //System.out.format("(%d, %d)(%d, %d)", minX, maxX, minY, maxY);
         maxX -= minX;

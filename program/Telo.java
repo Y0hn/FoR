@@ -23,11 +23,11 @@ public class Telo {
     private boolean zmenaZdravia;
     /**
      * Vytvori Telo pre postavu 
+     * 
      * @param maxZdravie pociatocny pocet zravia
-     * @param pozicia polohovy Vektor2D - zacinajuca polaha v miestnosti
-     * @param smer normalizovany smerovy Vektor2D pohybu
+     * @param rozmer Rozmer stvorca opisujuceho Tela
      * @param rychlost ovplyvnuje rychlost pohybu tela
-     * @param polomerTela polomer kruhoveho tela
+     * @param poskodenie poskodenie sposobovane ostanym
      */
     public Telo(int maxZdravie, Rozmer2D rozmer, double rychlost, int poskodenie) {
         this.smerovyVektor2D = Vektor2D.ZERO;
@@ -75,7 +75,7 @@ public class Telo {
 
         // Vykresli zmenu
         if (this.grafika != null) {
-            this.grafika.setLocation(rozmer.getPozicia().vytvorPoint());
+            this.grafika.setLocation(this.rozmer.getPozicia().vytvorPoint());
         }
     }
     /**
@@ -101,7 +101,7 @@ public class Telo {
      */
     public JPanel getGrafika() {
         return this.grafika;
-    }    
+    }
     /**
      * Obnovi Telo (Hraca) -> posunie ho v smere ak je to mozne, pripadne prejde do dalsej miestnosti
      * @param aktMiest Miestnost v ktorej sa telo nachadza
@@ -112,8 +112,8 @@ public class Telo {
         
         if (aktMiest.jePlochaRozmeruMimoStien(buduciRozmer)) {
             this.setPozicia(buducaPozicia);
-            this.skusIstDoInejMiestnosti(aktMiest);
-            } else if (!aktMiest.jePlochaRozmeruMimoStien(this.rozmer)) {
+            this.skusIstDoInejMiestnosti(aktMiest);            
+        } else if (!aktMiest.jePlochaRozmeruMimoStien(this.rozmer)) {
             this.opravPoziciu(aktMiest);
         } else {
             this.prijdiKuStene(aktMiest);
@@ -127,7 +127,6 @@ public class Telo {
     }
     /**
      * Obnovi Telo (Nepriatela) -> posunie ho v smere ak je to mozne
-     * @param aktMiest Miestnost v ktorej sa telo nachadza
      * @param aM aktualna Miestnost
      * @param hrac referencia na objekt Hraca
      * @return PRAVDA ak naraza do Hraca
@@ -155,13 +154,9 @@ public class Telo {
         this.zdravie += zmena;
         if (this.maxZdravie < this.zdravie) {
             this.zdravie = this.maxZdravie;
-        }
-        boolean zijem = 0 < this.zdravie;
-        if (!zijem) {
-            this.zomri();
-        }
+        }        
         this.zmenaZdravia = true;
-        return zijem;
+        return 0 < this.zdravie;
     }
 
     private Vektor2D ziskajPoziciuDalsiehoPohybu() {        
@@ -231,9 +226,5 @@ public class Telo {
             pozicia = pozicia.sucet(this.rozmer.getVelkost().skalarnySucin(-0.5));
             this.setPozicia(pozicia);
         }
-    }
-    private void zomri() {
-        this.grafika.setBounds(Rozmer2D.ZERO.vytvorRectangle());
-        this.grafika.getParent().remove(this.grafika);
     }
 }
