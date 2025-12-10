@@ -14,7 +14,7 @@ import java.awt.Font;
  * Zobrazovac okna Hry
  * 
  * @author y0hn
- * @version v0.10
+ * @version v0.11
  */
 public class Displej {
     private static final int POSUN_ROZMERU_X = 10;
@@ -23,29 +23,13 @@ public class Displej {
     private static final int VRSTVA_PODLAHA = 0;
     private static final int VRSTVA_STENA = 1;
     public static final int VRSTVA_STRELA = 2;
-    private static final int VRSTVA_VYHRA = 2;
+    private static final int VRSTVA_PLOCHA = 2;
     private static final int VRSTVA_HRAC = 3;
     private static final int VRSTVA_NEPRIATEL = 3;
     private static final int VRSTVA_UI_HRAC = 4;
     private static final int VRSTVA_UI = 5;
 
     private static final Font FONT = new Font("Arial", 1, 100);
-
-    private static Rozmer2D rozmer;
-    /**
-     * Vrati Rozmer2D Displeja
-     * @return [0,0]x[vX,vY]
-     */
-    public static Rozmer2D getRozmer() {
-        return Displej.rozmer;
-    }
-    /**
-     * Vrati Vektor2D stred Displeja
-     * @return [vX/2, vY/2]
-     */
-    public static Vektor2D getStred() {
-        return Displej.rozmer.ziskajStred();
-    }
 
     private JFrame okno;
     private JLayeredPane aktivnaMiestnost;
@@ -57,11 +41,10 @@ public class Displej {
      * @param nazovOkna zobrazovany v hlavicke okna
      * @param rozmer Vektor2D velkosti okna
      */
-    public Displej(String ikonaOkna, String nazovOkna, Vektor2D rozmerOkna) {
-        Displej.rozmer = new Rozmer2D(Vektor2D.ZERO, rozmerOkna);
+    public Displej(String ikonaOkna, String nazovOkna, Rozmer2D rozmer) {
         Vektor2D velkost = new Vektor2D(POSUN_ROZMERU_X, POSUN_ROZMERU_Y);
-        velkost = velkost.sucet(Displej.rozmer.getVelkost());
-        Rozmer2D skutocnyRozmer2D = new Rozmer2D(Displej.rozmer.getPozicia(), velkost);
+        velkost = rozmer.getVelkost().sucet(velkost);
+        Rozmer2D skutocnyRozmer2D = new Rozmer2D(rozmer.getPozicia(), velkost);
 
         this.restart = false;
 
@@ -159,13 +142,13 @@ public class Displej {
      * @param stav 
      */
     public void nastavGrafikuPreStavHry(StavHry stav, boolean zapni) {
-        Rozmer2D r = zapni ? Displej.getRozmer() : Rozmer2D.ZERO;
+        Rozmer2D r = zapni ? Hra.ROZMER_OKNA : Rozmer2D.ZERO;
         this.uzivatelskeRozhranie[stav.ordinal()].setBounds(r.vytvorRectangle());
     }
         
     private JLayeredPane vytvorGrafikuMiestnosti(Miestnost m) {
         JLayeredPane miestnost = new JLayeredPane();
-        miestnost.setBounds(Displej.rozmer.vytvorRectangle());
+        miestnost.setBounds(Hra.ROZMER_OKNA.vytvorRectangle());
 
         for (Rozmer2D[] rozmery : m.getRozmery2D()) {
             for (Rozmer2D r : rozmery) {
@@ -184,7 +167,7 @@ public class Displej {
 
         JPanel podlaha = new JPanel();
         podlaha.setBackground(Color.GRAY); // docasne
-        podlaha.setBounds(Displej.getRozmer().vytvorRectangle());
+        podlaha.setBounds(Hra.ROZMER_OKNA.vytvorRectangle());
         podlaha.setLayout(new BorderLayout());
         miestnost.setLayer(podlaha, VRSTVA_PODLAHA);
         miestnost.add(podlaha);
@@ -200,11 +183,11 @@ public class Displej {
 
         VyhradenaPlocha plocha = m.getVyhradenaPlocha();
         if (plocha != null) {
-            JPanel vyhernaPlocha = new JPanel();
-            vyhernaPlocha.setBackground(plocha.getFarba());
-            vyhernaPlocha.setBounds(plocha.getRozmer().vytvorRectangle());
-            miestnost.setLayer(vyhernaPlocha, VRSTVA_VYHRA);
-            miestnost.add(vyhernaPlocha);
+            JPanel grafikaPlochy = new JPanel();
+            grafikaPlochy.setBackground(plocha.getFarba());
+            grafikaPlochy.setBounds(plocha.getRozmer().vytvorRectangle());
+            miestnost.setLayer(grafikaPlochy, VRSTVA_PLOCHA);
+            miestnost.add(grafikaPlochy);
         }
 
         return miestnost;
@@ -220,13 +203,8 @@ public class Displej {
         
         for (int i = 0; i < StavHry.values().length; i++) {
             StavHry sh = StavHry.values()[i]; 
-            if (!sh.getText().equals("")) {                
+            if (sh != StavHry.HRA) {                
                 JButton jb = new JButton();
-                jb.setBackground(sh.getFarbaPozadia());
-                jb.setBounds(Displej.getRozmer().vytvorRectangle());
-                jb.setHorizontalAlignment(SwingConstants.CENTER);
-                jb.setVerticalAlignment(SwingConstants.CENTER);
-                jb.setLayout(null);
 
                 jb.setFocusable(false);
                 jb.setContentAreaFilled(false);
@@ -234,17 +212,20 @@ public class Displej {
                 jb.setBorderPainted(false);
                 jb.setFocusPainted(false);
                 jb.setOpaque(true);
+
                 jb.setBounds(Rozmer2D.ZERO.vytvorRectangle());
+                jb.setBackground(sh.getFarbaPozadia());
+                jb.setLayout(null);
                 jb.addActionListener(a -> {
                     this.restart = true;
                 });
                 tlacitka[i] = jb;
 
                 JLabel jl = new JLabel();
-                jl.setFont(FONT);
-                jl.setBounds(Displej.getRozmer().vytvorRectangle());
-                jl.setHorizontalAlignment(SwingConstants.CENTER);
-                jl.setVerticalAlignment(SwingConstants.CENTER);
+                jl.setFont(sh.getFont());
+                jl.setBounds(Hra.ROZMER_OKNA.vytvorRectangle());
+                jl.setHorizontalAlignment(sh.getZarovananieX());
+                jl.setVerticalAlignment(sh.getZarovananieY());
                 jl.setForeground(sh.getFarbaTextu());
                 jl.setText(sh.getText());
                 jb.add(jl, BorderLayout.CENTER);

@@ -181,8 +181,8 @@ public class Telo {
     private void skusIstDoInejMiestnosti(Miestnost aktualnaMiestnost) {
         Vektor2D stred = this.rozmer.ziskajStred();
         
-        if (!Displej.getRozmer().jePoziciaVnutri(stred)) {
-            Vektor2D posun = Displej.getRozmer().getVelkost();
+        if (!Hra.ROZMER_OKNA.jePoziciaVnutri(stred)) {
+            Vektor2D posun = Hra.ROZMER_OKNA.getVelkost();
             posun = posun.sucinSoSkalarom(-0.5);
 
             stred = stred.sucet(posun);
@@ -200,7 +200,7 @@ public class Telo {
      * Zmeni pohohu po vstupe do Miestnosti aby bola na opacnej strane ako pri vstupe
      */
     private void invertujPolohu() {
-        Vektor2D stredMiestnost = Displej.getRozmer().getVelkost().sucinSoSkalarom(0.5);
+        Vektor2D stredMiestnost = Hra.ROZMER_OKNA.getVelkost().sucinSoSkalarom(0.5);
         Vektor2D stredovaPozicia = this.rozmer.ziskajStred();
 
         // posunie [0,0] do stredu miestnosti
@@ -221,7 +221,7 @@ public class Telo {
         this.setPozicia(novaPozicia);
     }
     private void opravPoziciu(Miestnost aM) {
-        Vektor2D stredMiestnosti = Displej.getStred();
+        Vektor2D stredMiestnosti = Hra.ROZMER_OKNA.ziskajStred();
         Vektor2D smerPosunu = stredMiestnosti.rozdiel(this.rozmer.ziskajStred());
         smerPosunu = smerPosunu.normalizuj().sucinSoSkalarom(PRESNOST_OPRAVY_POSUNU);
 

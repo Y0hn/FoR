@@ -81,6 +81,9 @@ public class Miestnost {
      * @return vrati hodnotu iba v pripade ak je Miestnost konecna inak ma hodnotu NULL
      */
     public VyhradenaPlocha getVyhradenaPlocha() {
+        if (this.nepriatelia.size() != 0) {
+            return null;
+        }
         return this.vyhradenaPlocha;
     }
     /**
@@ -152,8 +155,13 @@ public class Miestnost {
     public StavHry tik(Hrac hrac, double deltaCasu) {
         StavHry stavHry = StavHry.HRA;
 
-        if (!this.dvereOtvorene && this.nepriatelia.size() == 0) {
-            this.nastavVsetkyDvere(true);
+        if (this.nepriatelia.size() == 0) {
+            if (!this.dvereOtvorene) {
+                this.nastavVsetkyDvere(true);
+            } 
+            if (this.vyhradenaPlocha != null) {
+                stavHry = this.vyhradenaPlocha.tik(hrac);
+            }
         } else if (this.casAktivacie < System.currentTimeMillis()) {
             for (Nepriatel n : this.nepriatelia) {
                 if (n.tik(this, hrac, deltaCasu)) {
@@ -163,9 +171,6 @@ public class Miestnost {
             }
         }
 
-        if (this.vyhradenaPlocha != null) {
-            stavHry = this.vyhradenaPlocha.tik(hrac);
-        }
         return stavHry;
     }
     /**
@@ -235,8 +240,8 @@ public class Miestnost {
     }
 
     private Vektor2D ziskajNahodnuPoziciuVnutri(Random nahoda) {
-        int maxX = Displej.getRozmer().getIntVeX();
-        int maxY = Displej.getRozmer().getIntVeY();
+        int maxX = Hra.ROZMER_OKNA.getIntVeX();
+        int maxY = Hra.ROZMER_OKNA.getIntVeY();
 
         int x = nahoda.nextInt(maxX);
         int y = nahoda.nextInt(maxY);

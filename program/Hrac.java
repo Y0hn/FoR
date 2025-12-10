@@ -35,7 +35,7 @@ public class Hrac {
      * @param svet Svet v ktorom hrac zacina hru 
      */
     public Hrac() {
-        Rozmer2D rozmer = new Rozmer2D(Displej.getStred(), VELKOST);
+        Rozmer2D rozmer = new Rozmer2D(Hra.ROZMER_OKNA.ziskajStred(), VELKOST);
         rozmer.setPozicia(rozmer.getPozicia().rozdiel(VELKOST.sucinSoSkalarom(0.5)));
         this.telo = new Telo(MAX_ZIVOT, rozmer, RYCHLOST, POSKODENIE_STERLY);
 
@@ -90,7 +90,7 @@ public class Hrac {
      */
     public void ozivHraca() {
         this.telo.zmenZdravie(Integer.MAX_VALUE);
-        this.telo.setPozicia(Displej.getStred().rozdiel(VELKOST.sucinSoSkalarom(0.5)));
+        this.telo.setPozicia(Hra.ROZMER_OKNA.ziskajStred().rozdiel(VELKOST.sucinSoSkalarom(0.5)));
     }
 
     /**

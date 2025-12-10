@@ -95,7 +95,7 @@ public class Svet {
         for (Miestnost m : this.miestnosti) {
             m.vytvorSteny();
             int index = m.getIndex();
-            if (m.getVyhradenaPlocha() == null && this.indexPociatocnejMiestnosti != index) {
+            if (this.indexPociatocnejMiestnosti != index) {
                 m.vytvorNepriatelov(nahoda);
             }
         }

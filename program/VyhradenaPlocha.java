@@ -14,8 +14,8 @@ public enum VyhradenaPlocha {
 
     VyhradenaPlocha(double pX, double pY, Color farba) {
         Vektor2D pomerVelkosti = new Vektor2D(pX, pY);
-        Vektor2D pozicia = Hra.ROZMER_HRY.sucinSoSkalarom(0.5);
-        Vektor2D velkost = Hra.ROZMER_HRY.roznasobenie(pomerVelkosti);
+        Vektor2D pozicia = Hra.ROZMER_OKNA.getVelkost().sucinSoSkalarom(0.5);
+        Vektor2D velkost = Hra.ROZMER_OKNA.getVelkost().roznasobenie(pomerVelkosti);
         pozicia = pozicia.rozdiel(velkost.sucinSoSkalarom(0.5));
 
         this.rozmerVMiestnosti = new Rozmer2D(pozicia, velkost);

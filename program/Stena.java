@@ -56,7 +56,7 @@ public class Stena {
     }
 
     private Mur[] vygenerujMurBezDveriVSmere(Smer smer) {
-        Vektor2D rozmer = Displej.getRozmer().getVelkost();
+        Vektor2D rozmer = Hra.ROZMER_OKNA.getVelkost();
 
         // absolutna poloha ku lavemu-hronemu rohu okna
         Vektor2D polohaMuru = Vektor2D.ZERO;
@@ -77,7 +77,7 @@ public class Stena {
         return castiSteny;
     }
     private Mur[] vygenerujMurSDveramiVSmere(Smer smer) {
-        Vektor2D rozmer = Displej.getRozmer().getVelkost();
+        Vektor2D rozmer = Hra.ROZMER_OKNA.getVelkost();
         Vektor2D smerovyVektor2D = smer.getVektor2D();
         Mur[] castiSteny = new Mur[3];
         double pomerPosunuDveri = 1 - SIRKA_DVERI;

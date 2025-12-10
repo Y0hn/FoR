@@ -5,7 +5,7 @@
  * @version v0.5
  */
 public class Hra {
-    public static final Vektor2D ROZMER_HRY = new Vektor2D(600, 400);
+    public static final Rozmer2D ROZMER_OKNA = new Rozmer2D(0, 0, 600, 400);
     private static final int VELKOST_SVETA = 50;
     private static Hra instancia;
 
@@ -35,7 +35,7 @@ public class Hra {
     private boolean koncovaObrazovka;
 
     private Hra() {
-        this.displej = new Displej("", "FrontRooms", Hra.ROZMER_HRY);
+        this.displej = new Displej("", "FrontRooms", Hra.ROZMER_OKNA);
         this.svet = new Svet(VELKOST_SVETA);
         this.hrac = new Hrac();
         
