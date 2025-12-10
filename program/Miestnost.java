@@ -10,7 +10,7 @@ import java.util.Random;
  */
 public class Miestnost {
     private static final int MAX_POCET_NEPIRATELOV = 5;
-    private static final Vektor2D VELKOST_VYHRY = new Vektor2D(50, 50);
+    private static final Vektor2D VELKOST_VYHRY = new Vektor2D(100, 100);
     private static final double DOSAH_DVERI = 150;
     
     private int indexMiestnosti;
@@ -18,7 +18,6 @@ public class Miestnost {
     private Stena[] steny;
     private ArrayList<Nepriatel> nepriatelia;
     private boolean dvereOtvorene;
-    private Random nahoda;
     private Rozmer2D vyhernaPlocha;
 
     /**
@@ -32,7 +31,6 @@ public class Miestnost {
         this.nepriatelia = new ArrayList<Nepriatel>();
         this.susedneMiestnosti = new Miestnost[pocetStien];
         this.dvereOtvorene = false;
-        this.nahoda = new Random();
         this.vyhernaPlocha = null;
     }
     /**
@@ -106,8 +104,8 @@ public class Miestnost {
     /**
      * Vytvori Nepriatelov na nahodnych suradniciach
      */
-    public void vytvorNepriatelov() {
-        int pocet = this.nahoda.nextInt(MAX_POCET_NEPIRATELOV);
+    public void vytvorNepriatelov(Random nahoda) {
+        int pocet = nahoda.nextInt(MAX_POCET_NEPIRATELOV);
         Rozmer2D rozmer;
 
         for (int i = 0; i < pocet; i++) {
@@ -115,7 +113,7 @@ public class Miestnost {
             boolean mimoDveri;
             boolean mimoOstatnych;
             do {
-                Vektor2D pozicia = this.ziskajNahodnuPoziciuVnutri();
+                Vektor2D pozicia = this.ziskajNahodnuPoziciuVnutri(nahoda);
                 rozmer = new Rozmer2D(pozicia, Nepriatel.VELKOST);
 
                 mimoDveri = this.jeRozmerMimoDosahuDveri(rozmer);
@@ -229,12 +227,12 @@ public class Miestnost {
         return mimoDosah;
     }
 
-    private Vektor2D ziskajNahodnuPoziciuVnutri() {
+    private Vektor2D ziskajNahodnuPoziciuVnutri(Random nahoda) {
         int maxX = Displej.getRozmer().getIntVeX();
         int maxY = Displej.getRozmer().getIntVeY();
 
-        int x = this.nahoda.nextInt(maxX);
-        int y = this.nahoda.nextInt(maxY);
+        int x = nahoda.nextInt(maxX);
+        int y = nahoda.nextInt(maxY);
         return new Vektor2D(x, y);
     }
 

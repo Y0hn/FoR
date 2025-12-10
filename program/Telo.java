@@ -151,10 +151,14 @@ public class Telo {
      * @return PRAVDA ak Telo stale zije
      */
     public boolean zmenZdravie(int zmena) {
-        this.zdravie += zmena;
-        if (this.maxZdravie < this.zdravie) {
+        if (this.maxZdravie < zmena) {
             this.zdravie = this.maxZdravie;
-        }        
+        } else {
+            this.zdravie += zmena;
+            if (this.maxZdravie < this.zdravie) {
+                this.zdravie = this.maxZdravie;
+            }
+        }
         this.zmenaZdravia = true;
         return 0 < this.zdravie;
     }

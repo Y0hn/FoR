@@ -87,7 +87,7 @@ public class Svet {
             m.vytvorSteny();
             int index = m.getIndex();
             if (index != this.indexKonecnejMiestnosti && this.indexPociatocnejMiestnosti != index) {
-                m.vytvorNepriatelov();
+                m.vytvorNepriatelov(nahoda);
             }
         }
     }

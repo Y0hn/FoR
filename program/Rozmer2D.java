@@ -4,9 +4,8 @@ import java.awt.Rectangle;
 /**
  * Stara sa o fyzicku reperezenaciu objektu 
  * popisaneho obdlznikom v 2D priestore
- * 
  * @author y0hn
- * @version v0.6
+ * @version v0.6 
  */
 public class Rozmer2D {
     public static final Rozmer2D ZERO = new Rozmer2D(0, 0, 0, 0);
@@ -30,7 +29,7 @@ public class Rozmer2D {
     }
     /**
      * Vytvori Rozmer2D popisujuci tvar z Vektorov
-     * @param pozicia [x,y]
+     * @param pozicia (x,y)
      * @param velkost [sirka,vyska]
      */
     public Rozmer2D(Vektor2D pozicia, Vektor2D velkost) {
@@ -100,7 +99,7 @@ public class Rozmer2D {
 
     /**
      * Vyvori Vektor2D s vekostou zodpovedajucou pozicii tvaru
-     * @return [x,y]
+     * @return (x,y)
      */
     public Vektor2D getPozicia() {
         return new Vektor2D(this.poziciaX, this.poziciaY);
@@ -113,8 +112,8 @@ public class Rozmer2D {
         return new Vektor2D(this.velkostX, this.velkostY);
     }
     /**
-     * Vyvori Vektor2D s vekostou zodpovedajucou pozicii tvaru
-     * @return [x,y]
+     * Posunie rozmer na poziciu
+     * @param pozicia (x,y)
      */
     public void setPozicia(Vektor2D pozicia) {
         this.poziciaX = pozicia.getX();
@@ -132,7 +131,7 @@ public class Rozmer2D {
 
     /**
      * Vytvori obdlznik nesuci rovnake rozmery ako popisovany tvar
-     * @return (x,y)x[vX,vY]
+     * @return (x,y) [vX,vY]
      */
     public Rectangle vytvorRectangle() {
         return new Rectangle(this.getIntPoX(), this.getIntPoY(), this.getIntVeX(), this.getIntVeY());
@@ -140,26 +139,26 @@ public class Rozmer2D {
 
     /**
      * Vytvori bod na rovnakej pozicii ako tvar
-     * @return
+     * @return bod na pozicii ((int)x,(int)y)
      */
     public Point vytvorPointPozicie() {
         return new Point(this.getIntPoX(), this.getIntPoY());
     }
 
     /**
-     * Zisti ci sa pozicia nachadza v rozmere
+     * Zisti ci sa pozicia nachadza v Rozmere
      * @param pozicia Vektor2D
-     * @return PRANDA ak je cast Tela v stene
+     * @return PRANDA ak je pozicia vnutri alebo na hrane
      */
     public boolean jePoziciaVnutri(Vektor2D pozicia) {
         boolean kolizuje = true;
         
         // kolizie prisposobene pre zobrazenie v okne (lavy horny roh) (+y => nizsie)
 
-        kolizuje &= pozicia.getX() > this.poziciaX; // kolizia z lava
-        kolizuje &= pozicia.getX() < this.poziciaX + this.velkostX; // kolizia z prava
-        kolizuje &= pozicia.getY() > this.poziciaY; // kolizia z dola
-        kolizuje &= pozicia.getY() < this.poziciaY + this.velkostY; // kolizia z hora
+        kolizuje &= pozicia.getX() >= this.poziciaX; // kolizia z lava
+        kolizuje &= pozicia.getX() <= this.poziciaX + this.velkostX; // kolizia z prava
+        kolizuje &= pozicia.getY() >= this.poziciaY; // kolizia z dola
+        kolizuje &= pozicia.getY() <= this.poziciaY + this.velkostY; // kolizia z hora
 
         return kolizuje;
     }
@@ -182,7 +181,8 @@ public class Rozmer2D {
                 case 3:
                     posun = rozmer.getVelkost();
                     break;
-                default: // 0
+                case 0:
+                default:
                     posun = Vektor2D.ZERO;
                     break;
             }
@@ -199,7 +199,7 @@ public class Rozmer2D {
         boolean vnutri = false;
         for (double i = 1; i < 3; i++) {            
             for (int ii = 0; ii < 4 && !vnutri; ii++) {
-                Vektor2D posun;            
+                Vektor2D posun;
                 switch (ii) {
                     case 1:
                         posun = Vektor2D.PRAVO.roznasobenie(rozmer.getVelkost());
@@ -210,7 +210,8 @@ public class Rozmer2D {
                     case 3:
                         posun = rozmer.getVelkost();
                         break;
-                    default: // 0
+                    case 0:
+                    default:
                         posun = Vektor2D.ZERO;
                         break;
                 }
@@ -223,7 +224,7 @@ public class Rozmer2D {
     }
 
     /**
-     * Zmeni poziciu Rozmeru
+     * Zmeni poziciu Rozmeru o velkost Vektora
      * @param posun Vektor2D
      */
     public void pricitajVektor2DKPozicii(Vektor2D posun) {
@@ -234,12 +235,10 @@ public class Rozmer2D {
     /**
      * Ziska vzdialenost stredov Rozmerov
      * @param rozmer
-     * @return vzdialenost stredov
+     * @return vzdialenost od stredu tohto Rozmeru k stredu druheho Rozmeru
      */
     public double vzdialenostStredov(Rozmer2D rozmer) {
-        double v = this.ziskajStred().vzdialenostOd(rozmer.ziskajStred());
-        //System.out.println(this + " -> " + rozmer + " >=> " + this.ziskajStred() + " -> " + rozmer.ziskajStred() + " = " + v);
-        return v;
+        return this.ziskajStred().vzdialenostOd(rozmer.ziskajStred());
     }
 
     /**
