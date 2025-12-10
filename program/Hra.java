@@ -2,7 +2,7 @@
  * Trieda pre zjednotenie vsetkych komponentov Hry
  * 
  * @author y0hn 
- * @version v0.4
+ * @version v0.5
  */
 public class Hra {
     public static final Vektor2D ROZMER_HRY = new Vektor2D(600, 400);
@@ -52,12 +52,16 @@ public class Hra {
     public void tik(double deltaCasu) {
         if (this.stavHry == StavHry.HRA) {
             this.stavHry = this.aktivnaMiestnost.tik(this.hrac, deltaCasu);
-            this.hrac.tik(this.aktivnaMiestnost, deltaCasu);
-
+            this.stavHry = this.hrac.tik(this.aktivnaMiestnost, this.stavHry, deltaCasu);
         } else if (!this.koncovaObrazovka) {
             this.displej.nastavGrafikuPreStavHry(this.stavHry, true);
             this.koncovaObrazovka = true;
-
+        } else if (this.stavHry == StavHry.PAUZA) {
+            if (this.displej.ziskajRestart() || this.hrac.pauzaTik()) {
+                this.displej.nastavGrafikuPreStavHry(this.stavHry, false);   
+                this.koncovaObrazovka = false;
+                this.stavHry = StavHry.HRA;
+            }        
         } else if (this.displej.ziskajRestart()) {
             this.displej.nastavGrafikuPreStavHry(this.stavHry, false);            
             this.svet = new Svet(VELKOST_SVETA);

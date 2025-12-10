@@ -9,17 +9,20 @@ import javax.swing.JPanel;
  * Drzi informacie o hracovi vo Svete
  * 
  * @author y0hn 
- * @version v0.5
+ * @version v0.6
  */
 public class Hrac {
+    public static final Rozmer2D GRAFIKA_ZIVOTOV_HRACA = new Rozmer2D(5, 5, 150, 20);
+
     private static final int MAX_ZIVOT = 10;
     private static final Vektor2D VELKOST = new Vektor2D(50, 50);
     private static final double RYCHLOST = 10;
     private static final double RYCHLOST_STRELBY = 2;
     private static final int POSKODENIE_STERLY = 1;
-    public static final Rozmer2D GRAFIKA_ZIVOTOV_HRACA = new Rozmer2D(5, 5, 150, 20);
 
     private Telo telo;
+    private boolean pauza;
+    private boolean vstupPauza;
     private boolean[] pohybVSmere;
     private boolean[] strelbaVSmere;
     private ArrayList<Strela> strely;
@@ -36,11 +39,15 @@ public class Hrac {
         rozmer.setPozicia(rozmer.getPozicia().rozdiel(VELKOST.sucinSoSkalarom(0.5)));
         this.telo = new Telo(MAX_ZIVOT, rozmer, RYCHLOST, POSKODENIE_STERLY);
 
+        // Nastavenie vstupov
         this.pohybVSmere = new boolean[Smer.values().length];
         this.strelbaVSmere = new boolean[Smer.values().length];
         for (int i = 0; i < this.pohybVSmere.length; i++) {
             this.pohybVSmere[i] = false;
         }
+        this.vstupPauza = false;
+        this.pauza = false;
+        
         this.strely = new ArrayList<Strela>();
     }
     /**
@@ -91,7 +98,7 @@ public class Hrac {
      * Ziska a pracuje informacie zo vstupov.
      * @param aktMiest sucastna Miestnost
      */
-    public void tik(Miestnost aktMiest, double deltaCasu) {
+    public StavHry tik(Miestnost aktMiest, StavHry stav, double deltaCasu) {
         Vektor2D v = this.ziskajSmerovyVektor2D(this.pohybVSmere);
         this.telo.setPohybVektor(v);
 
@@ -112,6 +119,31 @@ public class Hrac {
         for (Strela strela : tentoTik) {
             strela.tik(aktMiest, deltaCasu);
         }
+
+        
+        if (this.pauza != this.vstupPauza) {
+            this.pauza = false;
+        }
+        if (!this.pauza && this.vstupPauza && stav == StavHry.HRA) {
+            stav = StavHry.PAUZA;
+            this.pauza = true;
+        }
+        return stav;
+    }
+    /**
+     * Volane v pripade pozastavenia Hry
+     * @return TRUE ak ma Hra pokracovat inak FALSE
+     */
+    public boolean pauzaTik() {
+        if (this.pauza != this.vstupPauza) {
+            this.pauza = false;
+        }
+
+        if (!this.pauza && this.vstupPauza) {
+            this.pauza = true;
+            return true;
+        } 
+        return false;
     }
     /**
      * Nastavi odposluch na klavesove vstupy k oknu
@@ -171,6 +203,10 @@ public class Hrac {
                 break;
             case 39: // sipka Pravo
                 indexiKlaves[1] = Smer.PRAVO.ordinal();
+                break;
+
+            case 27: // ESC
+                this.vstupPauza = pridaj;
                 break;
 
             default:

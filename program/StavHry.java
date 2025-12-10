@@ -9,6 +9,7 @@ import java.awt.Color;
 public enum StavHry {
     VYHRA(Color.GREEN, Color.BLUE, "Výhra"),
     PREHRA(Color.BLACK, Color.RED, "Koniec Hry"),
+    PAUZA(Color.BLACK, Color.WHITE, "Pauza"),
     HRA(Color.BLACK, Color.RED, "");
     
     private Color farbaPozadia;
