@@ -9,7 +9,7 @@ import javax.swing.JPanel;
  * @version v0.8
  */
 public class Telo {
-    private static final double POMER_VELKOSTI_POSUN_PRI_ZMENE_MIESTNOSTI = 0.05; 
+    private static final double POMER_VELKOSTI_POSUN_PRI_ZMENE_MIESTNOSTI = 0.1; 
     private static final double PRESNOST_POSUNU_K_STENE = 1;
     private static final double PRESNOST_OPRAVY_POSUNU = 1;
 
@@ -106,8 +106,8 @@ public class Telo {
      * Obnovi Telo (Hraca) -> posunie ho v smere ak je to mozne, pripadne prejde do dalsej miestnosti
      * @param aktMiest Miestnost v ktorej sa telo nachadza
      */
-    public boolean tik(Miestnost aktMiest) {
-        Vektor2D buducaPozicia = this.ziskajPoziciuDalsiehoPohybu();
+    public boolean tik(Miestnost aktMiest, double deltaCasu) {
+        Vektor2D buducaPozicia = this.ziskajPoziciuDalsiehoPohybu(deltaCasu);
         Rozmer2D buduciRozmer = new Rozmer2D(buducaPozicia, this.rozmer.getVelkost());
         
         if (aktMiest.jePlochaRozmeruMimoStien(buduciRozmer)) {
@@ -131,8 +131,8 @@ public class Telo {
      * @param hrac referencia na objekt Hraca
      * @return PRAVDA ak naraza do Hraca
      */
-    public boolean tik(Miestnost aM, Hrac hrac) {
-        Vektor2D buducaPozicia = this.ziskajPoziciuDalsiehoPohybu();
+    public boolean tik(Miestnost aM, Hrac hrac, double deltaCasu) {
+        Vektor2D buducaPozicia = this.ziskajPoziciuDalsiehoPohybu(deltaCasu);
         Rozmer2D buduciRozmer = new Rozmer2D(buducaPozicia, this.rozmer.getVelkost());        
         boolean koliziaHrac = hrac.getTelo().getRozmer().jeRozmerCiastocneVnutri(buduciRozmer);
 
@@ -163,8 +163,9 @@ public class Telo {
         return 0 < this.zdravie;
     }
 
-    private Vektor2D ziskajPoziciuDalsiehoPohybu() {        
+    private Vektor2D ziskajPoziciuDalsiehoPohybu(double deltaCasu) {        
         Vektor2D pohyb = this.smerovyVektor2D.sucinSoSkalarom(this.rychlostPohybu);
+        pohyb = pohyb.sucinSoSkalarom(deltaCasu);
         pohyb = this.rozmer.getPozicia().sucet(pohyb);
         return pohyb;
     }    

@@ -46,8 +46,9 @@ public class Strela {
      * Ak Strela narazi, znici ju.
      * @param aktivMiestnost
      */
-    public void tik(Miestnost aktivMiestnost) {
-        this.rozmer.pricitajVektor2DKPozicii(this.posun);
+    public void tik(Miestnost aktivMiestnost, double deltaCasu) {
+        Vektor2D posunVCase = this.posun.sucinSoSkalarom(deltaCasu);
+        this.rozmer.pricitajVektor2DKPozicii(posunVCase);
         this.grafika.setLocation(this.rozmer.vytvorPointPozicie());
 
         if (this.jeVStene(aktivMiestnost) || this.zasah(aktivMiestnost)) {

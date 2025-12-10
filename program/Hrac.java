@@ -91,11 +91,11 @@ public class Hrac {
      * Ziska a pracuje informacie zo vstupov.
      * @param aktMiest sucastna Miestnost
      */
-    public void tik(Miestnost aktMiest) {
+    public void tik(Miestnost aktMiest, double deltaCasu) {
         Vektor2D v = this.ziskajSmerovyVektor2D(this.pohybVSmere);
         this.telo.setPohybVektor(v);
 
-        if (this.telo.tik(aktMiest)) {
+        if (this.telo.tik(aktMiest, deltaCasu)) {
             int zivoty = this.telo.getZdravie();
             for (int i = 1; i - 1 < this.ui.length; i++) {
                 this.ui[i - 1].setVisible(i <= zivoty);
@@ -110,7 +110,7 @@ public class Hrac {
 
         ArrayList<Strela> tentoTik = new ArrayList<Strela>(this.strely);
         for (Strela strela : tentoTik) {
-            strela.tik(aktMiest);
+            strela.tik(aktMiest, deltaCasu);
         }
     }
     /**

@@ -147,14 +147,14 @@ public class Miestnost {
      * @param hrac Objekt hraca
      * @return novy Stav Hry
      */
-    public StavHry tik(Hrac hrac) {
+    public StavHry tik(Hrac hrac, double deltaCasu) {
         StavHry stavHry = StavHry.HRA;
 
         if (!this.dvereOtvorene && this.nepriatelia.size() == 0) {
             this.nastavVsetkyDvere(true);
         } else {
             for (Nepriatel n : this.nepriatelia) {
-                if (n.tik(this, hrac)) {
+                if (n.tik(this, hrac, deltaCasu)) {
                     stavHry = StavHry.PREHRA;
                     break;
                 }

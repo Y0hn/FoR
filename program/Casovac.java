@@ -9,34 +9,43 @@ import javax.swing.Timer;
  * @version v0.2
  */
 public class Casovac implements ActionListener {
+    private static final int ONESKORENIE_MS = 25;
+    private static final long DLZKA_TIKU_MS = 0;  
+
     private Timer casovac;
-    private Hra hra;
-    
-    private long poslednyTik;    
-    private static final long DLZKA_TIKU = 1000;   
+    private Hra hra;    
+    private long dalsiTik;
+    private long poslednyTik;
 
     /**
-     * Vytvori casovac
+     * Vytvori casovac pre Hru
      *  
-     * @param hra   
+     * @param hra
      */
     public Casovac(Hra hra) {
         this.hra = hra;
         
-        this.casovac = new javax.swing.Timer(25, null);        
+        this.casovac = new javax.swing.Timer(ONESKORENIE_MS, null);        
         this.casovac.addActionListener(this);      
         
+        this.dalsiTik = 0;
         this.poslednyTik = 0;
         this.casovac.start();
     }
+
     /**
      * Volane ked sa aktualizuje cas v casovaci
      */
     public void actionPerformed(ActionEvent event) {
-        long newTick = System.nanoTime();
-        if (Casovac.DLZKA_TIKU <= newTick - this.poslednyTik  || newTick < Casovac.DLZKA_TIKU) {
-            this.poslednyTik = (newTick / Casovac.DLZKA_TIKU) * Casovac.DLZKA_TIKU;
-            this.hra.tik(); 
+        long sucastnyCas = System.currentTimeMillis();
+
+        if (this.dalsiTik <= sucastnyCas) {
+            double deltaCasu = sucastnyCas - this.poslednyTik;
+            deltaCasu /= ONESKORENIE_MS;
+            this.hra.tik(deltaCasu); 
+
+            this.poslednyTik = System.currentTimeMillis();
+            this.dalsiTik = this.poslednyTik + DLZKA_TIKU_MS;
         }
     }  
 }

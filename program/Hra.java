@@ -49,13 +49,15 @@ public class Hra {
     /**
      * Obnovi vsetky objekty v Hre
      */
-    public void tik() {
+    public void tik(double deltaCasu) {
         if (this.stavHry == StavHry.HRA) {
-            this.stavHry = this.aktivnaMiestnost.tik(this.hrac);
-            this.hrac.tik(this.aktivnaMiestnost);
+            this.stavHry = this.aktivnaMiestnost.tik(this.hrac, deltaCasu);
+            this.hrac.tik(this.aktivnaMiestnost, deltaCasu);
+
         } else if (!this.koncovaObrazovka) {
             this.displej.nastavGrafikuPreStavHry(this.stavHry, true);
             this.koncovaObrazovka = true;
+
         } else if (this.displej.ziskajRestart()) {
             this.displej.nastavGrafikuPreStavHry(this.stavHry, false);            
             this.svet = new Svet(VELKOST_SVETA);

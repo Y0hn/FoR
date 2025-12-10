@@ -54,7 +54,7 @@ public class Nepriatel {
      * @param hrac objekt Hraca
      * @return PRAVDA ak Hrac stratil posledny zivot
      */
-    public boolean tik(Miestnost aM, Hrac hrac) {
+    public boolean tik(Miestnost aM, Hrac hrac, double deltaCasu) {
         boolean znicilTeloHraca = false;
 
         Vektor2D smer = this.telo.getRozmer().getPozicia();
@@ -62,7 +62,7 @@ public class Nepriatel {
         smer = smer.sucinSoSkalarom(-1);
         this.telo.setPohybVektor(smer);
         
-        if (this.telo.tik(aM, hrac) && this.buduciUtok <= System.currentTimeMillis()) {
+        if (this.telo.tik(aM, hrac, deltaCasu) && this.buduciUtok <= System.currentTimeMillis()) {
             znicilTeloHraca = this.zautoc(hrac);
             this.buduciUtok = System.currentTimeMillis() + Math.round(1 / RYCHLOST_UTOKU * Math.pow(10, 3)); 
         }
