@@ -5,7 +5,7 @@
  * @version v0.4
  */
 public class Hra {
-    private static final Vektor2D ROZMER_HRY = new Vektor2D(600, 400);
+    public static final Vektor2D ROZMER_HRY = new Vektor2D(600, 400);
     private static final int VELKOST_SVETA = 50;
     private static Hra instancia;
 

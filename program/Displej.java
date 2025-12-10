@@ -198,11 +198,11 @@ public class Displej {
         label.setFont(FONT);    
         podlaha.add(label, BorderLayout.CENTER);
 
-        Rozmer2D vyhra = m.getVyhernaPlocha();
-        if (vyhra != null) {
+        VyhradenaPlocha plocha = m.getVyhradenaPlocha();
+        if (plocha != null) {
             JPanel vyhernaPlocha = new JPanel();
-            vyhernaPlocha.setBackground(Color.YELLOW);
-            vyhernaPlocha.setBounds(vyhra.vytvorRectangle());
+            vyhernaPlocha.setBackground(plocha.getFarba());
+            vyhernaPlocha.setBounds(plocha.getRozmer().vytvorRectangle());
             miestnost.setLayer(vyhernaPlocha, VRSTVA_VYHRA);
             miestnost.add(vyhernaPlocha);
         }

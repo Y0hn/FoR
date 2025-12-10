@@ -9,6 +9,7 @@ import java.util.Random;
  * @version v0.6
  */
 public class Miestnost {
+    private static final int MIN_POCET_NEPIRATELOV = 1;
     private static final int MAX_POCET_NEPIRATELOV = 5;
     private static final Vektor2D VELKOST_VYHRY = new Vektor2D(100, 100);
     private static final double DOSAH_DVERI = 150;
@@ -18,7 +19,7 @@ public class Miestnost {
     private Stena[] steny;
     private ArrayList<Nepriatel> nepriatelia;
     private boolean dvereOtvorene;
-    private Rozmer2D vyhernaPlocha;
+    private VyhradenaPlocha vyhradenaPlocha;
 
     /**
      * Konstruktor triedy Miestnost
@@ -31,7 +32,7 @@ public class Miestnost {
         this.nepriatelia = new ArrayList<Nepriatel>();
         this.susedneMiestnosti = new Miestnost[pocetStien];
         this.dvereOtvorene = false;
-        this.vyhernaPlocha = null;
+        this.vyhradenaPlocha = null;
     }
     /**
      * Vrati cislo Miestnosti v poradi
@@ -78,8 +79,8 @@ public class Miestnost {
      * Ziska Rozmer vyhernej plochy v Miestnosti
      * @return vrati hodnotu iba v pripade ak je Miestnost konecna inak ma hodnotu NULL
      */
-    public Rozmer2D getVyhernaPlocha() {
-        return this.vyhernaPlocha;
+    public VyhradenaPlocha getVyhradenaPlocha() {
+        return this.vyhradenaPlocha;
     }
     /**
      * Nastavi suseda v predom urcenom smere
@@ -105,7 +106,9 @@ public class Miestnost {
      * Vytvori Nepriatelov na nahodnych suradniciach
      */
     public void vytvorNepriatelov(Random nahoda) {
-        int pocet = nahoda.nextInt(MAX_POCET_NEPIRATELOV);
+        int pocet = MAX_POCET_NEPIRATELOV - MIN_POCET_NEPIRATELOV;
+        pocet = nahoda.nextInt(pocet);
+        pocet += MIN_POCET_NEPIRATELOV;
         Rozmer2D rozmer;
 
         for (int i = 0; i < pocet; i++) {
@@ -124,12 +127,10 @@ public class Miestnost {
         }
     }
     /**
-     * Nastavi Miestnost ako vyhernu miestnost 
+     * Prideli Miestnosti Vyhradenu Plochu 
      */
-    public void nastavKonecnuMiestnost() {
-        Vektor2D pozicia = Displej.getStred();
-        pozicia = pozicia.rozdiel(VELKOST_VYHRY.sucinSoSkalarom(0.5));
-        this.vyhernaPlocha = new Rozmer2D(pozicia, VELKOST_VYHRY);
+    public void setVyhradenaPlocha(VyhradenaPlocha plocha) {
+        this.vyhradenaPlocha = plocha;
     }
     /**
      * Nastavi stav pre vsetky dvere v Miestnosti
@@ -161,10 +162,8 @@ public class Miestnost {
             }
         }
 
-        if (this.vyhernaPlocha != null) {
-            if (this.vyhernaPlocha.jeRozmerCiastocneVnutri(hrac.getTelo().getRozmer())) {
-                stavHry = StavHry.VYHRA;
-            }
+        if (this.vyhradenaPlocha != null) {
+            stavHry = this.vyhradenaPlocha.tik(hrac);
         }
         return stavHry;
     }

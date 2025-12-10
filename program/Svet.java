@@ -8,7 +8,6 @@ import java.util.Random;
  * @version v0.5
  */
 public class Svet {
-    private int indexKonecnejMiestnosti;
     private int indexPociatocnejMiestnosti;
     private ArrayList<Miestnost> miestnosti;
     
@@ -76,17 +75,27 @@ public class Svet {
             }
         }
 
-        // nastavi miestnost v krotrej hrac zacne hru
-        // miestnost je medzi prvou 1/5 a 4/5 celkoveho poctu
+        // nastavi Miestnost v krotrej hrac zacne hru
+        // Miestnost je medzi prvou 1/5 a 4/5 celkoveho poctu
         this.indexPociatocnejMiestnosti = (int)Math.round(this.miestnosti.size() * 0.2 + nahoda.nextDouble() * (this.miestnosti.size() * 0.6));
-        this.indexKonecnejMiestnosti = (nahoda.nextBoolean()) ? 0 : this.miestnosti.size() - 1;
 
-        this.miestnosti.get(this.indexKonecnejMiestnosti).nastavKonecnuMiestnost();
+        int koniec = (nahoda.nextBoolean()) ? 0 : this.miestnosti.size() - 1;
+        this.miestnosti.get(koniec).setVyhradenaPlocha(VyhradenaPlocha.VYHERNA_PLOCHA);
 
+        int pocetZon = (this.miestnosti.size() / 10);
+        for (int i = 0; i < pocetZon; i++) {
+            int index;
+            do {
+                index = i * 10 + 1 + nahoda.nextInt(8);
+            } while (this.indexPociatocnejMiestnosti == index);
+            this.miestnosti.get(index).setVyhradenaPlocha(VyhradenaPlocha.UZDRAVOVACIA_PLOCHA);;
+        }
+
+        // Vytvori Nepriatelov v praznych Miestnostiach
         for (Miestnost m : this.miestnosti) {
             m.vytvorSteny();
             int index = m.getIndex();
-            if (index != this.indexKonecnejMiestnosti && this.indexPociatocnejMiestnosti != index) {
+            if (m.getVyhradenaPlocha() == null && this.indexPociatocnejMiestnosti != index) {
                 m.vytvorNepriatelov(nahoda);
             }
         }
@@ -99,13 +108,7 @@ public class Svet {
     public Miestnost getZaciatocnaMiestnost() {
         return this.miestnosti.get(this.indexPociatocnejMiestnosti);
     }
-    /**
-     * Vrati index Vyhernej Miestnosti 
-     * @return index Miesnosti v kotorej konci hra 
-     */
-    public Miestnost getKonecnaMiestnost() {
-        return this.miestnosti.get(this.indexKonecnejMiestnosti);
-    }
+    
     /**
      * Ziska Miestnost z pola Miestnosti, 
      * ak je index nespravny vrati hodnotu NULL
