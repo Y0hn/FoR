@@ -6,12 +6,12 @@ import java.util.Random;
  * Po vojdeni hraca do miestnosti sa aktivuje
  * 
  * @author y0hn
- * @version v0.6
+ * @version v0.7
  */
 public class Miestnost {
     private static final int MIN_POCET_NEPIRATELOV = 1;
     private static final int MAX_POCET_NEPIRATELOV = 5;
-    private static final Vektor2D VELKOST_VYHRY = new Vektor2D(100, 100);
+    private static final int ONESKORENIE_NEPRIATELOV = 250; // ms
     private static final double DOSAH_DVERI = 150;
     
     private int indexMiestnosti;
@@ -20,6 +20,7 @@ public class Miestnost {
     private ArrayList<Nepriatel> nepriatelia;
     private boolean dvereOtvorene;
     private VyhradenaPlocha vyhradenaPlocha;
+    private long casAktivacie;
 
     /**
      * Konstruktor triedy Miestnost
@@ -153,7 +154,7 @@ public class Miestnost {
 
         if (!this.dvereOtvorene && this.nepriatelia.size() == 0) {
             this.nastavVsetkyDvere(true);
-        } else {
+        } else if (this.casAktivacie < System.currentTimeMillis()) {
             for (Nepriatel n : this.nepriatelia) {
                 if (n.tik(this, hrac, deltaCasu)) {
                     stavHry = StavHry.PREHRA;
@@ -166,6 +167,13 @@ public class Miestnost {
             stavHry = this.vyhradenaPlocha.tik(hrac);
         }
         return stavHry;
+    }
+    /**
+     * Volane pri vykresleni Miestnosti,
+     * nastavuje casovac pre na spusetnie pohybu Nepriatelov
+     */
+    public void aktivuj() {
+        this.casAktivacie = System.currentTimeMillis() + Miestnost.ONESKORENIE_NEPRIATELOV;
     }
     /**
      * Presunie hraca do Miestnosti

@@ -7,7 +7,7 @@ import java.awt.Color;
  */
 public enum VyhradenaPlocha {
     VYHERNA_PLOCHA(0.2, 0.2, Color.YELLOW),
-    UZDRAVOVACIA_PLOCHA(0.2, 0.2, Color.PINK);
+    UZDRAVOVACIA_PLOCHA(0.3, 0.3, Color.PINK);
 
     private Rozmer2D rozmerVMiestnosti;
     private Color farba;

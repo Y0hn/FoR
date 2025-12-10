@@ -77,6 +77,7 @@ public class Hra {
         if (m != null) {
             this.displej.zmenAktivnuMiestnost(m, this.hrac);
             this.aktivnaMiestnost = m;
+            m.aktivuj();
         }
     }
 }

@@ -88,7 +88,7 @@ public class Svet {
             do {
                 index = i * 10 + 1 + nahoda.nextInt(8);
             } while (this.indexPociatocnejMiestnosti == index);
-            this.miestnosti.get(index).setVyhradenaPlocha(VyhradenaPlocha.UZDRAVOVACIA_PLOCHA);;
+            this.miestnosti.get(index).setVyhradenaPlocha(VyhradenaPlocha.UZDRAVOVACIA_PLOCHA);
         }
 
         // Vytvori Nepriatelov v praznych Miestnostiach
