@@ -9,18 +9,19 @@ import javax.swing.JPanel;
  * @version v0.2
  */
 public class Nepriatel {
+    public static final Vektor2D VELKOST = new Vektor2D(50, 50);
+
     private static final int MAX_POCET_ZIVOTOV = 1; 
     private static final int RYCHLOST = 5; 
     private static final double RYCHLOST_UTOKU = 1;
     private static final int POSKODENIE_UTOKU = 1;
-    public static final Vektor2D VELKOST = new Vektor2D(50, 50);
     
-    private Telo telo;
+    private final Telo telo;
     private long buduciUtok;
 
     /**
      * Vytvori nepriatela s Telom
-     * @param rozmerTela pozicia a velkost nepriatela
+     * @param pozicia pozicia Nepriatela
      */
     public Nepriatel(Vektor2D pozicia) {
         Rozmer2D rozmer = new Rozmer2D(pozicia, VELKOST);
@@ -43,6 +44,9 @@ public class Nepriatel {
         grafika.setBackground(Color.RED);
         this.telo.setGrafika(grafika, Color.RED);
     }
+    /**
+     * Odstarni Nepriatela z Okna, v ktorom je zobrazovany
+     */
     public void zruzGrafiku() {
         JPanel grafika = this.telo.getGrafika();
         grafika.setBounds(Rozmer2D.ZERO.vytvorRectangle());
@@ -52,6 +56,7 @@ public class Nepriatel {
      * Obnovi spravanie nepiratela
      * @param aM aktualna Miestnost
      * @param hrac objekt Hraca
+     * @param deltaCasu casovy rozdiel od posledneho tiku
      * @return PRAVDA ak Hrac stratil posledny zivot
      */
     public boolean tik(Miestnost aM, Hrac hrac, double deltaCasu) {

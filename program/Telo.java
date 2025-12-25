@@ -13,12 +13,12 @@ public class Telo {
     private static final double PRESNOST_POSUNU_K_STENE = 1;
     private static final double PRESNOST_OPRAVY_POSUNU = 1;
 
-    private int maxZdravie;
+    private final int maxZdravie;
     private int zdravie;
-    private int poskodenie;
+    private final int poskodenie;
     private Rozmer2D rozmer;
     private Vektor2D smerovyVektor2D;
-    private double rychlostPohybu;
+    private final double rychlostPohybu;
     private JPanel grafika;
     private boolean zmenaZdravia;
     /**
@@ -68,7 +68,7 @@ public class Telo {
     }
     /**
      * Nastavi poziciu a obnovi grafiku tela
-     * @param pozicia
+     * @param pozicia nova pozicia Tela
      */
     public void setPozicia(Vektor2D pozicia) {
         this.rozmer.setPozicia(pozicia);
@@ -80,7 +80,6 @@ public class Telo {
     }
     /**
      * Natstavi smerovy Vektor2D Tela
-     * 
      * @param smerovyVektor novy smerovy Vektor2D
      */
     public void setPohybVektor(Vektor2D smerovyVektor) {
@@ -105,6 +104,7 @@ public class Telo {
     /**
      * Obnovi Telo (Hraca) -> posunie ho v smere ak je to mozne, pripadne prejde do dalsej miestnosti
      * @param aktMiest Miestnost v ktorej sa telo nachadza
+     * @param deltaCasu casovy rozdiel od posledneho tiku
      */
     public boolean tik(Miestnost aktMiest, double deltaCasu) {
         Vektor2D buducaPozicia = this.ziskajPoziciuDalsiehoPohybu(deltaCasu);
@@ -129,6 +129,7 @@ public class Telo {
      * Obnovi Telo (Nepriatela) -> posunie ho v smere ak je to mozne
      * @param aM aktualna Miestnost
      * @param hrac referencia na objekt Hraca
+     * @param deltaCasu casovy rozdiel od posledneho tiku
      * @return PRAVDA ak naraza do Hraca
      */
     public boolean tik(Miestnost aM, Hrac hrac, double deltaCasu) {

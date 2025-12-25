@@ -15,7 +15,7 @@ public class Stena {
      * 1 => Dvere,
      * 2 => Mur2
      */
-    private Mur[] mury;
+    private final Mur[] mury;
 
     /**
      * Vytvori Stenu medzi Miestnost a jej Suseda.
@@ -37,6 +37,10 @@ public class Stena {
         }
         return rozmery;
     }
+    /**
+     * Ziska Rozmer dveri ak existuje
+     * @return Rozmer2D dveri alebo NULL
+     */
     public Rozmer2D getRozmerDveri() {
         Rozmer2D dvere = null;
         if (this.mury.length == 3) {
@@ -129,8 +133,7 @@ public class Stena {
 
         /**
          * Vytvori cast Steny
-         * @param pozicia pozicia laveho-horneho rohu
-         * @param velkost velkost obdlznika
+         * @param rozmer rozmer Muru
          */
         public Mur(Rozmer2D rozmer) {
             this.rozmer = rozmer;

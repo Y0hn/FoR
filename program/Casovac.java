@@ -12,14 +12,13 @@ public class Casovac implements ActionListener {
     private static final int ONESKORENIE_MS = 25;
     private static final long DLZKA_TIKU_MS = 0;  
 
-    private Timer casovac;
-    private Hra hra;    
+    private final Timer casovac;
+    private final Hra hra;    
     private long dalsiTik;
     private long poslednyTik;
 
     /**
      * Vytvori casovac pre Hru
-     *  
      * @param hra
      */
     public Casovac(Hra hra) {
@@ -35,6 +34,7 @@ public class Casovac implements ActionListener {
 
     /**
      * Volane ked sa aktualizuje cas v casovaci
+     * @param event
      */
     public void actionPerformed(ActionEvent event) {
         long sucastnyCas = System.currentTimeMillis();

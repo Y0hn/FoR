@@ -8,8 +8,8 @@ import java.util.Random;
  * @version v0.5
  */
 public class Svet {
-    private int indexPociatocnejMiestnosti;
-    private ArrayList<Miestnost> miestnosti;
+    private final int indexPociatocnejMiestnosti;
+    private final ArrayList<Miestnost> miestnosti;
     
     /**
      * Konstruktor Sveta
@@ -80,7 +80,7 @@ public class Svet {
         this.indexPociatocnejMiestnosti = (int)Math.round(this.miestnosti.size() * 0.2 + nahoda.nextDouble() * (this.miestnosti.size() * 0.6));
 
         int koniec = (nahoda.nextBoolean()) ? 0 : this.miestnosti.size() - 1;
-        this.miestnosti.get(koniec).setVyhradenaPlocha(VyhradenaPlocha.VYHERNA_PLOCHA);
+        this.miestnosti.get(koniec).setSpecialnaPlocha(SpecialnaPlocha.VYHERNA_PLOCHA);
 
         int pocetZon = (this.miestnosti.size() / 10);
         for (int i = 0; i < pocetZon; i++) {
@@ -88,7 +88,7 @@ public class Svet {
             do {
                 index = i * 10 + 1 + nahoda.nextInt(8);
             } while (this.indexPociatocnejMiestnosti == index);
-            this.miestnosti.get(index).setVyhradenaPlocha(VyhradenaPlocha.UZDRAVOVACIA_PLOCHA);
+            this.miestnosti.get(index).setSpecialnaPlocha(SpecialnaPlocha.UZDRAVOVACIA_PLOCHA);
         }
 
         // Vytvori Nepriatelov v praznych Miestnostiach

@@ -27,9 +27,9 @@ public class Hra {
         instancia.nacitajMiestnost(miestnost);
     }
 
+    private final Hrac hrac;
+    private final Displej displej;
     private Svet svet;
-    private Hrac hrac;
-    private Displej displej;
     private Miestnost aktivnaMiestnost;
     private StavHry stavHry;
     private boolean koncovaObrazovka;
@@ -48,6 +48,7 @@ public class Hra {
     
     /**
      * Obnovi vsetky objekty v Hre
+     * @param deltaCasu casovy rozdiel od posledneho tiku
      */
     public void tik(double deltaCasu) {
         if (this.stavHry == StavHry.HRA) {

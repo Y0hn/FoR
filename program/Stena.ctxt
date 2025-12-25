@@ -9,6 +9,7 @@ comment2.target=Rozmer2D[]\ getRozmery()
 comment2.text=\r\n\ Vrati\ Rozmery\ vsetkych\ Murov\ v\ Stene\r\n\ @return\ [mur[0].rozmery,\ ...]\ <-\ Rozmer2D\r\n
 comment3.params=
 comment3.target=Rozmer2D\ getRozmerDveri()
+comment3.text=\r\n\ Ziska\ Rozmer\ dveri\ ak\ existuje\r\n\ @return\ Rozmer2D\ dveri\ alebo\ NULL\r\n
 comment4.params=otvorene
 comment4.target=void\ nastavDvere(boolean)
 comment4.text=\r\n\ Nastavi\ stav\ dveri\r\n\ @param\ otvorene\ ak\ PRAVDA\ tak\ sa\ dvere\ otvoria\r\n

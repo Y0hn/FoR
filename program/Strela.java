@@ -14,11 +14,11 @@ public class Strela {
     public static final Vektor2D VELKOST = new Vektor2D(10, 10);
     private static final double RYCHLOST = 15;
 
-    private Rozmer2D rozmer;
-    private Vektor2D posun;
-    private JPanel grafika;
-    private Hrac hrac;
-    private int poskodenie;
+    private final Rozmer2D rozmer;
+    private final Vektor2D posun;
+    private final JPanel grafika;
+    private final Hrac hrac;
+    private final int poskodenie;
 
     /**
      * Vytvori Strelu iducu jednym smerom od hraca
@@ -44,7 +44,8 @@ public class Strela {
     /**
      * Posunie Strelu predom nasavenym smerom. 
      * Ak Strela narazi, znici ju.
-     * @param aktivMiestnost
+     * @param aktivMiestnost sucastna Miestnost
+     * @param deltaCasu casovy rozdiel od posledneho tiku
      */
     public void tik(Miestnost aktivMiestnost, double deltaCasu) {
         Vektor2D posunVCase = this.posun.sucinSoSkalarom(deltaCasu);

@@ -14,16 +14,17 @@ public class Miestnost {
     private static final int ONESKORENIE_NEPRIATELOV = 250; // ms
     private static final double DOSAH_DVERI = 150;
     
-    private int indexMiestnosti;
+    private final int indexMiestnosti;
     private Miestnost[] susedneMiestnosti;
     private Stena[] steny;
     private ArrayList<Nepriatel> nepriatelia;
     private boolean dvereOtvorene;
-    private VyhradenaPlocha vyhradenaPlocha;
+    private SpecialnaPlocha vyhradenaPlocha;
     private long casAktivacie;
 
     /**
      * Konstruktor triedy Miestnost
+     * @param index cislo Miestnosti vo Svete
      */
     public Miestnost(int index) {
         this.indexMiestnosti = index;
@@ -45,7 +46,7 @@ public class Miestnost {
     /**
      * Vrati Stenu v Smere 
      * @param s smer od stredu
-     * @return referencia na Stenu
+     * @return Stena v Smere
      */
     public Stena getStena(Smer s) {
         return this.steny[s.ordinal()];
@@ -80,7 +81,7 @@ public class Miestnost {
      * Ziska Rozmer vyhernej plochy v Miestnosti
      * @return vrati hodnotu iba v pripade ak je Miestnost konecna inak ma hodnotu NULL
      */
-    public VyhradenaPlocha getVyhradenaPlocha() {
+    public SpecialnaPlocha getSpecialnaPlocha() {
         if (this.nepriatelia.size() != 0) {
             return null;
         }
@@ -108,6 +109,7 @@ public class Miestnost {
     }
     /**
      * Vytvori Nepriatelov na nahodnych suradniciach
+     * @param nahoda 
      */
     public void vytvorNepriatelov(Random nahoda) {
         int pocet = MAX_POCET_NEPIRATELOV - MIN_POCET_NEPIRATELOV;
@@ -132,8 +134,9 @@ public class Miestnost {
     }
     /**
      * Prideli Miestnosti Vyhradenu Plochu 
+     * @param plocha Specialna plocha v Mistnosti
      */
-    public void setVyhradenaPlocha(VyhradenaPlocha plocha) {
+    public void setSpecialnaPlocha(SpecialnaPlocha plocha) {
         this.vyhradenaPlocha = plocha;
     }
     /**
@@ -150,6 +153,7 @@ public class Miestnost {
     /**
      * Obnovi vsetky objekty v miestnosti
      * @param hrac Objekt hraca
+     * @param deltaCasu casovy rozdiel od posledneho tiku
      * @return novy Stav Hry
      */
     public StavHry tik(Hrac hrac, double deltaCasu) {
@@ -238,7 +242,6 @@ public class Miestnost {
         }
         return mimoDosah;
     }
-
     private Vektor2D ziskajNahodnuPoziciuVnutri(Random nahoda) {
         int maxX = Hra.ROZMER_OKNA.getIntVeX();
         int maxY = Hra.ROZMER_OKNA.getIntVeY();

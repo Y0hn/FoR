@@ -20,7 +20,7 @@ public class Hrac {
     private static final double RYCHLOST_STRELBY = 2;
     private static final int POSKODENIE_STERLY = 1;
 
-    private Telo telo;
+    private final Telo telo;
     private boolean pauza;
     private boolean vstupPauza;
     private boolean[] pohybVSmere;
@@ -31,8 +31,7 @@ public class Hrac {
     private JPanel[] ui;
 
     /**
-     * Vytvori hraca vo svete
-     * @param svet Svet v ktorom hrac zacina hru 
+     * Vytvori Hraca
      */
     public Hrac() {
         Rozmer2D rozmer = new Rozmer2D(Hra.ROZMER_OKNA.ziskajStred(), VELKOST);
@@ -97,6 +96,8 @@ public class Hrac {
      * Obnovi vlastnosti Hraca a jeho komponenty.
      * Ziska a pracuje informacie zo vstupov.
      * @param aktMiest sucastna Miestnost
+     * @param stav sucasny Stav Hry
+     * @param deltaCasu casovy rozdiel od posledneho tiku
      */
     public StavHry tik(Miestnost aktMiest, StavHry stav, double deltaCasu) {
         Vektor2D v = this.ziskajSmerovyVektor2D(this.pohybVSmere);
@@ -222,13 +223,11 @@ public class Hrac {
     }
     private Vektor2D ziskajSmerovyVektor2D(boolean[] smery) {   
         Vektor2D v = Vektor2D.ZERO;
-
         for (int i = 0; i < smery.length; i++) {
             if (smery[i]) {
                 v = v.sucet(Smer.values()[i].getVektor2D());
             }
-        }
-        
+        }        
         return v;
     }
     private void vystrel(Vektor2D smer) {

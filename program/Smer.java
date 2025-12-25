@@ -9,12 +9,7 @@ public enum Smer {
     HORE(0, -1),
     PRAVO(1, 0),
     DOLE(0, 1),
-    LAVO(-1, 0),;
-
-    private Vektor2D vektor;
-    Smer(double x, double y) {
-        this.vektor = new Vektor2D(x, y).normalizuj();
-    }
+    LAVO(-1, 0);
 
     /**
      * Vytvori Smer na zaklade priradenej hodnoty
@@ -49,6 +44,12 @@ public enum Smer {
             s = Smer.LAVO;
         }
         return s;
+    }
+
+    private final Vektor2D vektor;
+    
+    Smer(double x, double y) {
+        this.vektor = new Vektor2D(x, y).normalizuj();
     }
 
     /**

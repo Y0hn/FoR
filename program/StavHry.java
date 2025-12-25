@@ -18,19 +18,23 @@ public enum StavHry {
     private String text;
     private Font font;
     /**
-     * SwingConstants.CENTER = 0
-     * SwingConstants.LEFT = 2
-     * SwingConstants.RIGHT = 4
+     * SwingConstants.
+     *  CENTER = 0
+     *  LEFT = 2
+     *  RIGHT = 4
      */
     private int osX;
     /**
-     * SwingConstants.CENTER = 0
-     * SwingConstants.TOP = 1
-     * SwingConstants.BOTTOM = 3
+     * SwingConstants.
+     *  CENTER = 0
+     *  TOP = 1
+     *  BOTTOM = 3
      */
     private int osY;
     
-
+    /**
+     * Vytvori plne priehladny StavHry
+     */
     StavHry() {
         
     }
@@ -79,6 +83,10 @@ public enum StavHry {
     public int getZarovananieY() {
         return this.osY;
     }
+    /**
+     * Ziska Font textu nad grafikou
+     * @return
+     */
     public Font getFont() {
         return this.font;
     }

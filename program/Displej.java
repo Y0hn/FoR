@@ -16,13 +16,11 @@ import java.awt.Font;
  * @author y0hn
  * @version v0.11
  */
-public class Displej {
-    private static final int POSUN_ROZMERU_X = 10;
-    private static final int POSUN_ROZMERU_Y = 36;
+public class Displej {    
+    public static final int VRSTVA_STRELA = 2;
 
     private static final int VRSTVA_PODLAHA = 0;
     private static final int VRSTVA_STENA = 1;
-    public static final int VRSTVA_STRELA = 2;
     private static final int VRSTVA_PLOCHA = 2;
     private static final int VRSTVA_HRAC = 3;
     private static final int VRSTVA_NEPRIATEL = 3;
@@ -30,14 +28,17 @@ public class Displej {
     private static final int VRSTVA_UI = 5;
 
     private static final Font FONT = new Font("Arial", 1, 100);
+    private static final int POSUN_ROZMERU_X = 10;
+    private static final int POSUN_ROZMERU_Y = 36;
 
-    private JFrame okno;
+    private final JFrame okno;
+    private final JButton[] uzivatelskeRozhranie;
     private JLayeredPane aktivnaMiestnost;
-    private JButton[] uzivatelskeRozhranie;
     private boolean restart;
 
     /**
      * Vytvori okno Displeja 
+     * @param ikonaOkna cesta ku Ikone okna
      * @param nazovOkna zobrazovany v hlavicke okna
      * @param rozmer Vektor2D velkosti okna
      */
@@ -75,6 +76,10 @@ public class Displej {
     public JFrame getOkno() {
         return this.okno;
     }
+    /**
+     * Ziska hodnotu restartu iba 1 krat
+     * @return PRAVDA ak sa ma Displej restartovat
+     */
     public boolean ziskajRestart() {
         boolean restartuj = this.restart;
         if (restartuj) {
@@ -84,7 +89,7 @@ public class Displej {
     }
     /**
      * Vytvori Hracovi objekt na Displeji 
-     * @param h objekt Hraca
+     * @param objektHraca
      */
     public void nastavHraca(Hrac objektHraca) {
         JPanel grafika = new JPanel();
@@ -113,6 +118,7 @@ public class Displej {
     /**
      * Zmeni Miestnost vykreslovanu na Displej
      * @param m nova aktivna Mistnost
+     * @param h objekt Hraca
      */
     public void zmenAktivnuMiestnost(Miestnost m, Hrac h) {
         if (this.aktivnaMiestnost != null) {
@@ -139,7 +145,8 @@ public class Displej {
     }
     /**
      * Nastavi konecnu grafiku podla stavu hry
-     * @param stav 
+     * @param stav prideleny Stav Hry pre grafiku
+     * @param zapni ak PRAVDA zapne grafiku inak vypne
      */
     public void nastavGrafikuPreStavHry(StavHry stav, boolean zapni) {
         Rozmer2D r = zapni ? Hra.ROZMER_OKNA : Rozmer2D.ZERO;
@@ -181,7 +188,7 @@ public class Displej {
         label.setFont(FONT);    
         podlaha.add(label, BorderLayout.CENTER);
 
-        VyhradenaPlocha plocha = m.getVyhradenaPlocha();
+        SpecialnaPlocha plocha = m.getSpecialnaPlocha();
         if (plocha != null) {
             JPanel grafikaPlochy = new JPanel();
             grafikaPlochy.setBackground(plocha.getFarba());

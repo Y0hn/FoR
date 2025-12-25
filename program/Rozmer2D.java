@@ -12,8 +12,8 @@ public class Rozmer2D {
 
     private double poziciaX;
     private double poziciaY;
-    private double velkostX;
-    private double velkostY;
+    private final double velkostX;
+    private final double velkostY;
     /**
      * Vytvori Rozmer2D popisujuci tvar
      * @param x vzdialenost laveho rohu od 0

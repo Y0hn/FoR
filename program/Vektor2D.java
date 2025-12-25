@@ -14,8 +14,8 @@ public class Vektor2D {
     public static final Vektor2D PRAVO = new Vektor2D(1, 0);
     public static final Vektor2D LAVO = new Vektor2D(-1, 0);
 
-    private double x;
-    private double y;
+    private final double x;
+    private final double y;
     /**
      * Vytvori 2-rozmerny Vektor2D bodu (x,y)
      * @param x pozicia x

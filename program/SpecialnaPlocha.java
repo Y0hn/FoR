@@ -5,14 +5,14 @@ import java.awt.Color;
  * @author y0hn
  * @version v0.1
  */
-public enum VyhradenaPlocha {
+public enum SpecialnaPlocha {
     VYHERNA_PLOCHA(0.2, 0.2, Color.YELLOW),
     UZDRAVOVACIA_PLOCHA(0.3, 0.3, Color.PINK);
 
-    private Rozmer2D rozmerVMiestnosti;
-    private Color farba;
+    private final Rozmer2D rozmerVMiestnosti;
+    private final Color farba;
 
-    VyhradenaPlocha(double pX, double pY, Color farba) {
+    SpecialnaPlocha(double pX, double pY, Color farba) {
         Vektor2D pomerVelkosti = new Vektor2D(pX, pY);
         Vektor2D pozicia = Hra.ROZMER_OKNA.getVelkost().sucinSoSkalarom(0.5);
         Vektor2D velkost = Hra.ROZMER_OKNA.getVelkost().roznasobenie(pomerVelkosti);

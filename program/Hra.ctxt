@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Hra
-comment0.text=\r\n\ Trieda\ pre\ zjednotenie\ vsetkych\ komponentov\ Hry\r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ v0.4\r\n
+comment0.text=\r\n\ Trieda\ pre\ zjednotenie\ vsetkych\ komponentov\ Hry\r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ v0.5\r\n
 comment1.params=
 comment1.target=Hra\ start()
 comment1.text=\r\n\ Zacne\ novu\ Hru\ iba\ pripade\ ak\ uz\ nebezi\ ina\r\n\ @return\ beziacu\ Hru\r\n
@@ -11,7 +11,7 @@ comment3.params=
 comment3.target=Hra()
 comment4.params=deltaCasu
 comment4.target=void\ tik(double)
-comment4.text=\r\n\ Obnovi\ vsetky\ objekty\ v\ Hre\r\n
+comment4.text=\r\n\ Obnovi\ vsetky\ objekty\ v\ Hre\r\n\ @param\ deltaCasu\ casovy\ rozdiel\ od\ posledneho\ tiku\r\n
 comment5.params=m
 comment5.target=void\ nacitajMiestnost(Miestnost)
 comment5.text=\r\n\ Zmeni\ aktivnu\ Miestnost\ zobrazovanu\ na\ Displeji\r\n\ @param\ m\ nova\ Miestnost\r\n
