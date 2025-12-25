@@ -21,6 +21,7 @@ public class Displej {
 
     private static final int VRSTVA_PODLAHA = 0;
     private static final int VRSTVA_STENA = 1;
+    private static final int VRSTVA_ROH = 2;
     private static final int VRSTVA_PLOCHA = 2;
     private static final int VRSTVA_HRAC = 3;
     private static final int VRSTVA_NEPRIATEL = 3;
@@ -30,6 +31,7 @@ public class Displej {
     private static final Font FONT = new Font("Arial", 1, 100);
     private static final int POSUN_ROZMERU_X = 10;
     private static final int POSUN_ROZMERU_Y = 36;
+    private static final double VELKOST_ROHU = 1.05;
 
     private final JFrame okno;
     private final JButton[] uzivatelskeRozhranie;
@@ -197,12 +199,32 @@ public class Displej {
             miestnost.add(grafikaPlochy);
         }
 
+        Vektor2D velkostRohu = new Vektor2D(Stena.SIRKA_STENY, Stena.SIRKA_STENY);
+        velkostRohu = velkostRohu.sucinSoSkalarom(Displej.VELKOST_ROHU); 
+        Rozmer2D[] rozmeryRohov = new Rozmer2D[]{
+            new Rozmer2D(Vektor2D.ZERO, velkostRohu),
+            new Rozmer2D(new Vektor2D(Hra.ROZMER_OKNA.getVelkostX() - velkostRohu.getX(), 0), velkostRohu),
+            new Rozmer2D(new Vektor2D(0, Hra.ROZMER_OKNA.getVelkostY()  - velkostRohu.getY()), velkostRohu),
+            new Rozmer2D(Hra.ROZMER_OKNA.getVelkost().rozdiel(velkostRohu), velkostRohu),
+        };
+
+        for (int i = 0; i < 4; i++) {
+            label = new JLabel();
+            String cesta = i == 0 || 3 == i ? "assets/cornerL.png" : "assets/cornerR.png";
+            label.setIcon(new ImageIcon(cesta));
+            label.setHorizontalAlignment(SwingConstants.CENTER);
+            label.setVerticalAlignment(SwingConstants.CENTER);
+            label.setBounds(rozmeryRohov[i].vytvorRectangle());
+            miestnost.setLayer(label, VRSTVA_ROH);
+            miestnost.add(label);
+        }
+
         return miestnost;
     }
     private JPanel vytvorGrafikuMuru(Rozmer2D rozmer) {
         JPanel stena = new JPanel();
         stena.setBounds(rozmer.vytvorRectangle());
-        stena.setBackground(Color.BLACK);
+        stena.setBackground(Color.DARK_GRAY);
         return stena;
     }
     private JButton[] vytvorGrafikuUI() {

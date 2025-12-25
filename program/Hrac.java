@@ -12,7 +12,7 @@ import javax.swing.JPanel;
  * @version v0.6
  */
 public class Hrac {
-    public static final Rozmer2D GRAFIKA_ZIVOTOV_HRACA = new Rozmer2D(5, 5, 150, 20);
+    public static final Rozmer2D GRAFIKA_ZIVOTOV_HRACA = new Rozmer2D(40, 10, 150, 20);
 
     private static final int MAX_ZIVOT = 10;
     private static final Vektor2D VELKOST = new Vektor2D(50, 50);
