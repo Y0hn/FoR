@@ -17,16 +17,16 @@ import java.awt.Font;
  * @version v0.11
  */
 public class Displej {    
-    public static final int VRSTVA_STRELA = 2;
+    public static final int VRSTVA_STRELA = 3;
 
     private static final int VRSTVA_PODLAHA = 0;
     private static final int VRSTVA_STENA = 1;
     private static final int VRSTVA_ROH = 2;
     private static final int VRSTVA_PLOCHA = 2;
-    private static final int VRSTVA_HRAC = 3;
-    private static final int VRSTVA_NEPRIATEL = 3;
-    private static final int VRSTVA_UI_HRAC = 4;
-    private static final int VRSTVA_UI = 5;
+    private static final int VRSTVA_HRAC = 4;
+    private static final int VRSTVA_NEPRIATEL = 4;
+    private static final int VRSTVA_UI_HRAC = 5;
+    private static final int VRSTVA_UI = 6;
 
     private static final Font FONT = new Font("Arial", 1, 100);
     private static final int POSUN_ROZMERU_X = 10;

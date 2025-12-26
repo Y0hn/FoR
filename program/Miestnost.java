@@ -112,7 +112,7 @@ public class Miestnost {
      * @param nahoda 
      */
     public void vytvorNepriatelov(Random nahoda) {
-        int pocet = MAX_POCET_NEPIRATELOV - MIN_POCET_NEPIRATELOV;
+        int pocet = MAX_POCET_NEPIRATELOV - MIN_POCET_NEPIRATELOV + 1;
         pocet = nahoda.nextInt(pocet);
         pocet += MIN_POCET_NEPIRATELOV;
         Rozmer2D rozmer;

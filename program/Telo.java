@@ -4,11 +4,11 @@ import java.awt.Color;
  * Reprezentacia postavy vo svete
  * 
  * @author y0hn 
- * @version v0.8
+ * @version v0.9
  */
 public class Telo {
-    private static final double POMER_VELKOSTI_POSUN_PRI_ZMENE_MIESTNOSTI = 0.1; 
-    private static final double PRESNOST_POSUNU_K_STENE = 1;
+    private static final double POMER_VELKOSTI_POSUN_PRI_ZMENE_MIESTNOSTI = 0.3; 
+    private static final double PRESNOST_POSUNU_K_STENE = 0.1;
     private static final double PRESNOST_OPRAVY_POSUNU = 1;
 
     private final int maxZdravie;
@@ -119,7 +119,7 @@ public class Telo {
      * @param deltaCasu casovy rozdiel od posledneho tiku
      */
     public boolean tik(Miestnost aktMiest, double deltaCasu) {
-        Vektor2D buducaPozicia = this.ziskajPoziciuDalsiehoPohybu(deltaCasu);
+        Vektor2D buducaPozicia = this.ziskajPoziciuDalsiehoPohybu(this.pohybovyVektor2D, deltaCasu);
         Rozmer2D buduciRozmer = new Rozmer2D(buducaPozicia, this.rozmer.getVelkost());
         
         if (!this.pohybovyVektor2D.equals(Vektor2D.ZERO)) {
@@ -128,11 +128,25 @@ public class Telo {
 
         if (aktMiest.jePlochaRozmeruMimoStien(buduciRozmer)) {
             this.setPozicia(buducaPozicia);
-            this.skusIstDoInejMiestnosti(aktMiest);            
+            this.skusIstDoInejMiestnosti(aktMiest);
         } else if (!aktMiest.jePlochaRozmeruMimoStien(this.rozmer)) {
             this.opravPoziciu(aktMiest);
         } else {
             this.prijdiKuStene(aktMiest);
+
+            Vektor2D posunH = this.ziskajPoziciuDalsiehoPohybu(this.pohybovyVektor2D.roznasobenie(Vektor2D.PRAVO), deltaCasu);
+            buduciRozmer.setPozicia(posunH);
+            boolean horizontalny = aktMiest.jePlochaRozmeruMimoStien(buduciRozmer);
+
+            Vektor2D posunV = this.ziskajPoziciuDalsiehoPohybu(this.pohybovyVektor2D.roznasobenie(Vektor2D.HORE), deltaCasu);
+            buduciRozmer.setPozicia(posunV);
+            boolean vertikalny = !horizontalny && aktMiest.jePlochaRozmeruMimoStien(buduciRozmer);
+
+            if (horizontalny) {
+                this.setPozicia(posunH);
+            } else if (vertikalny) {
+                this.setPozicia(posunV);
+            }
         }
 
         boolean zdravieZmenene = this.zmenaZdravia;
@@ -149,7 +163,7 @@ public class Telo {
      * @return PRAVDA ak naraza do Hraca
      */
     public boolean tik(Miestnost aM, Hrac hrac, double deltaCasu) {
-        Vektor2D buducaPozicia = this.ziskajPoziciuDalsiehoPohybu(deltaCasu);
+        Vektor2D buducaPozicia = this.ziskajPoziciuDalsiehoPohybu(this.pohybovyVektor2D, deltaCasu);
         Rozmer2D buduciRozmer = new Rozmer2D(buducaPozicia, this.rozmer.getVelkost());        
         boolean koliziaHrac = hrac.getTelo().getRozmer().jeRozmerCiastocneVnutri(buduciRozmer);
 
@@ -184,15 +198,16 @@ public class Telo {
         return 0 < this.zdravie;
     }
 
-    private Vektor2D ziskajPoziciuDalsiehoPohybu(double deltaCasu) {        
-        Vektor2D pohyb = this.pohybovyVektor2D.sucinSoSkalarom(this.rychlostPohybu);
+    private Vektor2D ziskajPoziciuDalsiehoPohybu(Vektor2D pohybovyVektor, double deltaCasu) {        
+        Vektor2D pohyb = pohybovyVektor.sucinSoSkalarom(this.rychlostPohybu);
         pohyb = pohyb.sucinSoSkalarom(deltaCasu);
         pohyb = this.rozmer.getPozicia().sucet(pohyb);
         return pohyb;
     }    
     private void prijdiKuStene(Miestnost aktivMiestnost) {
         Rozmer2D kopia = this.rozmer.kopia();
-        kopia.setPozicia(kopia.getPozicia().zaokruhli());
+        kopia.setPozicia(kopia.getPozicia());
+
         while (aktivMiestnost.jePlochaRozmeruMimoStien(kopia)) {
             this.rozmer = kopia.kopia();
             Vektor2D pohyb = this.pohybovyVektor2D.sucinSoSkalarom(PRESNOST_POSUNU_K_STENE);

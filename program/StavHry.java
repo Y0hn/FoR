@@ -8,7 +8,7 @@ import java.awt.Font;
  * @version v0.2
  */
 public enum StavHry {
-    VYHRA(Color.GREEN, Color.BLUE, "Výhra", 100, 0, 0),
+    VYHRA(new Color(33, 125, 174), Color.WHITE, "Výhra", 100, 0, 0),
     PREHRA(Color.BLACK, Color.RED, "Koniec Hry", 100, 0, 0),
     PAUZA(Color.BLACK, Color.WHITE, "Pauza", 50, 0, 1),
     HRA;

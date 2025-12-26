@@ -29,7 +29,7 @@ public class Strela {
     public Strela(Vektor2D pozicia, Vektor2D smerovyVektor, Hrac hrac) {
         pozicia = pozicia.sucet(VELKOST.sucinSoSkalarom(-0.5));
         this.rozmer = new Rozmer2D(pozicia, VELKOST);
-        this.posun = smerovyVektor.sucinSoSkalarom(RYCHLOST);
+        this.posun = smerovyVektor.normalizuj().sucinSoSkalarom(RYCHLOST);
         this.poskodenie = hrac.getTelo().getPoskodenie();
         this.hrac = hrac;
 
