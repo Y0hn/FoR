@@ -182,6 +182,9 @@ public class Vektor2D {
     public Point vytvorPoint() {
         return new Point(this.getIntX(), this.getIntY());
     }
+    public double getUhol() {
+        return Math.atan2(this.y, this.x);
+    }
 
     /**
      * Navratova pre zjednodusenie citatelnosti vo vypise

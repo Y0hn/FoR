@@ -58,9 +58,9 @@ public class Hrac {
     }
     /**
      * Ziska grafiku hraca
-     * @return JPanel hraca
+     * @return OtacanaGrafika hraca
      */
-    public JPanel getGrafika() {
+    public OtacanaGrafika getGrafika() {
         return this.telo.getGrafika();
     }
     /**
@@ -238,6 +238,8 @@ public class Hrac {
 
             // prida jednu sekundu vydelenu rychlostou strelby
             this.buducaStrela = System.nanoTime() + Math.round(1 / RYCHLOST_STRELBY * Math.pow(10, 9));
+            this.telo.setSmerovyVektor(smer);
+            this.telo.obnovGrafiku();
         }            
     }
 }

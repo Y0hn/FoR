@@ -1,7 +1,5 @@
 import java.awt.Color;
 
-import javax.swing.JPanel;
-
 /**
  * Reprezentacia postavy vo svete
  * 
@@ -17,9 +15,10 @@ public class Telo {
     private int zdravie;
     private final int poskodenie;
     private Rozmer2D rozmer;
+    private Vektor2D pohybovyVektor2D;
     private Vektor2D smerovyVektor2D;
     private final double rychlostPohybu;
-    private JPanel grafika;
+    private OtacanaGrafika grafika;
     private boolean zmenaZdravia;
     /**
      * Vytvori Telo pre postavu 
@@ -31,6 +30,7 @@ public class Telo {
      */
     public Telo(int maxZdravie, Rozmer2D rozmer, double rychlost, int poskodenie) {
         this.smerovyVektor2D = Vektor2D.ZERO;
+        this.pohybovyVektor2D = Vektor2D.ZERO;
         this.rychlostPohybu = rychlost;
         this.poskodenie = poskodenie;
         this.maxZdravie = maxZdravie;
@@ -74,31 +74,43 @@ public class Telo {
         this.rozmer.setPozicia(pozicia);
 
         // Vykresli zmenu
-        if (this.grafika != null) {
-            this.grafika.setLocation(this.rozmer.getPozicia().vytvorPoint());
-        }
+        this.obnovGrafiku();
     }
     /**
      * Natstavi smerovy Vektor2D Tela
      * @param smerovyVektor novy smerovy Vektor2D
      */
-    public void setPohybVektor(Vektor2D smerovyVektor) {
-        this.smerovyVektor2D = smerovyVektor.normalizuj();
+    public void setPohybVektor(Vektor2D pohybovyVektor) {
+        this.pohybovyVektor2D = pohybovyVektor.normalizuj();
+    }
+    public void setSmerovyVektor(Vektor2D smerovyVektor) {
+        this.smerovyVektor2D = smerovyVektor;
     }
     /**
      * Nastavi grafiku hraca
      * @param grafika JPanel
      */
-    public void setGrafika(JPanel grafika, Color farba) {
+    public void setGrafika(OtacanaGrafika grafika, Color farba) {
         grafika.setBounds(this.rozmer.vytvorRectangle());
         grafika.setBackground(farba);
         this.grafika = grafika;
     }
     /**
+     * Obnovi grafiku tela a jej rotaciu
+     * @param smer
+     */
+    public void obnovGrafiku() {
+        if (this.grafika != null) {
+            this.grafika.setLocation(this.rozmer.getPozicia().vytvorPoint());
+            this.grafika.setUhol(this.smerovyVektor2D.getUhol());
+            this.grafika.repaint();
+        }
+    }
+    /**
      * Ziska grafiku hraca
      * @return grafika Tela
      */
-    public JPanel getGrafika() {
+    public OtacanaGrafika getGrafika() {
         return this.grafika;
     }
     /**
@@ -110,6 +122,10 @@ public class Telo {
         Vektor2D buducaPozicia = this.ziskajPoziciuDalsiehoPohybu(deltaCasu);
         Rozmer2D buduciRozmer = new Rozmer2D(buducaPozicia, this.rozmer.getVelkost());
         
+        if (!this.pohybovyVektor2D.equals(Vektor2D.ZERO)) {
+            this.smerovyVektor2D = this.pohybovyVektor2D;
+        }
+
         if (aktMiest.jePlochaRozmeruMimoStien(buduciRozmer)) {
             this.setPozicia(buducaPozicia);
             this.skusIstDoInejMiestnosti(aktMiest);            
@@ -137,6 +153,10 @@ public class Telo {
         Rozmer2D buduciRozmer = new Rozmer2D(buducaPozicia, this.rozmer.getVelkost());        
         boolean koliziaHrac = hrac.getTelo().getRozmer().jeRozmerCiastocneVnutri(buduciRozmer);
 
+        if (!this.pohybovyVektor2D.equals(Vektor2D.ZERO)) {
+            this.smerovyVektor2D = this.pohybovyVektor2D;
+        }
+        
         if (!koliziaHrac && aM.jePlochaRozmeruMimoStien(buduciRozmer)) {
             if (aM.jePlochaRozmeruMimoNepriatelov(buduciRozmer, this.rozmer)) {
                 this.setPozicia(buducaPozicia);
@@ -165,7 +185,7 @@ public class Telo {
     }
 
     private Vektor2D ziskajPoziciuDalsiehoPohybu(double deltaCasu) {        
-        Vektor2D pohyb = this.smerovyVektor2D.sucinSoSkalarom(this.rychlostPohybu);
+        Vektor2D pohyb = this.pohybovyVektor2D.sucinSoSkalarom(this.rychlostPohybu);
         pohyb = pohyb.sucinSoSkalarom(deltaCasu);
         pohyb = this.rozmer.getPozicia().sucet(pohyb);
         return pohyb;
@@ -175,7 +195,7 @@ public class Telo {
         kopia.setPozicia(kopia.getPozicia().zaokruhli());
         while (aktivMiestnost.jePlochaRozmeruMimoStien(kopia)) {
             this.rozmer = kopia.kopia();
-            Vektor2D pohyb = this.smerovyVektor2D.sucinSoSkalarom(PRESNOST_POSUNU_K_STENE);
+            Vektor2D pohyb = this.pohybovyVektor2D.sucinSoSkalarom(PRESNOST_POSUNU_K_STENE);
             kopia.setPozicia(kopia.getPozicia().sucet(pohyb));
         }
     }

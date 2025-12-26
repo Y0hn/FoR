@@ -33,6 +33,9 @@ public class Displej {
     private static final int POSUN_ROZMERU_Y = 36;
     private static final double VELKOST_ROHU = 1.05;
 
+    private static final String GRAFIKA_HRAC = "assets/player.png";
+    private static final String GRAFIKA_NEPIRATEL = "assets/enemy.png";
+
     private final JFrame okno;
     private final JButton[] uzivatelskeRozhranie;
     private JLayeredPane aktivnaMiestnost;
@@ -94,7 +97,7 @@ public class Displej {
      * @param objektHraca
      */
     public void nastavHraca(Hrac objektHraca) {
-        JPanel grafika = new JPanel();
+        OtacanaGrafika grafika = new OtacanaGrafika(GRAFIKA_HRAC);
         this.aktivnaMiestnost.setLayer(grafika, VRSTVA_HRAC);
         this.aktivnaMiestnost.add(grafika);
         objektHraca.getTelo().setGrafika(grafika, Color.GREEN);
@@ -106,7 +109,7 @@ public class Displej {
 
         for (int i = 0; i < zivotyUI.length; i++) {
             JPanel zivot = new JPanel();
-            zivot.setBackground(Color.PINK);
+            zivot.setBackground(Color.RED);
             zivot.setBounds(rozmerZivota.vytvorRectangle());
             this.aktivnaMiestnost.setLayer(zivot, VRSTVA_UI_HRAC);
             this.aktivnaMiestnost.add(zivot);
@@ -130,7 +133,7 @@ public class Displej {
         this.aktivnaMiestnost.setLayout(null);
         this.okno.setContentPane(this.aktivnaMiestnost);
         
-        JPanel grafika = h.getTelo().getGrafika();
+        OtacanaGrafika grafika = h.getTelo().getGrafika();
         if (null != grafika) {
             this.aktivnaMiestnost.setLayer(grafika, VRSTVA_HRAC);
             this.aktivnaMiestnost.add(grafika);
@@ -168,7 +171,7 @@ public class Displej {
         }
 
         for (Nepriatel nepriatel : m.getNepriatelia()) {
-            JPanel grafika = new JPanel();
+            OtacanaGrafika grafika = new OtacanaGrafika(GRAFIKA_NEPIRATEL);
             miestnost.setLayer(grafika, VRSTVA_NEPRIATEL);
             miestnost.add(grafika);
             nepriatel.setGrafika(grafika);

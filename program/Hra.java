@@ -35,7 +35,7 @@ public class Hra {
     private boolean koncovaObrazovka;
 
     private Hra() {
-        this.displej = new Displej("", "FrontRooms", Hra.ROZMER_OKNA);
+        this.displej = new Displej("assets/player.png", "FrontRooms", Hra.ROZMER_OKNA);
         this.svet = new Svet(VELKOST_SVETA);
         this.hrac = new Hrac();
         

@@ -1,7 +1,5 @@
 import java.awt.Color;
 
-import javax.swing.JPanel;
-
 /**
  * Write a description of class Nepriatel here.
  * 
@@ -36,10 +34,10 @@ public class Nepriatel {
         return this.telo;
     }
     /**
-     * Nastav grafiku pre nepiratela
+     * Nastav grafiku pre Nepiratela
      * @param grafika
      */
-    public void setGrafika(JPanel grafika) {
+    public void setGrafika(OtacanaGrafika grafika) {
         grafika.setBounds(this.telo.getRozmer().vytvorRectangle());
         grafika.setBackground(Color.RED);
         this.telo.setGrafika(grafika, Color.RED);
@@ -48,7 +46,7 @@ public class Nepriatel {
      * Odstarni Nepriatela z Okna, v ktorom je zobrazovany
      */
     public void zruzGrafiku() {
-        JPanel grafika = this.telo.getGrafika();
+        OtacanaGrafika grafika = this.telo.getGrafika();
         grafika.setBounds(Rozmer2D.ZERO.vytvorRectangle());
         grafika.getParent().remove(grafika);
     }

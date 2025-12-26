@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=OtacanaGrafika
+comment0.text=\r\n\ \r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.1\r\n
+comment1.params=cesta
+comment1.target=OtacanaGrafika(java.lang.String)
+comment1.text=\r\n\ \r\n
+comment2.params=uhol
+comment2.target=void\ setUhol(double)
+comment3.params=grafika
+comment3.target=void\ paintComponent(java.awt.Graphics)
+numComments=4
