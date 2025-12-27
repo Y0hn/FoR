@@ -154,7 +154,10 @@ public class Displej {
      * @param zapni ak PRAVDA zapne grafiku inak vypne
      */
     public void nastavGrafikuPreStavHry(StavHry stav, boolean zapni) {
-        Rozmer2D r = zapni ? Hra.ROZMER_OKNA : Rozmer2D.ZERO;
+        Rozmer2D r = Rozmer2D.ZERO;
+        if (zapni) {
+            r = Hra.ROZMER_OKNA;
+        }
         this.uzivatelskeRozhranie[stav.ordinal()].setBounds(r.vytvorRectangle());
     }
         
@@ -245,22 +248,13 @@ public class Displej {
                 jb.setFocusPainted(false);
                 jb.setOpaque(true);
 
-                jb.setBounds(Rozmer2D.ZERO.vytvorRectangle());
+                jb.setIcon(new ImageIcon(sh.getCesta()));
                 jb.setBackground(sh.getFarbaPozadia());
-                jb.setLayout(null);
+                jb.setBounds(Rozmer2D.ZERO.vytvorRectangle());
                 jb.addActionListener(a -> {
                     this.restart = true;
                 });
                 tlacitka[i] = jb;
-
-                JLabel jl = new JLabel();
-                jl.setFont(sh.getFont());
-                jl.setBounds(Hra.ROZMER_OKNA.vytvorRectangle());
-                jl.setHorizontalAlignment(sh.getZarovananieX());
-                jl.setVerticalAlignment(sh.getZarovananieY());
-                jl.setForeground(sh.getFarbaTextu());
-                jl.setText(sh.getText());
-                jb.add(jl, BorderLayout.CENTER);
             }
         }
         return tlacitka;

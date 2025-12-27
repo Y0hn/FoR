@@ -5,7 +5,7 @@ import java.awt.Rectangle;
  * Stara sa o fyzicku reperezenaciu objektu 
  * popisaneho obdlznikom v 2D priestore
  * @author y0hn
- * @version v0.6 
+ * @version v0.7
  */
 public class Rozmer2D {
     public static final Rozmer2D ZERO = new Rozmer2D(0, 0, 0, 0);
@@ -247,6 +247,17 @@ public class Rozmer2D {
      */
     public Rozmer2D kopia() {
         return new Rozmer2D(this.poziciaX, this.poziciaY, this.velkostX, this.velkostY);
+    }
+    
+    /**
+     * Vyskaluje Rozmer - jeho velkost a poziciu
+     * @param skala [sX, sY]
+     * @return (x * sX|y * sY) [vY * sX|vY * sY]
+     */
+    public Rozmer2D vysklaluj(Vektor2D skala) {
+        Vektor2D pozicia = this.getPozicia().roznasobenie(skala);
+        Vektor2D velkost = this.getVelkost().roznasobenie(skala);
+        return new Rozmer2D(pozicia, velkost);
     }
 
     /**
