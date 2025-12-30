@@ -4,17 +4,20 @@ import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLayeredPane;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 
+import java.util.Hashtable;
+
 /**
  * Zobrazovac okna Hry
  * 
  * @author y0hn
- * @version v0.11
+ * @version v0.12
  */
 public class Displej {    
     public static final int VRSTVA_STRELA = 3;
@@ -28,16 +31,22 @@ public class Displej {
     private static final int VRSTVA_UI_HRAC = 5;
     private static final int VRSTVA_UI = 6;
 
-    private static final Font FONT = new Font("Arial", 1, 100);
     private static final int POSUN_ROZMERU_X = 10;
     private static final int POSUN_ROZMERU_Y = 36;
+
+    private static final Font FONT_MIESTNOST = new Font("Arial", 1, 100);
     private static final double VELKOST_ROHU = 1.05;
+
+    private static final Vektor2D VELKOST_MENU_TLACITKA = new Vektor2D(0.5, 0.15);
+    private static final Font FONT_MENU_TLACITKA = new Font("Arial", 1, 50);
+    private static final double POSUN_TLACITOK_DOLE = 1.15;
+    private static final int POSUN_TLACITOK_HORE = 25;
 
     private static final String GRAFIKA_HRAC = "assets/player.png";
     private static final String GRAFIKA_NEPIRATEL = "assets/enemy.png";
 
     private final JFrame okno;
-    private final JButton[] uzivatelskeRozhranie;
+    private final Hashtable<StavHry, JComponent> uzivatelskeRozhranie;
     private JLayeredPane aktivnaMiestnost;
     private boolean restart;
 
@@ -142,9 +151,9 @@ public class Displej {
                 this.aktivnaMiestnost.setLayer(cast, VRSTVA_UI_HRAC);
                 this.aktivnaMiestnost.add(cast);
             }
-            for (JButton tlacitko : this.uzivatelskeRozhranie) {
-                this.aktivnaMiestnost.setLayer(tlacitko, VRSTVA_UI);
-                this.aktivnaMiestnost.add(tlacitko);
+            for (JComponent grafikaUI : this.uzivatelskeRozhranie.values()) {
+                this.aktivnaMiestnost.setLayer(grafikaUI, VRSTVA_UI);
+                this.aktivnaMiestnost.add(grafikaUI);
             }
         }
     }
@@ -158,7 +167,7 @@ public class Displej {
         if (zapni) {
             r = Hra.ROZMER_OKNA;
         }
-        this.uzivatelskeRozhranie[stav.ordinal()].setBounds(r.vytvorRectangle());
+        this.uzivatelskeRozhranie.get(stav).setBounds(r.vytvorRectangle());
     }
         
     private JLayeredPane vytvorGrafikuMiestnosti(Miestnost m) {
@@ -193,7 +202,7 @@ public class Displej {
         label.setLayout(new BorderLayout());
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setVerticalAlignment(SwingConstants.CENTER);    
-        label.setFont(FONT);    
+        label.setFont(FONT_MIESTNOST);    
         podlaha.add(label, BorderLayout.CENTER);
 
         SpecialnaPlocha plocha = m.getSpecialnaPlocha();
@@ -233,30 +242,80 @@ public class Displej {
         stena.setBackground(Color.DARK_GRAY);
         return stena;
     }
-    private JButton[] vytvorGrafikuUI() {
-        JButton[] tlacitka = new JButton[StavHry.values().length - 1];
-        
-        for (int i = 0; i < StavHry.values().length; i++) {
-            StavHry sh = StavHry.values()[i]; 
-            if (sh != StavHry.HRA) {                
-                JButton jb = new JButton();
+    private Hashtable<StavHry, JComponent> vytvorGrafikuUI() {
+        Hashtable<StavHry, JComponent> grafiky = new Hashtable<StavHry, JComponent>();
+        for (StavHry sh : StavHry.values()) {
 
-                jb.setFocusable(false);
-                jb.setContentAreaFilled(false);
-                jb.setRolloverEnabled(false);
-                jb.setBorderPainted(false);
-                jb.setFocusPainted(false);
-                jb.setOpaque(true);
+            JComponent grafika = null;
 
-                jb.setIcon(new ImageIcon(sh.getCesta()));
-                jb.setBackground(sh.getFarbaPozadia());
-                jb.setBounds(Rozmer2D.ZERO.vytvorRectangle());
-                jb.addActionListener(a -> {
+            if (sh == StavHry.MENU) {
+                JPanel jp = new JPanel();
+                jp.setBounds(Rozmer2D.ZERO.vytvorRectangle());
+                jp.setBackground(sh.getFarbaPozadia());
+                jp.setLayout(null);
+                
+                JLabel jl = new JLabel();
+                jl.setIcon(new ImageIcon(sh.getCesta()));
+                jl.setBounds(Hra.ROZMER_OKNA.vytvorRectangle());
+                jl.setLayout(null);
+                jp.add(jl);
+
+                String[] TEXT_MENU_TLACITOK = new String[]{  "Pokracuj", "Start", "Ukonci" };
+                Vektor2D velkost = Hra.ROZMER_OKNA.getVelkost().roznasobenie(VELKOST_MENU_TLACITKA);
+                Vektor2D pozicia = Hra.ROZMER_OKNA.ziskajStred();
+                pozicia = pozicia.rozdiel(velkost.sucinSoSkalarom(0.5));
+                pozicia = new Vektor2D(pozicia.getX(), pozicia.getY() - POSUN_TLACITOK_HORE);
+                Rozmer2D rozmer = new Rozmer2D(pozicia, velkost);
+
+                for (int i = 0; i < 3; i++) {
+                    JButton jb = vytvorTlacitko(false, "", null);
+                    Rozmer2D r = rozmer.kopia();
+
+                    Vektor2D posun = new Vektor2D(r.getPoziciaX(), r.getPoziciaY() + r.getVelkostY() * i * POSUN_TLACITOK_DOLE);
+                    r.setPozicia(posun);
+                    jb.setBounds(r.vytvorRectangle());
+                    jb.setText(TEXT_MENU_TLACITOK[i]);
+                    jb.setFont(FONT_MENU_TLACITKA);
+                    jb.setForeground(Color.WHITE);
+                    jl.add(jb);
+                }
+
+                grafika = jp;
+
+            } else if (StavHry.HRA == sh) {
+                continue;
+
+            } else {
+                JButton tlacidlo = vytvorTlacitko(true, sh.getCesta(), sh.getFarbaPozadia());
+                tlacidlo.addActionListener(a -> {
                     this.restart = true;
                 });
-                tlacitka[i] = jb;
+                grafika = tlacidlo;
             }
+
+            grafiky.put(sh, grafika);
         }
-        return tlacitka;
+        return grafiky;
+    }
+    private JButton vytvorTlacitko(boolean vyplnene, String ikona, Color farba) {
+        JButton tlacitko = new JButton();
+
+        tlacitko.setFocusable(false);
+        tlacitko.setContentAreaFilled(false);
+        tlacitko.setRolloverEnabled(false);
+        tlacitko.setBorderPainted(false);
+        tlacitko.setFocusPainted(false);
+        tlacitko.setOpaque(vyplnene);
+
+        tlacitko.setBounds(Rozmer2D.ZERO.vytvorRectangle());
+
+        if (!ikona.equals("")) {
+            tlacitko.setIcon(new ImageIcon(ikona));
+        }
+        if (farba != null) {
+            tlacitko.setBackground(farba);
+        } 
+
+        return tlacitko;
     }
 }

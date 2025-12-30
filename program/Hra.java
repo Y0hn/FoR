@@ -32,18 +32,19 @@ public class Hra {
     private Svet svet;
     private Miestnost aktivnaMiestnost;
     private StavHry stavHry;
-    private boolean koncovaObrazovka;
+    private boolean prekryte;
 
     private Hra() {
-        this.displej = new Displej("assets/player.png", "FrontRooms", Hra.ROZMER_OKNA);
+        this.displej = new Displej("assets/icon.png", "FrontRooms", Hra.ROZMER_OKNA);
         this.svet = new Svet(VELKOST_SVETA);
         this.hrac = new Hrac();
         
         this.nacitajMiestnost(this.svet.getZaciatocnaMiestnost());
         this.hrac.nastavVstup(this.displej.getOkno());
         this.displej.nastavHraca(this.hrac);
-        this.koncovaObrazovka = false;
-        this.stavHry = StavHry.HRA;
+        this.stavHry = StavHry.MENU;
+        this.prekryte = false;
+        this.nacitajMiestnost(this.svet.getZaciatocnaMiestnost());
     }
     
     /**
@@ -54,21 +55,32 @@ public class Hra {
         if (this.stavHry == StavHry.HRA) {
             this.stavHry = this.aktivnaMiestnost.tik(this.hrac, deltaCasu);
             this.stavHry = this.hrac.tik(this.aktivnaMiestnost, this.stavHry, deltaCasu);
-        } else if (!this.koncovaObrazovka) {
+
+        } else if (!this.prekryte) {
             this.displej.nastavGrafikuPreStavHry(this.stavHry, true);
-            this.koncovaObrazovka = true;
+            this.prekryte = true;
+            
         } else if (this.stavHry == StavHry.PAUZA) {
             if (this.displej.ziskajRestart() || this.hrac.pauzaTik()) {
                 this.displej.nastavGrafikuPreStavHry(this.stavHry, false);   
-                this.koncovaObrazovka = false;
+                this.prekryte = false;
                 this.stavHry = StavHry.HRA;
-            }        
+            }
+
+        } else if (this.stavHry == StavHry.MENU) {
+            if (this.displej.ziskajRestart() || this.hrac.pauzaTik()) {
+                this.displej.nastavGrafikuPreStavHry(this.stavHry, false);
+
+                this.stavHry = StavHry.HRA;
+                this.prekryte = false;   
+            }
+
         } else if (this.displej.ziskajRestart()) {
             this.displej.nastavGrafikuPreStavHry(this.stavHry, false);            
             this.svet = new Svet(VELKOST_SVETA);
-
+            
             this.nacitajMiestnost(this.svet.getZaciatocnaMiestnost());
-            this.koncovaObrazovka = false;
+            this.prekryte = false;
             this.hrac.ozivHraca();
             this.stavHry = StavHry.HRA;
         }
