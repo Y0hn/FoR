@@ -3,7 +3,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLayeredPane;
 
@@ -17,7 +16,7 @@ import java.util.Hashtable;
  * Zobrazovac okna Hry
  * 
  * @author y0hn
- * @version v0.12
+ * @version v0.13
  */
 public class Displej {    
     public static final int VRSTVA_STRELA = 3;
@@ -37,11 +36,6 @@ public class Displej {
     private static final Font FONT_MIESTNOST = new Font("Arial", 1, 100);
     private static final double VELKOST_ROHU = 1.05;
 
-    private static final Vektor2D VELKOST_MENU_TLACITKA = new Vektor2D(0.5, 0.15);
-    private static final Font FONT_MENU_TLACITKA = new Font("Arial", 1, 50);
-    private static final double POSUN_TLACITOK_DOLE = 1.15;
-    private static final int POSUN_TLACITOK_HORE = 25;
-
     private static final String GRAFIKA_HRAC = "assets/player.png";
     private static final String GRAFIKA_NEPIRATEL = "assets/enemy.png";
 
@@ -49,6 +43,8 @@ public class Displej {
     private final Hashtable<StavHry, JComponent> uzivatelskeRozhranie;
     private JLayeredPane aktivnaMiestnost;
     private boolean restart;
+    private boolean[] hlavnaPonuka;
+    private boolean spatDoMenu;
 
     /**
      * Vytvori okno Displeja 
@@ -81,7 +77,34 @@ public class Displej {
         this.okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
         this.okno.setVisible(true);
 
-        this.uzivatelskeRozhranie = this.vytvorGrafikuUI();
+        this.uzivatelskeRozhranie = new Hashtable<StavHry, JComponent>();
+        for (StavHry sh : StavHry.values()) {
+            this.uzivatelskeRozhranie.put(sh, sh.getGrafika(0));
+
+            if (sh == StavHry.MENU) {
+                int pocet = sh.getVsetkyGrafiky().length;
+                this.hlavnaPonuka = new boolean[pocet];
+
+                for (int i = 1; i < pocet; i++) {
+                    final int index = i;
+                    sh.getGrafika(i).addActionListener(a -> {
+                        this.hlavnaPonuka[index] = true;
+                    });
+                }
+                
+            } else if (StavHry.HRA != sh) {
+                sh.getGrafika(0).addActionListener(a -> {
+                    this.restart = true;
+                });
+
+                if (StavHry.PAUZA == sh) {
+                    this.spatDoMenu = false;
+                    sh.getGrafika(1).addActionListener(a -> {
+                        this.spatDoMenu = true;
+                    });
+                }
+            } 
+        }
     }
     /**
      * Vrati Hlavne Zobrazovacie Okno
@@ -92,7 +115,7 @@ public class Displej {
     }
     /**
      * Ziska hodnotu restartu iba 1 krat
-     * @return PRAVDA ak sa ma Displej restartovat
+     * @return PRAVDA ak sa ma Displej restartovat, hodnota sa nastavi FALSE
      */
     public boolean ziskajRestart() {
         boolean restartuj = this.restart;
@@ -100,6 +123,29 @@ public class Displej {
             this.restart = false;
         }
         return restartuj;
+    }
+    /**
+     * Ziska hodnotu navratu do Hlavnej Ponuky iba 1 krat
+     * @return PRAVDA ak bolo tlacidlo stlacene, hodnota sa nastavi FALSE
+     */
+    public boolean ziskajSpatDoMenu() {
+        boolean spat = this.spatDoMenu;
+        if (spat) {
+            this.spatDoMenu = false;
+        }
+        return spat;
+    }
+    /**
+     * Ziska hodnotu vstupov v hlavnej ponuke 1x krat
+     * @param index tlacidla
+     * @return PRAVDA ak bolo tlacidlo stlacene, hodnota sa nastavi FALSE
+    */
+    public boolean ziskajHlavnuPonuku(int index) {
+        boolean ponuka = this.hlavnaPonuka[index];
+        if (ponuka) {
+            this.hlavnaPonuka[index] = false;
+        }
+        return ponuka;
     }
     /**
      * Vytvori Hracovi objekt na Displeji 
@@ -241,81 +287,5 @@ public class Displej {
         stena.setBounds(rozmer.vytvorRectangle());
         stena.setBackground(Color.DARK_GRAY);
         return stena;
-    }
-    private Hashtable<StavHry, JComponent> vytvorGrafikuUI() {
-        Hashtable<StavHry, JComponent> grafiky = new Hashtable<StavHry, JComponent>();
-        for (StavHry sh : StavHry.values()) {
-
-            JComponent grafika = null;
-
-            if (sh == StavHry.MENU) {
-                JPanel jp = new JPanel();
-                jp.setBounds(Rozmer2D.ZERO.vytvorRectangle());
-                jp.setBackground(sh.getFarbaPozadia());
-                jp.setLayout(null);
-                
-                JLabel jl = new JLabel();
-                jl.setIcon(new ImageIcon(sh.getCesta()));
-                jl.setBounds(Hra.ROZMER_OKNA.vytvorRectangle());
-                jl.setLayout(null);
-                jp.add(jl);
-
-                String[] TEXT_MENU_TLACITOK = new String[]{  "Pokracuj", "Start", "Ukonci" };
-                Vektor2D velkost = Hra.ROZMER_OKNA.getVelkost().roznasobenie(VELKOST_MENU_TLACITKA);
-                Vektor2D pozicia = Hra.ROZMER_OKNA.ziskajStred();
-                pozicia = pozicia.rozdiel(velkost.sucinSoSkalarom(0.5));
-                pozicia = new Vektor2D(pozicia.getX(), pozicia.getY() - POSUN_TLACITOK_HORE);
-                Rozmer2D rozmer = new Rozmer2D(pozicia, velkost);
-
-                for (int i = 0; i < 3; i++) {
-                    JButton jb = vytvorTlacitko(false, "", null);
-                    Rozmer2D r = rozmer.kopia();
-
-                    Vektor2D posun = new Vektor2D(r.getPoziciaX(), r.getPoziciaY() + r.getVelkostY() * i * POSUN_TLACITOK_DOLE);
-                    r.setPozicia(posun);
-                    jb.setBounds(r.vytvorRectangle());
-                    jb.setText(TEXT_MENU_TLACITOK[i]);
-                    jb.setFont(FONT_MENU_TLACITKA);
-                    jb.setForeground(Color.WHITE);
-                    jl.add(jb);
-                }
-
-                grafika = jp;
-
-            } else if (StavHry.HRA == sh) {
-                continue;
-
-            } else {
-                JButton tlacidlo = vytvorTlacitko(true, sh.getCesta(), sh.getFarbaPozadia());
-                tlacidlo.addActionListener(a -> {
-                    this.restart = true;
-                });
-                grafika = tlacidlo;
-            }
-
-            grafiky.put(sh, grafika);
-        }
-        return grafiky;
-    }
-    private JButton vytvorTlacitko(boolean vyplnene, String ikona, Color farba) {
-        JButton tlacitko = new JButton();
-
-        tlacitko.setFocusable(false);
-        tlacitko.setContentAreaFilled(false);
-        tlacitko.setRolloverEnabled(false);
-        tlacitko.setBorderPainted(false);
-        tlacitko.setFocusPainted(false);
-        tlacitko.setOpaque(vyplnene);
-
-        tlacitko.setBounds(Rozmer2D.ZERO.vytvorRectangle());
-
-        if (!ikona.equals("")) {
-            tlacitko.setIcon(new ImageIcon(ikona));
-        }
-        if (farba != null) {
-            tlacitko.setBackground(farba);
-        } 
-
-        return tlacitko;
     }
 }

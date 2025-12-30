@@ -2,7 +2,7 @@
  * Trieda pre zjednotenie vsetkych komponentov Hry
  * 
  * @author y0hn 
- * @version v0.5
+ * @version v0.6
  */
 public class Hra {
     public static final Rozmer2D ROZMER_OKNA = new Rozmer2D(0, 0, 600, 400);
@@ -61,18 +61,25 @@ public class Hra {
             this.prekryte = true;
             
         } else if (this.stavHry == StavHry.PAUZA) {
-            if (this.displej.ziskajRestart() || this.hrac.pauzaTik()) {
+            if (this.displej.ziskajSpatDoMenu()) {
+                this.displej.nastavGrafikuPreStavHry(this.stavHry, false);   
+                this.prekryte = false;
+                this.stavHry = StavHry.MENU;
+
+            } else if (this.displej.ziskajRestart() || this.hrac.pauzaTik()) {
                 this.displej.nastavGrafikuPreStavHry(this.stavHry, false);   
                 this.prekryte = false;
                 this.stavHry = StavHry.HRA;
             }
 
         } else if (this.stavHry == StavHry.MENU) {
-            if (this.displej.ziskajRestart() || this.hrac.pauzaTik()) {
+            if (this.displej.ziskajHlavnuPonuku(StavHry.MENU.getIndexTlacidla("Štart"))) {
                 this.displej.nastavGrafikuPreStavHry(this.stavHry, false);
-
                 this.stavHry = StavHry.HRA;
-                this.prekryte = false;   
+                this.prekryte = false;
+
+            } else if (this.displej.ziskajHlavnuPonuku(StavHry.MENU.getIndexTlacidla("Ukonči Hru"))) {
+                System.exit(0);
             }
 
         } else if (this.displej.ziskajRestart()) {
