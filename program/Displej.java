@@ -33,7 +33,7 @@ public class Displej {
     private static final int POSUN_ROZMERU_X = 10;
     private static final int POSUN_ROZMERU_Y = 36;
 
-    private static final Font FONT_MIESTNOST = new Font("Arial", 1, 100);
+    private static final Font FONT_MIESTNOST = new Font("Arial", 1, 200);
     private static final double VELKOST_ROHU = 1.05;
 
     private static final String GRAFIKA_HRAC = "assets/player.png";
@@ -153,6 +153,22 @@ public class Displej {
      */
     public void nastavHraca(Hrac objektHraca) {
         OtacanaGrafika grafika = new OtacanaGrafika(GRAFIKA_HRAC);
+
+        // Vytvori prazdnu Miestnost
+        if (this.aktivnaMiestnost == null) {
+            this.aktivnaMiestnost = new JLayeredPane();
+            this.aktivnaMiestnost.setBackground(Color.BLACK);
+            this.aktivnaMiestnost.setBounds(Hra.ROZMER_OKNA.vytvorRectangle());
+            this.aktivnaMiestnost.setLayout(null);
+            this.okno.setContentPane(this.aktivnaMiestnost);
+        
+            // Premigruje Uzivatelske Rozhranie
+            for (JComponent grafikaUI : this.uzivatelskeRozhranie.values()) {
+                this.aktivnaMiestnost.setLayer(grafikaUI, VRSTVA_UI);
+                this.aktivnaMiestnost.add(grafikaUI);
+            }
+        }
+
         this.aktivnaMiestnost.setLayer(grafika, VRSTVA_HRAC);
         this.aktivnaMiestnost.add(grafika);
         objektHraca.getTelo().setGrafika(grafika, Color.GREEN);

@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Rozmer2D
-comment0.text=\r\n\ Stara\ sa\ o\ fyzicku\ reperezenaciu\ objektu\ \r\n\ popisaneho\ obdlznikom\ v\ 2D\ priestore\r\n\ @author\ y0hn\r\n\ @version\ v0.7\r\n
+comment0.text=\r\n\ Stara\ sa\ o\ fyzicku\ reperezenaciu\ objektu\ \r\n\ popisaneho\ obdlznikom\ v\ 2D\ priestore\r\n\ @author\ y0hn\r\n\ @version\ v0.8\r\n
 comment1.params=x\ y\ vX\ vY
 comment1.target=Rozmer2D(double,\ double,\ double,\ double)
 comment1.text=\r\n\ Vytvori\ Rozmer2D\ popisujuci\ tvar\r\n\ @param\ x\ vzdialenost\ laveho\ rohu\ od\ 0\r\n\ @param\ y\ vzdialenost\ horneho\ rohu\ od\ 0\r\n\ @param\ vX\ sirka\r\n\ @param\ vY\ vyska\r\n

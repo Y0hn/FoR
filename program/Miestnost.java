@@ -12,7 +12,7 @@ public class Miestnost {
     private static final int MIN_POCET_NEPIRATELOV = 1;
     private static final int MAX_POCET_NEPIRATELOV = 5;
     private static final int ONESKORENIE_NEPRIATELOV = 250; // ms
-    private static final double DOSAH_DVERI = 150;
+    private static final double DOSAH_DVERI = 200;
     
     private final int indexMiestnosti;
     private Miestnost[] susedneMiestnosti;

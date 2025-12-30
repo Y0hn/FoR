@@ -6,8 +6,8 @@
  * @version v0.8
  */
 public class Stena {
-    public static final int SIRKA_STENY = 50;
-    public static final double SIRKA_DVERI = 0.6;
+    public static final int SIRKA_STENY = 80;
+    public static final double SIRKA_DVERI = 0.8;
     private static final double POMER_MUROV = (double)1 / (double)3;
 
     /**

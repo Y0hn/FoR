@@ -7,10 +7,10 @@ import java.awt.Color;
  * @version v0.2
  */
 public class Nepriatel {
-    public static final Vektor2D VELKOST = new Vektor2D(50, 50);
+    public static final Vektor2D VELKOST = new Vektor2D(100, 100);
 
     private static final int MAX_POCET_ZIVOTOV = 1; 
-    private static final int RYCHLOST = 5; 
+    private static final int RYCHLOST = 10; 
     private static final double RYCHLOST_UTOKU = 1;
     private static final int POSKODENIE_UTOKU = 1;
     

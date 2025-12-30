@@ -12,11 +12,11 @@ import javax.swing.JPanel;
  * @version v0.6
  */
 public class Hrac {
-    public static final Rozmer2D GRAFIKA_ZIVOTOV_HRACA = new Rozmer2D(40, 10, 150, 20);
+    public static final Rozmer2D GRAFIKA_ZIVOTOV_HRACA = new Rozmer2D(40, 10, 300, 40);
 
     private static final int MAX_ZIVOT = 10;
-    private static final Vektor2D VELKOST = new Vektor2D(50, 50);
-    private static final double RYCHLOST = 10;
+    private static final Vektor2D VELKOST = new Vektor2D(100, 100);
+    private static final double RYCHLOST = 15;
     private static final double RYCHLOST_STRELBY = 2;
     private static final int POSKODENIE_STERLY = 1;
 

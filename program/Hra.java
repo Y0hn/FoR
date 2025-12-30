@@ -5,7 +5,7 @@
  * @version v0.6
  */
 public class Hra {
-    public static final Rozmer2D ROZMER_OKNA = new Rozmer2D(0, 0, 600, 400);
+    public static final Rozmer2D ROZMER_OKNA = new Rozmer2D(0, 0, 1200, 840);
     private static final int VELKOST_SVETA = 50;
     private static Hra instancia;
 
@@ -36,15 +36,13 @@ public class Hra {
 
     private Hra() {
         this.displej = new Displej("assets/icon.png", "FrontRooms", Hra.ROZMER_OKNA);
-        this.svet = new Svet(VELKOST_SVETA);
         this.hrac = new Hrac();
-        
-        this.nacitajMiestnost(this.svet.getZaciatocnaMiestnost());
         this.hrac.nastavVstup(this.displej.getOkno());
-        this.displej.nastavHraca(this.hrac);
+        
         this.stavHry = StavHry.MENU;
-        this.prekryte = false;
-        this.nacitajMiestnost(this.svet.getZaciatocnaMiestnost());
+        this.prekryte = true;
+        this.displej.nastavGrafikuPreStavHry(this.stavHry, true);
+        this.displej.nastavHraca(this.hrac);
     }
     
     /**
@@ -75,6 +73,9 @@ public class Hra {
         } else if (this.stavHry == StavHry.MENU) {
             if (this.displej.ziskajHlavnuPonuku(StavHry.MENU.getIndexTlacidla("Štart"))) {
                 this.displej.nastavGrafikuPreStavHry(this.stavHry, false);
+                this.svet = new Svet(VELKOST_SVETA);
+                this.nacitajMiestnost(this.svet.getZaciatocnaMiestnost());
+                
                 this.stavHry = StavHry.HRA;
                 this.prekryte = false;
 

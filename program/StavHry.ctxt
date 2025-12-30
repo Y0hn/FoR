@@ -1,13 +1,17 @@
 #BlueJ class context
 comment0.target=StavHry
-comment0.text=\r\n\ Zoskupuje\ stavy\ v\ ktorych\ sa\ Hra\ moze\ nachadzat\ pocas\ svojho\ trvania\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.3\r\n
-comment1.params=farbaPozadia\ cestaObrazu
-comment1.target=StavHry(java.awt.Color,\ java.lang.String)
-comment1.text=\r\n\ Vytvori\ plne\ priehladny\ StavHry\r\n
-comment2.params=
-comment2.target=java.lang.String\ getCesta()
-comment2.text=\r\n\ Vrati\ cestu\ ku\ grafike\r\n\ @return\ text\ cesty\r\n
+comment0.text=\r\n\ Zoskupuje\ stavy\ v\ ktorych\ sa\ Hra\ moze\ nachadzat\ pocas\ svojho\ trvania\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.6\r\n
+comment1.params=farbaPozadia\ cestaObrazu\ tlacitka
+comment1.target=StavHry(java.awt.Color,\ java.lang.String,\ java.lang.String)
+comment2.params=index
+comment2.target=javax.swing.JButton\ getGrafika(int)
+comment2.text=\r\n\ Ziska\ grafiku\ podla\ poradoveho\ cisla\r\n\ @param\ index\ -\ cislo\ v\ poradi\ [0]\ je\ rodicovsky\r\n\ @return\ tlacidlo\r\n
 comment3.params=
-comment3.target=java.awt.Color\ getFarbaPozadia()
-comment3.text=\r\n\ Vrati\ farbu\ pozadia\ grafiky\r\n\ @return\ farba\ za\ obrazkom\ grafiky\r\n
-numComments=4
+comment3.target=javax.swing.JButton[]\ getVsetkyGrafiky()
+comment3.text=\r\n\ Ziska\ vsetky\ Grafiky\ vytvorene\ pre\ Stav\ Hry\r\n\ @return\ Pole\ Tlacidiel\ [0]\ je\ rodicovsky\r\n
+comment4.params=text
+comment4.target=int\ getIndexTlacidla(java.lang.String)
+comment4.text=\r\n\ Najde\ index\ tlacidla\ podla\ textu\ napisanom\ na\ nom\r\n\ @param\ text\ v\ tlacidle\r\n\ @return\ index\ tlacidla\r\n
+comment5.params=vyplnene\ ikona\ farba
+comment5.target=javax.swing.JButton\ vytvorTlacitko(boolean,\ java.lang.String,\ java.awt.Color)
+numComments=6

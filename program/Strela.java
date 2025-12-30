@@ -11,8 +11,8 @@ import javax.swing.JPanel;
  * @version v0.2
  */
 public class Strela {
-    public static final Vektor2D VELKOST = new Vektor2D(10, 10);
-    private static final double RYCHLOST = 15;
+    public static final Vektor2D VELKOST = new Vektor2D(20, 20);
+    private static final double RYCHLOST = 25;
 
     private final Rozmer2D rozmer;
     private final Vektor2D posun;

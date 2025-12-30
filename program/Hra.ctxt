@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Hra
-comment0.text=\r\n\ Trieda\ pre\ zjednotenie\ vsetkych\ komponentov\ Hry\r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ v0.5\r\n
+comment0.text=\r\n\ Trieda\ pre\ zjednotenie\ vsetkych\ komponentov\ Hry\r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ v0.6\r\n
 comment1.params=
 comment1.target=Hra\ start()
 comment1.text=\r\n\ Zacne\ novu\ Hru\ iba\ pripade\ ak\ uz\ nebezi\ ina\r\n\ @return\ beziacu\ Hru\r\n

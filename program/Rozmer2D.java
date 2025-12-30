@@ -5,7 +5,7 @@ import java.awt.Rectangle;
  * Stara sa o fyzicku reperezenaciu objektu 
  * popisaneho obdlznikom v 2D priestore
  * @author y0hn
- * @version v0.7
+ * @version v0.8
  */
 public class Rozmer2D {
     public static final Rozmer2D ZERO = new Rozmer2D(0, 0, 0, 0);
@@ -196,28 +196,21 @@ public class Rozmer2D {
      * @return PRAVDA ak je cast Rozmer2D v Rozmere2D
      */
     public boolean jeRozmerCiastocneVnutri(Rozmer2D rozmer) {
-        boolean vnutri = false;
-        for (double i = 1; i < 3; i++) {            
-            for (int ii = 0; ii < 4 && !vnutri; ii++) {
-                Vektor2D posun;
-                switch (ii) {
-                    case 1:
-                        posun = Vektor2D.PRAVO.roznasobenie(rozmer.getVelkost());
-                        break;
-                    case 2:
-                        posun = Vektor2D.HORE.roznasobenie(rozmer.getVelkost());
-                        break;
-                    case 3:
-                        posun = rozmer.getVelkost();
-                        break;
-                    case 0:
-                    default:
-                        posun = Vektor2D.ZERO;
-                        break;
+        Vektor2D stred = rozmer.ziskajStred();
+        boolean vnutri = this.jePoziciaVnutri(stred);
+        
+        // zkontroluje rohy a stredy stran
+        for (double i = -1; i < 2 && !vnutri; i++) {            
+            for (int ii = -1; ii < 2 && !vnutri; ii++) {
+                if (i == 0 && 0 == ii) {
+                    continue;
                 }
-                // zkontroluje aj stredy stran a stred
-                posun = posun.sucinSoSkalarom(1 / i);
-                vnutri |= this.jePoziciaVnutri(rozmer.getPozicia().sucet(posun));
+                Vektor2D posun = new Vektor2D(i, ii);
+                Vektor2D v = rozmer.getVelkost().sucinSoSkalarom(0.5);
+                posun = posun.roznasobenie(v);
+                posun = posun.sucet(stred);
+                
+                vnutri |= this.jePoziciaVnutri(posun);
             }
         }
         return vnutri;
