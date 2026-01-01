@@ -1,5 +1,6 @@
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.io.Serializable;
 
 /**
  * Stara sa o fyzicku reperezenaciu objektu 
@@ -7,7 +8,7 @@ import java.awt.Rectangle;
  * @author y0hn
  * @version v0.8
  */
-public class Rozmer2D {
+public class Rozmer2D implements Serializable {
     public static final Rozmer2D ZERO = new Rozmer2D(0, 0, 0, 0);
 
     private double poziciaX;

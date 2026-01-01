@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -7,7 +8,7 @@ import java.util.Random;
  * @author y0hn 
  * @version v0.5
  */
-public class Svet {
+public class Svet implements Serializable {
     private final int indexPociatocnejMiestnosti;
     private final ArrayList<Miestnost> miestnosti;
     

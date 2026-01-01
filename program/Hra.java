@@ -1,8 +1,14 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 /**
  * Trieda pre zjednotenie vsetkych komponentov Hry
  * 
  * @author y0hn 
- * @version v0.6
+ * @version v0.7
  */
 public class Hra {
     public static final Rozmer2D ROZMER_OKNA = new Rozmer2D(0, 0, 1200, 840);
@@ -27,7 +33,7 @@ public class Hra {
         instancia.nacitajMiestnost(miestnost);
     }
 
-    private final Hrac hrac;
+    private Hrac hrac;
     private final Displej displej;
     private Svet svet;
     private Miestnost aktivnaMiestnost;
@@ -61,13 +67,17 @@ public class Hra {
         } else if (this.stavHry == StavHry.PAUZA) {
             if (this.displej.ziskajSpatDoMenu()) {
                 this.displej.nastavGrafikuPreStavHry(this.stavHry, false);   
-                this.prekryte = false;
+                
+                this.ulozHru();
+
                 this.stavHry = StavHry.MENU;
+                this.prekryte = false;                
 
             } else if (this.displej.ziskajRestart() || this.hrac.pauzaTik()) {
                 this.displej.nastavGrafikuPreStavHry(this.stavHry, false);   
-                this.prekryte = false;
+
                 this.stavHry = StavHry.HRA;
+                this.prekryte = false;
             }
 
         } else if (this.stavHry == StavHry.MENU) {
@@ -79,6 +89,14 @@ public class Hra {
                 this.stavHry = StavHry.HRA;
                 this.prekryte = false;
 
+            } else if (this.displej.ziskajHlavnuPonuku(StavHry.MENU.getIndexTlacidla("Pokračuj"))) {
+                if (this.nacitajHru()) {
+                    this.displej.nastavGrafikuPreStavHry(this.stavHry, false);
+                    
+                    this.stavHry = StavHry.HRA;
+                    this.prekryte = false;
+                }
+
             } else if (this.displej.ziskajHlavnuPonuku(StavHry.MENU.getIndexTlacidla("Ukonči Hru"))) {
                 System.exit(0);
             }
@@ -88,9 +106,10 @@ public class Hra {
             this.svet = new Svet(VELKOST_SVETA);
             
             this.nacitajMiestnost(this.svet.getZaciatocnaMiestnost());
-            this.prekryte = false;
             this.hrac.ozivHraca();
+            
             this.stavHry = StavHry.HRA;
+            this.prekryte = false;
         }
     }
     
@@ -104,5 +123,88 @@ public class Hra {
             this.aktivnaMiestnost = m;
             m.aktivuj();
         }
+    }
+
+    /**
+     * Ulozi informacie do suborov
+     */
+    private void ulozHru() {
+        FileOutputStream subor;
+        ObjectOutputStream vystup;
+
+        try {
+            subor = new FileOutputStream("./saves/world.sav");
+            vystup = new ObjectOutputStream(subor);
+            vystup.writeObject(this.svet);
+            vystup.close();
+
+            subor = new FileOutputStream("./saves/room.sav");
+            vystup = new ObjectOutputStream(subor);
+            vystup.writeObject(this.aktivnaMiestnost);
+            vystup.close();
+
+            subor = new FileOutputStream("./saves/player.sav");
+            vystup = new ObjectOutputStream(subor);
+            vystup.writeObject(this.hrac);
+            vystup.close();
+
+        } catch (IOException e) {
+            System.out.print(e);
+        } catch (Exception e) {
+            System.out.print(e);
+        }
+    }
+
+    /**
+     * Nacita informacie zo suborov
+     * @return PRAVDA ak je uspesne
+     */
+    private boolean nacitajHru() {
+        FileInputStream subor;
+        ObjectInputStream vstup;
+        boolean uspech = false;
+
+        Svet starySvet = null;
+        Hrac staryHrac = null;
+        Miestnost staraMiestnost = null;
+
+        try {
+            subor = new FileInputStream("./saves/world.sav");
+            vstup = new ObjectInputStream(subor);
+            starySvet = (Svet)vstup.readObject();
+            vstup.close();
+            
+            subor = new FileInputStream("./saves/room.sav");
+            vstup = new ObjectInputStream(subor);
+            staraMiestnost = (Miestnost)vstup.readObject();
+            vstup.close();
+            
+            subor = new FileInputStream("./saves/player.sav");
+            vstup = new ObjectInputStream(subor);
+            staryHrac = (Hrac)vstup.readObject();
+            vstup.close();
+            
+        } catch (IOException e) {
+            System.out.print(e);
+        } catch (Exception e) {
+            System.out.print(e);
+        } finally {
+            if (starySvet == null || staraMiestnost == null || null == hrac) {
+                System.out.println("\nNeuspesne nacitanie zo subora\n");
+            } else {
+                this.hrac = staryHrac;
+                this.svet = starySvet;
+                this.aktivnaMiestnost = staraMiestnost;
+
+                this.displej.nastavHraca(staryHrac);
+                staryHrac.nastavVstup(this.displej.getOkno());
+                staryHrac.obnovZivoty();
+                this.nacitajMiestnost(staraMiestnost);
+                this.displej.nastavGrafikuStriel(staryHrac);
+                
+                uspech = true;
+            }
+        }
+        return uspech;
     }
 }

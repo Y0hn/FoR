@@ -1,5 +1,6 @@
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -11,7 +12,7 @@ import javax.swing.JPanel;
  * @author y0hn 
  * @version v0.6
  */
-public class Hrac {
+public class Hrac implements Serializable {
     public static final Rozmer2D GRAFIKA_ZIVOTOV_HRACA = new Rozmer2D(40, 10, 300, 40);
 
     private static final int MAX_ZIVOT = 10;
@@ -25,10 +26,11 @@ public class Hrac {
     private boolean vstupPauza;
     private boolean[] pohybVSmere;
     private boolean[] strelbaVSmere;
+
     private ArrayList<Strela> strely;
     private long buducaStrela;
 
-    private JPanel[] ui;
+    private transient JPanel[] ui;
 
     /**
      * Vytvori Hraca
@@ -78,6 +80,13 @@ public class Hrac {
         return this.ui;
     }
     /**
+     * Ziska vsetky aktualne Strely
+     * @return list Striel
+     */
+    public ArrayList<Strela> ziskajStrely() {
+        return this.strely;
+    }
+    /**
      * Odstani Strelu z obnovovacieho listu
      * @param strela
      */
@@ -104,10 +113,7 @@ public class Hrac {
         this.telo.setPohybVektor(v);
 
         if (this.telo.tik(aktMiest, deltaCasu)) {
-            int zivoty = this.telo.getZdravie();
-            for (int i = 1; i - 1 < this.ui.length; i++) {
-                this.ui[i - 1].setVisible(i <= zivoty);
-            }
+            this.obnovZivoty();
         }
 
         Vektor2D s = this.ziskajSmerovyVektor2D(this.strelbaVSmere);
@@ -145,6 +151,17 @@ public class Hrac {
             return true;
         } 
         return false;
+    }
+    /**
+     * Obnovi Graficke pocitadlo zivotov, tak aby ukazovalo aktualne udaje
+     */
+    public void obnovZivoty() {
+        if (this.ui != null) {
+            int zivoty = this.telo.getZdravie();
+            for (int i = 1; i - 1 < this.ui.length; i++) {
+                this.ui[i - 1].setVisible(i <= zivoty);
+            }
+        }
     }
     /**
      * Nastavi odposluch na klavesove vstupy k oknu

@@ -220,6 +220,18 @@ public class Displej {
         }
     }
     /**
+     * Nastavi grafiku pre vsetky aktivne Strely
+     * @param objektHraca
+     */
+    public void nastavGrafikuStriel(Hrac objektHraca) {
+        for (Strela s : objektHraca.ziskajStrely()) {
+            OtacanaGrafika og = s.getGrafika();
+            this.aktivnaMiestnost.setLayer(og, VRSTVA_STRELA);
+            this.aktivnaMiestnost.add(og);
+            og.obnovObraz();
+        }
+    }
+    /**
      * Nastavi konecnu grafiku podla stavu hry
      * @param stav prideleny Stav Hry pre grafiku
      * @param zapni ak PRAVDA zapne grafiku inak vypne

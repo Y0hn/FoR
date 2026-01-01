@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.io.Serializable;
 
 /**
  * Reprezentacia postavy vo svete
@@ -6,7 +7,7 @@ import java.awt.Color;
  * @author y0hn 
  * @version v0.9
  */
-public class Telo {
+public class Telo implements Serializable {
     private static final double POMER_VELKOSTI_POSUN_PRI_ZMENE_MIESTNOSTI = 0.3; 
     private static final double PRESNOST_POSUNU_K_STENE = 0.1;
     private static final double PRESNOST_OPRAVY_POSUNU = 1;

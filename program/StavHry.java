@@ -16,7 +16,7 @@ public enum StavHry {
     PREHRA(Color.BLACK, "assets/death.png", ""),
     PAUZA(Color.BLACK, "assets/pause.png", "Hlavná Ponuka"),
     HRA(null, "", ""),
-    MENU(Color.BLACK, "assets/menu.png", /*"Pokračuj,*/ "Ukonči Hru,Štart");
+    MENU(Color.BLACK, "assets/menu.png", "Ukonči Hru,Štart,Pokračuj");
     
     private JButton[] grafika;
     private Hashtable<String, Integer> indexiTlacidiel;

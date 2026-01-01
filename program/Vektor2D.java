@@ -1,5 +1,6 @@
 import java.awt.Dimension;
 import java.awt.Point;
+import java.io.Serializable;
 
 /**
  * 2D Vektor2D (reprezentuje bod v Kartezianskej suradnicovej sustave so suradnicami [x,y])
@@ -7,7 +8,7 @@ import java.awt.Point;
  * @author y0hn
  * @version v0.11
  */
-public class Vektor2D {
+public class Vektor2D implements Serializable {
     public static final Vektor2D ZERO = new Vektor2D(0, 0);
     public static final Vektor2D HORE = new Vektor2D(0, 1);
     public static final Vektor2D DOLE = new Vektor2D(0, -1);

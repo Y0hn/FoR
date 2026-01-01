@@ -1,11 +1,15 @@
 #BlueJ class context
 comment0.target=OtacanaGrafika
-comment0.text=\r\n\ \r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.1\r\n
+comment0.text=\r\n\ Grafika\ s\ mosznostou\ rotacie\ okolo\ stredu\ obrazu\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.2\r\n
 comment1.params=cesta
 comment1.target=OtacanaGrafika(java.lang.String)
-comment1.text=\r\n\ \r\n
+comment1.text=\r\n\ Vytvori\ grafiku\ Obrazu\ na\ ceste\ s\ moznostou\ otacania\r\n\ @param\ cesta\r\n
 comment2.params=uhol
 comment2.target=void\ setUhol(double)
-comment3.params=grafika
-comment3.target=void\ paintComponent(java.awt.Graphics)
-numComments=4
+comment2.text=\r\n\ Nastavi\ uhol\ otocenia\ obrazu\r\n\ @param\ uhol\ 0\ ->\ smeruje\ do\ prava\r\n
+comment3.params=
+comment3.target=void\ obnovObraz()
+comment3.text=\r\n\ Nacita\ novu\ grafiku\ podla\ predom\ stanovenej\ cesty\r\n
+comment4.params=grafika
+comment4.target=void\ paintComponent(java.awt.Graphics)
+numComments=5

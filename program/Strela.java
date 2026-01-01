@@ -1,22 +1,21 @@
-import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 
 /**
  * Projektil vytvoreny hracom
  * 
  * @author y0hn
- * @version v0.2
+ * @version v0.3
  */
-public class Strela {
+public class Strela implements Serializable {
     public static final Vektor2D VELKOST = new Vektor2D(20, 20);
     private static final double RYCHLOST = 25;
 
     private final Rozmer2D rozmer;
     private final Vektor2D posun;
-    private final JPanel grafika;
+    private final OtacanaGrafika grafika;
     private final Hrac hrac;
     private final int poskodenie;
 
@@ -33,13 +32,20 @@ public class Strela {
         this.poskodenie = hrac.getTelo().getPoskodenie();
         this.hrac = hrac;
 
-        this.grafika = new JPanel();
+        this.grafika = new OtacanaGrafika("assets/shot.png");
         this.grafika.setBounds(this.rozmer.vytvorRectangle());
-        this.grafika.setBackground(Color.BLACK);
+        this.grafika.setUhol(this.posun.getUhol());
         
         JLayeredPane vrstvenaPlocha = (JLayeredPane)hrac.getGrafika().getParent();
         vrstvenaPlocha.setLayer(this.grafika, Displej.VRSTVA_STRELA);
         vrstvenaPlocha.add(this.grafika);
+    }
+    /**
+     * Ziska grafiku Strely
+     * @return (OtacanaGrafika)JLabel
+     */
+    public OtacanaGrafika getGrafika() {
+        return this.grafika;
     }
     /**
      * Posunie Strelu predom nasavenym smerom. 
@@ -76,7 +82,11 @@ public class Strela {
         }
         return zasah;
     }
-    private void znic() {
+
+    /**
+     * Odstrani strelu z Obrazovky
+     */
+    public void znic() {
         this.grafika.setBounds(Rozmer2D.ZERO.vytvorRectangle());
         this.grafika.getParent().remove(this.grafika);
         this.hrac.odstranStrelu(this);

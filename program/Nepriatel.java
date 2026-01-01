@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.io.Serializable;
 
 /**
  * Write a description of class Nepriatel here.
@@ -6,7 +7,7 @@ import java.awt.Color;
  * @author y0hn
  * @version v0.2
  */
-public class Nepriatel {
+public class Nepriatel implements Serializable {
     public static final Vektor2D VELKOST = new Vektor2D(100, 100);
 
     private static final int MAX_POCET_ZIVOTOV = 1; 

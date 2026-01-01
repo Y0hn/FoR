@@ -1,3 +1,4 @@
+import java.io.Serializable;
 
 /**
  * Brani Hracovi opustit z heraciu plochu
@@ -5,7 +6,7 @@
  * @author y0hn
  * @version v0.8
  */
-public class Stena {
+public class Stena implements Serializable {
     public static final int SIRKA_STENY = 80;
     public static final double SIRKA_DVERI = 0.8;
     private static final double POMER_MUROV = (double)1 / (double)3;
@@ -127,7 +128,7 @@ public class Stena {
     /**
      * Reprezentuje cast Steny vo Svete
      */
-    public class Mur {
+    public class Mur implements Serializable {
         private Rozmer2D rozmer;
         private boolean aktivny;
 

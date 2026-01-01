@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -8,7 +9,7 @@ import java.util.Random;
  * @author y0hn
  * @version v0.7
  */
-public class Miestnost {
+public class Miestnost implements Serializable {
     private static final int MIN_POCET_NEPIRATELOV = 1;
     private static final int MAX_POCET_NEPIRATELOV = 5;
     private static final int ONESKORENIE_NEPRIATELOV = 250; // ms

@@ -8,3 +8,6 @@ program/*.class
 
 # Logs
 program/doc/logfile.txt
+
+# Save Files
+program/saves/
