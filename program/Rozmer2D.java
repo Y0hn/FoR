@@ -1,4 +1,3 @@
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.Serializable;
 
@@ -6,7 +5,7 @@ import java.io.Serializable;
  * Stara sa o fyzicku reperezenaciu objektu 
  * popisaneho obdlznikom v 2D priestore
  * @author y0hn
- * @version v0.8
+ * @version v0.9
  */
 public class Rozmer2D implements Serializable {
     public static final Rozmer2D ZERO = new Rozmer2D(0, 0, 0, 0);
@@ -130,21 +129,6 @@ public class Rozmer2D implements Serializable {
         return stred;
     }
 
-    /**
-     * Vytvori obdlznik nesuci rovnake rozmery ako popisovany tvar
-     * @return (x,y) [vX,vY]
-     */
-    public Rectangle vytvorRectangle() {
-        return new Rectangle(this.getIntPoX(), this.getIntPoY(), this.getIntVeX(), this.getIntVeY());
-    }
-
-    /**
-     * Vytvori bod na rovnakej pozicii ako tvar
-     * @return bod na pozicii ((int)x,(int)y)
-     */
-    public Point vytvorPointPozicie() {
-        return new Point(this.getIntPoX(), this.getIntPoY());
-    }
 
     /**
      * Zisti ci sa pozicia nachadza v Rozmere
@@ -163,40 +147,13 @@ public class Rozmer2D implements Serializable {
 
         return kolizuje;
     }
-    /**
-     * Zisti ci sa cely Rozmer2D nachadza v rozmere
-     * @param pozicia Vektor2D
-     * @return PRAVDA ak je cely Rozmer2D v Rozmere2D
-     */
-    public boolean jeRozmerVnutri(Rozmer2D rozmer) {
-        boolean vnutri = true;
-        for (int i = 0; i < 4 && vnutri; i++) {
-            Vektor2D posun;            
-            switch (i) {
-                case 1:
-                    posun = Vektor2D.PRAVO.roznasobenie(rozmer.getVelkost());
-                    break;
-                case 2:
-                    posun = Vektor2D.HORE.roznasobenie(rozmer.getVelkost());
-                    break;
-                case 3:
-                    posun = rozmer.getVelkost();
-                    break;
-                case 0:
-                default:
-                    posun = Vektor2D.ZERO;
-                    break;
-            }
-            vnutri &= this.jePoziciaVnutri(rozmer.getPozicia().sucet(posun));
-        }
-        return vnutri;
-    }
+    
     /**
      * Zisti ci sa cast Rozmeru2D nachadza v Rozmere
      * @param pozicia Vektor2D
      * @return PRAVDA ak je cast Rozmer2D v Rozmere2D
      */
-    public boolean jeRozmerCiastocneVnutri(Rozmer2D rozmer) {
+    public boolean jeRozmerPrekryty(Rozmer2D rozmer) {
         Vektor2D stred = rozmer.ziskajStred();
         boolean vnutri = this.jePoziciaVnutri(stred);
         
@@ -219,9 +176,9 @@ public class Rozmer2D implements Serializable {
 
     /**
      * Zmeni poziciu Rozmeru o velkost Vektora
-     * @param posun Vektor2D
+     * @param posun -> pozicia = (x1+x2, y1+y2)
      */
-    public void pricitajVektor2DKPozicii(Vektor2D posun) {
+    public void posun(Vektor2D posun) {
         this.poziciaX += posun.getX();
         this.poziciaY += posun.getY();
     }
@@ -242,16 +199,13 @@ public class Rozmer2D implements Serializable {
     public Rozmer2D kopia() {
         return new Rozmer2D(this.poziciaX, this.poziciaY, this.velkostX, this.velkostY);
     }
-    
+
     /**
-     * Vyskaluje Rozmer - jeho velkost a poziciu
-     * @param skala [sX, sY]
-     * @return (x * sX|y * sY) [vY * sX|vY * sY]
+     * Vytvori obdlznik nesuci rovnake rozmery ako popisovany tvar
+     * @return (x,y) [vX,vY]
      */
-    public Rozmer2D vysklaluj(Vektor2D skala) {
-        Vektor2D pozicia = this.getPozicia().roznasobenie(skala);
-        Vektor2D velkost = this.getVelkost().roznasobenie(skala);
-        return new Rozmer2D(pozicia, velkost);
+    public Rectangle vytvorRectangle() {
+        return new Rectangle(this.getIntPoX(), this.getIntPoY(), this.getIntVeX(), this.getIntVeY());
     }
 
     /**
@@ -268,10 +222,10 @@ public class Rozmer2D implements Serializable {
      * @return PRAVDA ak sa hodnoty ich atributov zhoduju
      */
     @Override
-    public boolean equals(Object object) {
-        boolean rovnake = object instanceof Rozmer2D;
+    public boolean equals(Object o) {
+        boolean rovnake = o instanceof Rozmer2D;
         if (rovnake) {
-            Rozmer2D rozmer = (Rozmer2D)object;
+            Rozmer2D rozmer = (Rozmer2D)o;
             rovnake &= this.poziciaX == rozmer.poziciaX;
             rovnake &= this.poziciaY == rozmer.poziciaY;
             rovnake &= this.velkostX == rozmer.velkostX;

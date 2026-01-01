@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.io.Serializable;
 
 /**
@@ -11,7 +10,7 @@ public class Nepriatel implements Serializable {
     public static final Vektor2D VELKOST = new Vektor2D(100, 100);
 
     private static final int MAX_POCET_ZIVOTOV = 1; 
-    private static final int RYCHLOST = 10; 
+    private static final int RYCHLOST = 8; 
     private static final double RYCHLOST_UTOKU = 1;
     private static final int POSKODENIE_UTOKU = 1;
     
@@ -35,13 +34,12 @@ public class Nepriatel implements Serializable {
         return this.telo;
     }
     /**
-     * Nastav grafiku pre Nepiratela
+     * Nastav grafiku pre Nepriatela
      * @param grafika
      */
     public void setGrafika(OtacanaGrafika grafika) {
         grafika.setBounds(this.telo.getRozmer().vytvorRectangle());
-        grafika.setBackground(Color.RED);
-        this.telo.setGrafika(grafika, Color.RED);
+        this.telo.setGrafika(grafika);
     }
     /**
      * Odstarni Nepriatela z Okna, v ktorom je zobrazovany
@@ -52,7 +50,7 @@ public class Nepriatel implements Serializable {
         grafika.getParent().remove(grafika);
     }
     /**
-     * Obnovi spravanie nepiratela
+     * Obnovi spravanie Nepiratela
      * @param aM aktualna Miestnost
      * @param hrac objekt Hraca
      * @param deltaCasu casovy rozdiel od posledneho tiku

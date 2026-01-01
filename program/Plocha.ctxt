@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=Plocha
+comment0.text=\r\n\ Plocha\ vyhradena\ v\ Miestnosti\r\n\ \ \r\n\ @author\ y0hn\r\n\ @version\ v0.2\r\n
+comment1.params=pX\ pY\ farba
+comment1.target=Plocha(double,\ double,\ java.awt.Color)
+comment2.params=
+comment2.target=java.awt.Color\ getFarba()
+comment2.text=\r\n\ Ziska\ farbu\ Plochy\r\n\ @return\r\n
+comment3.params=
+comment3.target=Rozmer2D\ getRozmer()
+comment3.text=\r\n\ Ziska\ Rozmer\ plochy\r\n\ @return\r\n
+comment4.params=hrac
+comment4.target=StavHry\ tik(Hrac)
+comment4.text=\r\n\ Zistuje\ ci\ sa\ Hrac\ dotyka\ plochy\r\n\ @param\ hrac\ objekt\ Hraca\r\n\ @return\ pripadnna\ zmena\ Stavu\ Hry\ (vyhra)\r\n
+numComments=5

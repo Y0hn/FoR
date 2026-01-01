@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Stena
-comment0.text=\r\n\ Brani\ Hracovi\ opustit\ z\ heraciu\ plochu\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.8\r\n
+comment0.text=\r\n\ Drzi\ Hraca\ v\ Miestnosti\ (na\ obrazovke)\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.8\r\n
 comment1.params=smer\ dvere
 comment1.target=Stena(Smer,\ boolean)
 comment1.text=\r\n\ Vytvori\ Stenu\ medzi\ Miestnost\ a\ jej\ Suseda.\r\n\ Stena\ obsahuje\ dvere,\ ktore\ vedu\ do\ susednej\ Miestnosti\r\n\ @param\ smer\ od\ stredu\ sucastnej\ Miestnosti\r\n\ @param\ dvere\ PRAVDA\ ak\ ma\ Stena\ obsahovat\ dvere\r\n

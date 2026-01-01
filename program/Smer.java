@@ -1,6 +1,6 @@
 /**
  * Enumeration trieda Smer
- * Obsahuje a popisuje smer (pohybu) v rovine
+ * Obsahuje a popisuje Smer (pohybu) v rovine
  * 
  * @author y0hn
  * @version v0.5
@@ -11,20 +11,6 @@ public enum Smer {
     DOLE(0, 1),
     LAVO(-1, 0);
 
-    /**
-     * Vytvori Smer na zaklade priradenej hodnoty
-     * @param smernik
-     * @return priradena hodnota Smer
-     */
-    public static Smer toSmer(int smernik) {
-        Smer s = null;
-        
-        if (0 <= smernik && smernik < Smer.values().length) {
-            s = Smer.values()[smernik];
-        }
-
-        return s;
-    }
     /**
      * Vytvori Smer na zaklade priradenej hodnoty
      * @param smernik
@@ -53,24 +39,24 @@ public enum Smer {
     }
 
     /**
-     * Priradi zo smeru hodnotu Vektor2D 
+     * Priradi zo Smeru hodnotu Vektor2D 
      * @return hodnota v tvare int
      */
     public Vektor2D getVektor2D() {
         return this.vektor;
     }
     /**
-     * Kontroluje vztah medzi smermi
-     * @param smer druhy smer
+     * Kontroluje vztah medzi Smermi
+     * @param smer druhy Smer
      * @return PRAVDA ak su navzajom protichodne
      */
     public boolean jeOpacny(Smer smer) {
         return this.opacny() == smer;
     }
     /**
-     * Vytvara opacny smer ku smeru 
-     * @param smer vlozeny smer
-     * @return opacny smer
+     * Vytvara opacny Smer ku Smeru 
+     * @param smer vlozeny Smer
+     * @return opacny Smer
      */
     public Smer opacny() {
         Smer opacnySmer = null;

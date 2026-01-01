@@ -6,7 +6,7 @@ import java.io.Serializable;
  * 2D Vektor2D (reprezentuje bod v Kartezianskej suradnicovej sustave so suradnicami [x,y])
  * 
  * @author y0hn
- * @version v0.11
+ * @version v0.12
  */
 public class Vektor2D implements Serializable {
     public static final Vektor2D ZERO = new Vektor2D(0, 0);
@@ -18,7 +18,7 @@ public class Vektor2D implements Serializable {
     private final double x;
     private final double y;
     /**
-     * Vytvori 2-rozmerny Vektor2D bodu (x,y)
+     * Vytvori 2-rozmerny Vektor bodu (x,y)
      * @param x pozicia x
      * @param y pozicia y 
      */
@@ -26,6 +26,8 @@ public class Vektor2D implements Serializable {
         this.x = x;
         this.y = y;
     }
+
+
     /**
      * Ziska hodnotu X suradnice
      * @return hodnota X
@@ -42,100 +44,33 @@ public class Vektor2D implements Serializable {
     }
     /**
      * Ziska zaokruhlenu hodnotu X suradnice
-     * @return int hodnota X
+     * @return zaokruhlena int hodnota X
      */
     public int getIntX() {
         return (int)Math.round(this.getX());
     }
     /**
      * Ziska zaokruhlenu hodnotu Y suradnice
-     * @return int hodnota Y
+     * @return zaokruhlena int hodnota Y
      */
     public int getIntY() {
         return (int)Math.round(this.getY());        
     }
 
+    
     /**
-     * Vypocita dlzku Vektor2Da
+     * Vypocita dlzku Vektora
      * @return |V| vzdialenost bodu (x,y) od (0,0)
      */
     public double dlzka() {
         return Math.sqrt(this.x * this.x  + this.y * this.y);
     }
     /**
-     * Vrati Vektor2D patriaci do praveho horneho kvadradnu
-     * Obidve suradnice Vektor2Da budu kladne alebo 0; 
-     * @return Vektor2D (|y|,|x|)
+     * Vypocita uhol od (1, 0)
+     * @return tan-1(y,x)
      */
-    public Vektor2D absolutny() {
-        double noveX = Math.abs(this.x);
-        double noveY = Math.abs(this.y);
-        return new Vektor2D(noveX, noveY);
-    }
-    /**
-     * Vymeni hodnoty Vektor2Da
-     * @return prevratni Vektor2D (y,x)
-     */
-    public Vektor2D vymeneny() {
-        return new Vektor2D(this.y, this.x);
-    }
-    /**
-     * Vypocita sucet Vektor2Dov
-     * @param druhyVektor2D Vektor2D
-     * @return scitany Vektor2D (x1+x2, y1+y2)
-     */
-    public Vektor2D sucetSoSkalarom(double skalar) {
-        double noveX = this.x + skalar;
-        double noveY = this.y + skalar;
-        return new Vektor2D(noveX, noveY);
-    }
-    /**
-     * Vypocita sucet Vektor2Dov
-     * @param druhyVektor2D Vektor2D
-     * @return scitany Vektor2D (x1+x2, y1+y2)
-     */
-    public Vektor2D sucet(Vektor2D druhyVektor2D) {
-        double noveX = this.x + druhyVektor2D.x;
-        double noveY = this.y + druhyVektor2D.y;
-        return new Vektor2D(noveX, noveY);
-    }
-    /**
-     * Vypocita rozdiel Vektor2Dov
-     * @param druhyVektor2D odcitavany Vektor2D
-     * @return rozdielovy Vektor2D (x1-x2, y1-y2)
-     */
-    public Vektor2D rozdiel(Vektor2D druhyVektor2D) {
-        double noveX = this.x - druhyVektor2D.x;
-        double noveY = this.y - druhyVektor2D.y;
-        return new Vektor2D(noveX, noveY);
-    }
-    /**
-     * Vypocita sucin Vektor2Da a skalarneho cisla
-     * @param skalar skalarny cinitel
-     * @return rozsireny Vektor2D (x*skalar, y*skalar)
-     */
-    public Vektor2D sucinSoSkalarom(double skalar) {
-        double noveX = this.x * skalar;
-        double noveY = this.y * skalar;
-        return new Vektor2D(noveX, noveY);
-    }
-    /**
-     * Vypocita "sucin" dvoch Vektor2Dov
-     * @param druhyVektor2D rozsirujuci Vektor2D
-     * @return rozsireny Vektor2D (x1*x2, y1*y2)
-     */
-    public Vektor2D roznasobenie(Vektor2D druhyVektor2D) {
-        double noveX = this.x * druhyVektor2D.x;
-        double noveY = this.y * druhyVektor2D.y;
-        return new Vektor2D(noveX, noveY);
-    }
-    /**
-     * Vypocita vzdialenost medzi bodmi Vektor2Dov v rovine
-     * @param druhyVektor2D druhy Vektor2D (x,y)
-     * @return vzdialenost medzi nimi |V1-V2|
-     */
-    public double vzdialenostOd(Vektor2D druhyVektor2D) {
-        return this.rozdiel(druhyVektor2D).dlzka();
+    public double getUhol() {
+        return Math.atan2(this.y, this.x);
     }
 
     /**
@@ -161,14 +96,84 @@ public class Vektor2D implements Serializable {
         return new Vektor2D(noveX, noveY);
     }
     /**
-     * vytvori celo-ciselny (nahor zakokruhleny) Vektor2D z povodneho
-     * @return nahor zaokruhleny Vektor2D 
+     * Vrati Vektor2D patriaci do praveho horneho kvadradnu
+     * Obidve suradnice Vektor2Da budu kladne alebo 0; 
+     * @return Vektor2D (|y|,|x|)
      */
-    public Vektor2D zaokruhliNahor() {
-        double noveX = Math.ceil(this.x);
-        double noveY = Math.ceil(this.y);
+    public Vektor2D absolutny() {
+        double noveX = Math.abs(this.x);
+        double noveY = Math.abs(this.y);
         return new Vektor2D(noveX, noveY);
     }
+    /**
+     * Vymeni hodnoty Vektora
+     * @return prevratni Vektor2D (y,x)
+     */
+    public Vektor2D vymeneny() {
+        return new Vektor2D(this.y, this.x);
+    }
+
+
+    /**
+     * Vypocita sucet Vektorov
+     * @param skalar cislo S
+     * @return scitany Vektor2D (x+S, y+S)
+     */
+    public Vektor2D sucetSoSkalarom(double skalar) {
+        double noveX = this.x + skalar;
+        double noveY = this.y + skalar;
+        return new Vektor2D(noveX, noveY);
+    }
+    /**
+     * Vypocita sucet Vektorov
+     * @param druhyVektor2D Vektor2D
+     * @return scitany Vektor2D (x1+x2, y1+y2)
+     */
+    public Vektor2D sucet(Vektor2D druhyVektor2D) {
+        double noveX = this.x + druhyVektor2D.x;
+        double noveY = this.y + druhyVektor2D.y;
+        return new Vektor2D(noveX, noveY);
+    }
+    /**
+     * Vypocita rozdiel Vektorov
+     * @param druhyVektor2D odcitavany Vektor2D
+     * @return rozdielovy Vektor2D (x1-x2, y1-y2)
+     */
+    public Vektor2D rozdiel(Vektor2D druhyVektor2D) {
+        double noveX = this.x - druhyVektor2D.x;
+        double noveY = this.y - druhyVektor2D.y;
+        return new Vektor2D(noveX, noveY);
+    }
+    /**
+     * Vypocita sucin Vektora a skalarneho cisla
+     * @param skalar cislo S
+     * @return rozsireny Vektor2D (x*S, y*S)
+     */
+    public Vektor2D sucinSoSkalarom(double skalar) {
+        double noveX = this.x * skalar;
+        double noveY = this.y * skalar;
+        return new Vektor2D(noveX, noveY);
+    }
+    /**
+     * Vypocita "sucin" dvoch Vektor2Dov
+     * @param druhyVektor2D rozsirujuci Vektor2D
+     * @return rozsireny Vektor2D (x1*x2, y1*y2)
+     */
+    public Vektor2D roznasobenie(Vektor2D druhyVektor2D) {
+        double noveX = this.x * druhyVektor2D.x;
+        double noveY = this.y * druhyVektor2D.y;
+        return new Vektor2D(noveX, noveY);
+    }
+    /**
+     * Vypocita vzdialenost medzi bodmi Vektor2Dov v rovine
+     * @param druhyVektor2D druhy Vektor2D (x,y)
+     * @return vzdialenost medzi nimi |V1-V2|
+     */
+    public double vzdialenostOd(Vektor2D druhyVektor2D) {
+        return this.rozdiel(druhyVektor2D).dlzka();
+    }
+
+
     /**
      * Vrati rozmer Vektora2D ako Dimenziu
      * @return Dimenzia (x,y)
@@ -182,9 +187,6 @@ public class Vektor2D implements Serializable {
      */
     public Point vytvorPoint() {
         return new Point(this.getIntX(), this.getIntY());
-    }
-    public double getUhol() {
-        return Math.atan2(this.y, this.x);
     }
 
     /**

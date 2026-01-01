@@ -12,10 +12,10 @@ import javax.swing.JButton;
  * @version v0.6
  */
 public enum StavHry {
+    HRA(null, "", ""),
     VYHRA(new Color(33, 125, 174), "assets/victory.png", ""),
     PREHRA(Color.BLACK, "assets/death.png", ""),
     PAUZA(Color.BLACK, "assets/pause.png", "Hlavná Ponuka"),
-    HRA(null, "", ""),
     MENU(Color.BLACK, "assets/menu.png", "Ukonči Hru,Štart,Pokračuj");
     
     private JButton[] grafika;

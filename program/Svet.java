@@ -13,11 +13,10 @@ public class Svet implements Serializable {
     private final ArrayList<Miestnost> miestnosti;
     
     /**
-     * Konstruktor Sveta
-     * Vytvori hreny Svet so stanovenym poctom miestnosti
-     * Taktiez vytvori prepoje (navaznosti) medzi miestnostami
+     * Vytvori hreny Svet so stanovenym poctom Miestnosti,
+     * nasledne vytvori aj prepoje (navaznosti) medzi Miestnostami
      * 
-     * @param velkost nastavuje pocet miestnosti vo svete
+     * @param velkost nastavuje pocet Miestnosti vo Svete
      */
     public Svet(int velkost) {
         this.miestnosti = new ArrayList<Miestnost>();
@@ -81,7 +80,7 @@ public class Svet implements Serializable {
         this.indexPociatocnejMiestnosti = (int)Math.round(this.miestnosti.size() * 0.2 + nahoda.nextDouble() * (this.miestnosti.size() * 0.6));
 
         int koniec = (nahoda.nextBoolean()) ? 0 : this.miestnosti.size() - 1;
-        this.miestnosti.get(koniec).setSpecialnaPlocha(SpecialnaPlocha.VYHERNA_PLOCHA);
+        this.miestnosti.get(koniec).setPlocha(Plocha.VYHERNA_PLOCHA);
 
         int pocetZon = (this.miestnosti.size() / 10);
         for (int i = 0; i < pocetZon; i++) {
@@ -89,7 +88,7 @@ public class Svet implements Serializable {
             do {
                 index = i * 10 + 1 + nahoda.nextInt(8);
             } while (this.indexPociatocnejMiestnosti == index);
-            this.miestnosti.get(index).setSpecialnaPlocha(SpecialnaPlocha.UZDRAVOVACIA_PLOCHA);
+            this.miestnosti.get(index).setPlocha(Plocha.UZDRAVOVACIA_PLOCHA);
         }
 
         // Vytvori Nepriatelov v praznych Miestnostiach
@@ -103,8 +102,8 @@ public class Svet implements Serializable {
     }
 
     /**
-     * Vrati index Zacinajej Miestnosti 
-     * @return index Miesnosti v kotorej zacina hra 
+     * Ziska zacinajucu Miestnosti
+     * @return Miestnost v kotorej zacina hra 
      */
     public Miestnost getZaciatocnaMiestnost() {
         return this.miestnosti.get(this.indexPociatocnejMiestnosti);

@@ -3,8 +3,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Miestnost vo svete, ktora ma susedne miestnosti a obsahuje nieco
- * Po vojdeni hraca do miestnosti sa aktivuje
+ * Miestnost vo Svete, pozna svoje susedne Miestnosti
+ * Po vojdeni Hraca do Miestnosti je potrebna aktivacia
  * 
  * @author y0hn
  * @version v0.7
@@ -13,14 +13,14 @@ public class Miestnost implements Serializable {
     private static final int MIN_POCET_NEPIRATELOV = 1;
     private static final int MAX_POCET_NEPIRATELOV = 5;
     private static final int ONESKORENIE_NEPRIATELOV = 250; // ms
-    private static final double DOSAH_DVERI = 200;
+    private static final double DOSAH_DVERI = 250;
     
     private final int indexMiestnosti;
     private Miestnost[] susedneMiestnosti;
     private Stena[] steny;
     private ArrayList<Nepriatel> nepriatelia;
     private boolean dvereOtvorene;
-    private SpecialnaPlocha vyhradenaPlocha;
+    private Plocha plocha;
     private long casAktivacie;
 
     /**
@@ -35,7 +35,7 @@ public class Miestnost implements Serializable {
         this.nepriatelia = new ArrayList<Nepriatel>();
         this.susedneMiestnosti = new Miestnost[pocetStien];
         this.dvereOtvorene = false;
-        this.vyhradenaPlocha = null;
+        this.plocha = null;
     }
     /**
      * Vrati cislo Miestnosti v poradi
@@ -82,11 +82,18 @@ public class Miestnost implements Serializable {
      * Ziska Rozmer vyhernej plochy v Miestnosti
      * @return vrati hodnotu iba v pripade ak je Miestnost konecna inak ma hodnotu NULL
      */
-    public SpecialnaPlocha getSpecialnaPlocha() {
+    public Plocha getPlocha() {
         if (this.nepriatelia.size() != 0) {
             return null;
         }
-        return this.vyhradenaPlocha;
+        return this.plocha;
+    }
+    /**
+     * Prideli Miestnosti Vyhradenu Plochu 
+     * @param plocha Specialna plocha v Mistnosti
+     */
+    public void setPlocha(Plocha plocha) {
+        this.plocha = plocha;
     }
     /**
      * Nastavi suseda v predom urcenom smere
@@ -127,18 +134,11 @@ public class Miestnost implements Serializable {
                 rozmer = new Rozmer2D(pozicia, Nepriatel.VELKOST);
 
                 mimoDveri = this.jeRozmerMimoDosahuDveri(rozmer);
-                mimoStien = this.jePlochaRozmeruMimoStien(rozmer);
+                mimoStien = this.jeRozmerMimoStien(rozmer);
                 mimoOstatnych = this.jePlochaRozmeruMimoNepriatelov(rozmer, null);
             } while (!mimoStien || !mimoDveri || !mimoOstatnych);
             this.nepriatelia.add(new Nepriatel(rozmer.getPozicia()));
         }
-    }
-    /**
-     * Prideli Miestnosti Vyhradenu Plochu 
-     * @param plocha Specialna plocha v Mistnosti
-     */
-    public void setSpecialnaPlocha(SpecialnaPlocha plocha) {
-        this.vyhradenaPlocha = plocha;
     }
     /**
      * Nastavi stav pre vsetky dvere v Miestnosti
@@ -164,8 +164,8 @@ public class Miestnost implements Serializable {
             if (!this.dvereOtvorene) {
                 this.nastavVsetkyDvere(true);
             } 
-            if (this.vyhradenaPlocha != null) {
-                stavHry = this.vyhradenaPlocha.tik(hrac);
+            if (this.plocha != null) {
+                stavHry = this.plocha.tik(hrac);
             }
         } else if (this.casAktivacie < System.currentTimeMillis()) {
             for (Nepriatel n : this.nepriatelia) {
@@ -189,7 +189,7 @@ public class Miestnost implements Serializable {
      * Presunie hraca do Miestnosti
      * @param smer od stredu sucastnej Miestnosti
      */
-    public void prejdiDoDalsejMiestnosti(Smer smer) {
+    public void prejdiDverami(Smer smer) {
         int index = smer.ordinal();
         Hra.nastavAktivnuMiestnost(this.susedneMiestnosti[index]);
     }
@@ -198,11 +198,11 @@ public class Miestnost implements Serializable {
      * @param rozmer kontrlovany rozmer
      * @return PRAVDA ak sa neprekryva so ziadnou Stenou
      */
-    public boolean jePlochaRozmeruMimoStien(Rozmer2D rozmer) {
+    public boolean jeRozmerMimoStien(Rozmer2D rozmer) {
         boolean volne = true;
         for (Rozmer2D[] rozmerySteny : this.getRozmery2D()) {
             for (Rozmer2D rozmerMuru : rozmerySteny) {
-                volne &= !rozmerMuru.jeRozmerCiastocneVnutri(rozmer);
+                volne &= !rozmerMuru.jeRozmerPrekryty(rozmer);
                 if (!volne) {
                     break;
                 }
@@ -224,7 +224,7 @@ public class Miestnost implements Serializable {
         for (Nepriatel n : this.nepriatelia) {
             Rozmer2D r = n.getTelo().getRozmer();
             if (okrem == null || okrem != r) {
-                volne &= !r.jeRozmerCiastocneVnutri(rozmer);
+                volne &= !r.jeRozmerPrekryty(rozmer);
             }
         }
         return volne;        

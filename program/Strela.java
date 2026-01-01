@@ -10,7 +10,7 @@ import javax.swing.JLayeredPane;
  * @version v0.3
  */
 public class Strela implements Serializable {
-    public static final Vektor2D VELKOST = new Vektor2D(20, 20);
+    private static final Vektor2D VELKOST = new Vektor2D(20, 20);
     private static final double RYCHLOST = 25;
 
     private final Rozmer2D rozmer;
@@ -50,21 +50,21 @@ public class Strela implements Serializable {
     /**
      * Posunie Strelu predom nasavenym smerom. 
      * Ak Strela narazi, znici ju.
-     * @param aktivMiestnost sucastna Miestnost
+     * @param aM aktualna Miestnost
      * @param deltaCasu casovy rozdiel od posledneho tiku
      */
-    public void tik(Miestnost aktivMiestnost, double deltaCasu) {
+    public void tik(Miestnost aM, double deltaCasu) {
         Vektor2D posunVCase = this.posun.sucinSoSkalarom(deltaCasu);
-        this.rozmer.pricitajVektor2DKPozicii(posunVCase);
-        this.grafika.setLocation(this.rozmer.vytvorPointPozicie());
+        this.rozmer.posun(posunVCase);
+        this.grafika.setLocation(this.rozmer.getPozicia().vytvorPoint());
 
-        if (this.jeVStene(aktivMiestnost) || this.zasah(aktivMiestnost)) {
+        if (this.jeVStene(aM) || this.zasah(aM)) {
             this.znic();
         }
     }
 
     private boolean jeVStene(Miestnost aM) {
-        boolean vStene = !aM.jePlochaRozmeruMimoStien(this.rozmer);
+        boolean vStene = !aM.jeRozmerMimoStien(this.rozmer);
         return vStene;
     }
     private boolean zasah(Miestnost aM) {
@@ -73,7 +73,7 @@ public class Strela implements Serializable {
 
         for (Nepriatel n : nepriatelia) {
             Telo t = n.getTelo();
-            if (t.getRozmer().jeRozmerCiastocneVnutri(this.rozmer)) {
+            if (t.getRozmer().jeRozmerPrekryty(this.rozmer)) {
                 if (!t.zmenZdravie(-this.poskodenie)) {
                     aM.odstranNepriatela(n);
                 }
@@ -82,11 +82,7 @@ public class Strela implements Serializable {
         }
         return zasah;
     }
-
-    /**
-     * Odstrani strelu z Obrazovky
-     */
-    public void znic() {
+    private void znic() {
         this.grafika.setBounds(Rozmer2D.ZERO.vytvorRectangle());
         this.grafika.getParent().remove(this.grafika);
         this.hrac.odstranStrelu(this);

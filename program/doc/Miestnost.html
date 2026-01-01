@@ -142,8 +142,8 @@ implements java.io.Serializable</pre>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>SpecialnaPlocha</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSpecialnaPlocha()">getSpecialnaPlocha</a></span>()</code></th>
+<td class="colFirst"><code>Plocha</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPlocha()">getPlocha</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Ziska Rozmer vyhernej plochy v Miestnosti</div>
 </td>
@@ -165,7 +165,7 @@ implements java.io.Serializable</pre>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#jePlochaRozmeruMimoStien(Rozmer2D)">jePlochaRozmeruMimoStien</a></span>&#8203;(Rozmer2D&nbsp;rozmer)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#jeRozmerMimoStien(Rozmer2D)">jeRozmerMimoStien</a></span>&#8203;(Rozmer2D&nbsp;rozmer)</code></th>
 <td class="colLast">
 <div class="block">Zkontroluje ci sa prelina Rozmer s Rozmerom Steny v Miestnosti</div>
 </td>
@@ -186,14 +186,14 @@ implements java.io.Serializable</pre>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#prejdiDoDalsejMiestnosti(Smer)">prejdiDoDalsejMiestnosti</a></span>&#8203;(Smer&nbsp;smer)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#prejdiDverami(Smer)">prejdiDverami</a></span>&#8203;(Smer&nbsp;smer)</code></th>
 <td class="colLast">
 <div class="block">Presunie hraca do Miestnosti</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSpecialnaPlocha(SpecialnaPlocha)">setSpecialnaPlocha</a></span>&#8203;(SpecialnaPlocha&nbsp;plocha)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPlocha(Plocha)">setPlocha</a></span>&#8203;(Plocha&nbsp;plocha)</code></th>
 <td class="colLast">
 <div class="block">Prideli Miestnosti Vyhradenu Plochu</div>
 </td>
@@ -348,13 +348,13 @@ implements java.io.Serializable</pre>
 </dl>
 </li>
 </ul>
-<a id="getSpecialnaPlocha()">
+<a id="getPlocha()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getSpecialnaPlocha</h4>
-<pre class="methodSignature">public&nbsp;SpecialnaPlocha&nbsp;getSpecialnaPlocha()</pre>
+<h4>getPlocha</h4>
+<pre class="methodSignature">public&nbsp;Plocha&nbsp;getPlocha()</pre>
 <div class="block">Ziska Rozmer vyhernej plochy v Miestnosti</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -402,13 +402,13 @@ implements java.io.Serializable</pre>
 </dl>
 </li>
 </ul>
-<a id="setSpecialnaPlocha(SpecialnaPlocha)">
+<a id="setPlocha(Plocha)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>setSpecialnaPlocha</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setSpecialnaPlocha&#8203;(SpecialnaPlocha&nbsp;plocha)</pre>
+<h4>setPlocha</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setPlocha&#8203;(Plocha&nbsp;plocha)</pre>
 <div class="block">Prideli Miestnosti Vyhradenu Plochu</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -459,13 +459,13 @@ implements java.io.Serializable</pre>
  nastavuje casovac pre na spusetnie pohybu Nepriatelov</div>
 </li>
 </ul>
-<a id="prejdiDoDalsejMiestnosti(Smer)">
+<a id="prejdiDverami(Smer)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>prejdiDoDalsejMiestnosti</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;prejdiDoDalsejMiestnosti&#8203;(Smer&nbsp;smer)</pre>
+<h4>prejdiDverami</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;prejdiDverami&#8203;(Smer&nbsp;smer)</pre>
 <div class="block">Presunie hraca do Miestnosti</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -473,13 +473,13 @@ implements java.io.Serializable</pre>
 </dl>
 </li>
 </ul>
-<a id="jePlochaRozmeruMimoStien(Rozmer2D)">
+<a id="jeRozmerMimoStien(Rozmer2D)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>jePlochaRozmeruMimoStien</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;jePlochaRozmeruMimoStien&#8203;(Rozmer2D&nbsp;rozmer)</pre>
+<h4>jeRozmerMimoStien</h4>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;jeRozmerMimoStien&#8203;(Rozmer2D&nbsp;rozmer)</pre>
 <div class="block">Zkontroluje ci sa prelina Rozmer s Rozmerom Steny v Miestnosti</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

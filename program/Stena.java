@@ -1,14 +1,14 @@
 import java.io.Serializable;
 
 /**
- * Brani Hracovi opustit z heraciu plochu
+ * Drzi Hraca v Miestnosti (na obrazovke)
  * 
  * @author y0hn
  * @version v0.8
  */
 public class Stena implements Serializable {
     public static final int SIRKA_STENY = 80;
-    public static final double SIRKA_DVERI = 0.8;
+    private static final double SIRKA_DVERI = 0.8;
     private static final double POMER_MUROV = (double)1 / (double)3;
 
     /**
@@ -128,7 +128,7 @@ public class Stena implements Serializable {
     /**
      * Reprezentuje cast Steny vo Svete
      */
-    public class Mur implements Serializable {
+    private class Mur implements Serializable {
         private Rozmer2D rozmer;
         private boolean aktivny;
 
@@ -149,13 +149,6 @@ public class Stena implements Serializable {
                 return Rozmer2D.ZERO;
             }
             return this.rozmer;
-        }
-        /**
-         * Ziska ci je Mur aktivny (nepriechodny)
-         * @return PRAVDA ak je nepriechodny
-         */
-        public boolean getAktivny() {
-            return this.aktivny;
         }
         
         /**

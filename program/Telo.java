@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.io.Serializable;
 
 /**
@@ -78,12 +77,16 @@ public class Telo implements Serializable {
         this.obnovGrafiku();
     }
     /**
-     * Natstavi smerovy Vektor2D Tela
-     * @param smerovyVektor novy smerovy Vektor2D
+     * Nastavi smerovy Vektor2D
+     * @param smerovyVektor -> smer Otocenia Tela
      */
     public void setPohybVektor(Vektor2D pohybovyVektor) {
         this.pohybovyVektor2D = pohybovyVektor.normalizuj();
     }
+    /**
+     * Nastavi pohybovy Vektor2D
+     * @param smerovyVektor -> smer Pohybu Tela
+     */
     public void setSmerovyVektor(Vektor2D smerovyVektor) {
         this.smerovyVektor2D = smerovyVektor;
     }
@@ -91,9 +94,8 @@ public class Telo implements Serializable {
      * Nastavi grafiku hraca
      * @param grafika JPanel
      */
-    public void setGrafika(OtacanaGrafika grafika, Color farba) {
+    public void setGrafika(OtacanaGrafika grafika) {
         grafika.setBounds(this.rozmer.vytvorRectangle());
-        grafika.setBackground(farba);
         this.grafika = grafika;
     }
     /**
@@ -127,21 +129,21 @@ public class Telo implements Serializable {
             this.smerovyVektor2D = this.pohybovyVektor2D;
         }
 
-        if (aktMiest.jePlochaRozmeruMimoStien(buduciRozmer)) {
+        if (aktMiest.jeRozmerMimoStien(buduciRozmer)) {
             this.setPozicia(buducaPozicia);
             this.skusIstDoInejMiestnosti(aktMiest);
-        } else if (!aktMiest.jePlochaRozmeruMimoStien(this.rozmer)) {
+        } else if (!aktMiest.jeRozmerMimoStien(this.rozmer)) {
             this.opravPoziciu(aktMiest);
         } else {
             this.prijdiKuStene(aktMiest);
 
             Vektor2D posunH = this.ziskajPoziciuDalsiehoPohybu(this.pohybovyVektor2D.roznasobenie(Vektor2D.PRAVO), deltaCasu);
             buduciRozmer.setPozicia(posunH);
-            boolean horizontalny = aktMiest.jePlochaRozmeruMimoStien(buduciRozmer);
+            boolean horizontalny = aktMiest.jeRozmerMimoStien(buduciRozmer);
 
             Vektor2D posunV = this.ziskajPoziciuDalsiehoPohybu(this.pohybovyVektor2D.roznasobenie(Vektor2D.HORE), deltaCasu);
             buduciRozmer.setPozicia(posunV);
-            boolean vertikalny = !horizontalny && aktMiest.jePlochaRozmeruMimoStien(buduciRozmer);
+            boolean vertikalny = !horizontalny && aktMiest.jeRozmerMimoStien(buduciRozmer);
 
             if (horizontalny) {
                 this.setPozicia(posunH);
@@ -166,13 +168,13 @@ public class Telo implements Serializable {
     public boolean tik(Miestnost aM, Hrac hrac, double deltaCasu) {
         Vektor2D buducaPozicia = this.ziskajPoziciuDalsiehoPohybu(this.pohybovyVektor2D, deltaCasu);
         Rozmer2D buduciRozmer = new Rozmer2D(buducaPozicia, this.rozmer.getVelkost());        
-        boolean koliziaHrac = hrac.getTelo().getRozmer().jeRozmerCiastocneVnutri(buduciRozmer);
+        boolean koliziaHrac = hrac.getTelo().getRozmer().jeRozmerPrekryty(buduciRozmer);
 
         if (!this.pohybovyVektor2D.equals(Vektor2D.ZERO)) {
             this.smerovyVektor2D = this.pohybovyVektor2D;
         }
         
-        if (!koliziaHrac && aM.jePlochaRozmeruMimoStien(buduciRozmer)) {
+        if (!koliziaHrac && aM.jeRozmerMimoStien(buduciRozmer)) {
             if (aM.jePlochaRozmeruMimoNepriatelov(buduciRozmer, this.rozmer)) {
                 this.setPozicia(buducaPozicia);
             }
@@ -183,7 +185,7 @@ public class Telo implements Serializable {
     }
     /**
      * Zmeni zdravie Tela
-     * @param uber velkost zmeny zdravia (+/-)
+     * @param zmena velkost zmeny zdravia (+/-)
      * @return PRAVDA ak Telo stale zije
      */
     public boolean zmenZdravie(int zmena) {
@@ -209,7 +211,7 @@ public class Telo implements Serializable {
         Rozmer2D kopia = this.rozmer.kopia();
         kopia.setPozicia(kopia.getPozicia());
 
-        while (aktivMiestnost.jePlochaRozmeruMimoStien(kopia)) {
+        while (aktivMiestnost.jeRozmerMimoStien(kopia)) {
             this.rozmer = kopia.kopia();
             Vektor2D pohyb = this.pohybovyVektor2D.sucinSoSkalarom(PRESNOST_POSUNU_K_STENE);
             kopia.setPozicia(kopia.getPozicia().sucet(pohyb));
@@ -230,7 +232,7 @@ public class Telo implements Serializable {
             Smer s = Smer.toSmer(new Vektor2D(x, y));
 
             this.invertujPolohu();
-            aktualnaMiestnost.prejdiDoDalsejMiestnosti(s);
+            aktualnaMiestnost.prejdiDverami(s);
         }
     }
     /**
@@ -263,7 +265,7 @@ public class Telo implements Serializable {
         smerPosunu = smerPosunu.normalizuj().sucinSoSkalarom(PRESNOST_OPRAVY_POSUNU);
 
         // Posuva poziciu ku stredu Miestnosti kym kolizuje so stenou
-        while (!(aM.jePlochaRozmeruMimoStien(this.rozmer) && aM.jePlochaRozmeruMimoNepriatelov(this.rozmer, null))) {
+        while (!(aM.jeRozmerMimoStien(this.rozmer) && aM.jePlochaRozmeruMimoNepriatelov(this.rozmer, null))) {
             Vektor2D pozicia = this.rozmer.ziskajStred().sucet(smerPosunu);
             pozicia = pozicia.sucet(this.rozmer.getVelkost().sucinSoSkalarom(-0.5));
             this.setPozicia(pozicia);

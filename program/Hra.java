@@ -5,7 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
- * Trieda pre zjednotenie vsetkych komponentov Hry
+ * Trieda pre zjednotenie vsetkych komponentov Hry, 
+ * moze Ukladat a Nacitavat svoj stav zo suboru
  * 
  * @author y0hn 
  * @version v0.7
@@ -101,7 +102,7 @@ public class Hra {
                 System.exit(0);
             }
 
-        } else if (this.displej.ziskajRestart()) {
+        } else if (this.displej.ziskajRestart() || this.hrac.getRestart()) {
             this.displej.nastavGrafikuPreStavHry(this.stavHry, false);            
             this.svet = new Svet(VELKOST_SVETA);
             

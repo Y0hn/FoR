@@ -11,6 +11,7 @@ import javax.swing.Timer;
 public class Casovac implements ActionListener {
     private static final int ONESKORENIE_MS = 25;
     private static final long DLZKA_TIKU_MS = 0;  
+    private static Casovac instancia;
 
     private final Timer casovac;
     private final Hra hra;    
@@ -21,7 +22,14 @@ public class Casovac implements ActionListener {
      * Vytvori casovac pre Hru
      * @param hra
      */
-    public Casovac(Hra hra) {
+    public static Casovac spust(Hra hra) {
+        if (Casovac.instancia == null) {
+            Casovac.instancia = new Casovac(hra);
+        }
+        return Casovac.instancia;
+    }
+    
+    private Casovac(Hra hra) {
         this.hra = hra;
         
         this.casovac = new javax.swing.Timer(ONESKORENIE_MS, null);        
@@ -34,9 +42,10 @@ public class Casovac implements ActionListener {
 
     /**
      * Volane ked sa aktualizuje cas v casovaci
-     * @param event
+     * @param ae udalost
      */
-    public void actionPerformed(ActionEvent event) {
+    @Override
+    public void actionPerformed(ActionEvent ae) {
         long sucastnyCas = System.currentTimeMillis();
 
         if (this.dalsiTik <= sucastnyCas) {

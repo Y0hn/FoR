@@ -7,10 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- * Drzi informacie o hracovi vo Svete
+ * Drzi informacie o Hracovi v Miestnosti
  * 
  * @author y0hn 
- * @version v0.6
+ * @version v0.7
  */
 public class Hrac implements Serializable {
     public static final Rozmer2D GRAFIKA_ZIVOTOV_HRACA = new Rozmer2D(40, 10, 300, 40);
@@ -24,6 +24,7 @@ public class Hrac implements Serializable {
     private final Telo telo;
     private boolean pauza;
     private boolean vstupPauza;
+    private boolean vstupRestart;
     private boolean[] pohybVSmere;
     private boolean[] strelbaVSmere;
 
@@ -53,14 +54,14 @@ public class Hrac implements Serializable {
     }
     /**
      * Vrati Telo Hraca
-     * @return reprazentacia Hraca vo Svete
+     * @return reprazentacia Hraca v Miestnosti
      */
     public Telo getTelo() {
         return this.telo;
     }
     /**
      * Ziska grafiku hraca
-     * @return OtacanaGrafika hraca
+     * @return Otacana Grafika Hraca
      */
     public OtacanaGrafika getGrafika() {
         return this.telo.getGrafika();
@@ -80,10 +81,17 @@ public class Hrac implements Serializable {
         return this.ui;
     }
     /**
+     * Ziska restart
+     * @return PRAVDA ak je stlaceny klaves pre restrat
+     */
+    public boolean getRestart() {
+        return this.vstupRestart;
+    }
+    /**
      * Ziska vsetky aktualne Strely
      * @return list Striel
      */
-    public ArrayList<Strela> ziskajStrely() {
+    public ArrayList<Strela> getStrely() {
         return this.strely;
     }
     /**
@@ -94,7 +102,7 @@ public class Hrac implements Serializable {
         this.strely.remove(strela);
     }
     /**
-     * Ozivy Hraca 
+     * Hracovi nastavi plny pocet zivotov a postavi ho do stredu Miestnosti (okna) 
      */
     public void ozivHraca() {
         this.telo.zmenZdravie(Integer.MAX_VALUE);
@@ -104,6 +112,7 @@ public class Hrac implements Serializable {
     /**
      * Obnovi vlastnosti Hraca a jeho komponenty.
      * Ziska a pracuje informacie zo vstupov.
+     * 
      * @param aktMiest sucastna Miestnost
      * @param stav sucasny Stav Hry
      * @param deltaCasu casovy rozdiel od posledneho tiku
@@ -194,48 +203,52 @@ public class Hrac implements Serializable {
      * @param pridaj PRAVDA ak bol staceny, NEPRAVDA ak pusteny
      */
     private void keySetSmer(int klaves, boolean pridaj) {   
-        int[] indexiKlaves = new int[] {-1, -1};
+        int[] indexVstupu = new int[] {-1, -1};
 
         switch (klaves) {
             case 87: // W
-                indexiKlaves[0] = Smer.HORE.ordinal();
+                indexVstupu[0] = Smer.HORE.ordinal();
                 break;
             case 65: // A
-                indexiKlaves[0] = Smer.LAVO.ordinal();
+                indexVstupu[0] = Smer.LAVO.ordinal();
                 break;
             case 83: // S
-                indexiKlaves[0] = Smer.DOLE.ordinal();
+                indexVstupu[0] = Smer.DOLE.ordinal();
                 break;
             case 68: // D
-                indexiKlaves[0] = Smer.PRAVO.ordinal();
+                indexVstupu[0] = Smer.PRAVO.ordinal();
                 break;
 
             case 38: // sipka Hore
-                indexiKlaves[1] = Smer.HORE.ordinal();
+                indexVstupu[1] = Smer.HORE.ordinal();
                 break;
             case 37: // sipka Lavo
-                indexiKlaves[1] = Smer.LAVO.ordinal();
+                indexVstupu[1] = Smer.LAVO.ordinal();
                 break;
             case 40: // sipka Dole
-                indexiKlaves[1] = Smer.DOLE.ordinal();
+                indexVstupu[1] = Smer.DOLE.ordinal();
                 break;
             case 39: // sipka Pravo
-                indexiKlaves[1] = Smer.PRAVO.ordinal();
+                indexVstupu[1] = Smer.PRAVO.ordinal();
                 break;
 
             case 27: // ESC
                 this.vstupPauza = pridaj;
                 break;
 
+            case 82: // R
+                this.vstupRestart = pridaj;
+                break;
+
             default:
                 break;
         }
 
-        if (indexiKlaves[0] != -1) {
-            this.pohybVSmere[indexiKlaves[0]] = pridaj;
+        if (indexVstupu[0] != -1) {
+            this.pohybVSmere[indexVstupu[0]] = pridaj;
         }
-        if (indexiKlaves[1] != -1) {
-            this.strelbaVSmere[indexiKlaves[1]] = pridaj;
+        if (indexVstupu[1] != -1) {
+            this.strelbaVSmere[indexVstupu[1]] = pridaj;
         }
     }
     private Vektor2D ziskajSmerovyVektor2D(boolean[] smery) {   

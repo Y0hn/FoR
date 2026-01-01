@@ -171,7 +171,7 @@ public class Displej {
 
         this.aktivnaMiestnost.setLayer(grafika, VRSTVA_HRAC);
         this.aktivnaMiestnost.add(grafika);
-        objektHraca.getTelo().setGrafika(grafika, Color.GREEN);
+        objektHraca.getTelo().setGrafika(grafika);
         
         JPanel[] zivotyUI = new JPanel[objektHraca.getTelo().getMaxZdravie()];
         Rozmer2D rozmerZivota = Hrac.GRAFIKA_ZIVOTOV_HRACA;
@@ -224,7 +224,7 @@ public class Displej {
      * @param objektHraca
      */
     public void nastavGrafikuStriel(Hrac objektHraca) {
-        for (Strela s : objektHraca.ziskajStrely()) {
+        for (Strela s : objektHraca.getStrely()) {
             OtacanaGrafika og = s.getGrafika();
             this.aktivnaMiestnost.setLayer(og, VRSTVA_STRELA);
             this.aktivnaMiestnost.add(og);
@@ -279,7 +279,7 @@ public class Displej {
         label.setFont(FONT_MIESTNOST);    
         podlaha.add(label, BorderLayout.CENTER);
 
-        SpecialnaPlocha plocha = m.getSpecialnaPlocha();
+        Plocha plocha = m.getPlocha();
         if (plocha != null) {
             JPanel grafikaPlochy = new JPanel();
             grafikaPlochy.setBackground(plocha.getFarba());
