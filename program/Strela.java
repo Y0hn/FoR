@@ -16,7 +16,6 @@ public class Strela implements Serializable {
     private final Rozmer2D rozmer;
     private final Vektor2D posun;
     private final OtacanaGrafika grafika;
-    private final Hrac hrac;
     private final int poskodenie;
 
     /**
@@ -30,7 +29,6 @@ public class Strela implements Serializable {
         this.rozmer = new Rozmer2D(pozicia, VELKOST);
         this.posun = smerovyVektor.normalizuj().sucinSoSkalarom(RYCHLOST);
         this.poskodenie = hrac.getTelo().getPoskodenie();
-        this.hrac = hrac;
 
         this.grafika = new OtacanaGrafika("assets/shot.png");
         this.grafika.setBounds(this.rozmer.vytvorRectangle());
@@ -51,15 +49,17 @@ public class Strela implements Serializable {
      * Posunie Strelu predom nasavenym smerom. 
      * Ak Strela narazi, znici ju.
      * @param aM aktualna Miestnost
+     * @param hrac objekt Hraca
      * @param deltaCasu casovy rozdiel od posledneho tiku
      */
-    public void tik(Miestnost aM, double deltaCasu) {
+    public void tik(Miestnost aM, Hrac hrac, double deltaCasu) {
         Vektor2D posunVCase = this.posun.sucinSoSkalarom(deltaCasu);
         this.rozmer.posun(posunVCase);
         this.grafika.setLocation(this.rozmer.getPozicia().vytvorPoint());
 
         if (this.jeVStene(aM) || this.zasah(aM)) {
             this.znic();
+            hrac.odstranStrelu(this);
         }
     }
 
@@ -85,6 +85,5 @@ public class Strela implements Serializable {
     private void znic() {
         this.grafika.setBounds(Rozmer2D.ZERO.vytvorRectangle());
         this.grafika.getParent().remove(this.grafika);
-        this.hrac.odstranStrelu(this);
     }
 }

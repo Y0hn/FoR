@@ -133,7 +133,7 @@ public class Hrac implements Serializable {
 
         ArrayList<Strela> tentoTik = new ArrayList<Strela>(this.strely);
         for (Strela strela : tentoTik) {
-            strela.tik(aktMiest, deltaCasu);
+            strela.tik(aktMiest, this, deltaCasu);
         }
 
         
