@@ -7,12 +7,13 @@ import java.util.Random;
  * Po vojdeni Hraca do Miestnosti je potrebna aktivacia
  * 
  * @author y0hn
- * @version v0.7
+ * @version v0.8
  */
 public class Miestnost implements Serializable {
     private static final int MIN_POCET_NEPIRATELOV = 1;
     private static final int MAX_POCET_NEPIRATELOV = 5;
     private static final int ONESKORENIE_NEPRIATELOV = 250; // ms
+    private static final int POCET_GRAFIK_PODLAHY = 3;
     private static final double DOSAH_DVERI = 250;
     
     private final int indexMiestnosti;
@@ -22,12 +23,13 @@ public class Miestnost implements Serializable {
     private boolean dvereOtvorene;
     private Plocha plocha;
     private long casAktivacie;
+    private String cestaKPodlahe;
 
     /**
      * Konstruktor triedy Miestnost
      * @param index cislo Miestnosti vo Svete
      */
-    public Miestnost(int index) {
+    public Miestnost(int index, Random nahoda) {
         this.indexMiestnosti = index;
         int pocetStien = Smer.values().length;
 
@@ -36,6 +38,10 @@ public class Miestnost implements Serializable {
         this.susedneMiestnosti = new Miestnost[pocetStien];
         this.dvereOtvorene = false;
         this.plocha = null;
+
+        this.cestaKPodlahe = "assets/floor-";
+        this.cestaKPodlahe += nahoda.nextInt(POCET_GRAFIK_PODLAHY);
+        this.cestaKPodlahe += ".png";
     }
     /**
      * Vrati cislo Miestnosti v poradi
@@ -77,6 +83,20 @@ public class Miestnost implements Serializable {
             rozmery[i] = this.steny[i].getRozmery();
         }
         return rozmery;
+    }
+    /**
+     * Vrati Obraz pre grafiku podlahy
+     * @return
+     */
+    public String getPodlaha() {
+        return this.cestaKPodlahe;
+    }
+    /**
+     * Nastavi pre grafiku podlahy
+     * @param cesta
+     */
+    public void setPodlaha(String cesta) {
+        this.cestaKPodlahe = cesta;
     }
     /**
      * Ziska Rozmer vyhernej plochy v Miestnosti

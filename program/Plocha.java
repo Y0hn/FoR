@@ -1,33 +1,47 @@
-import java.awt.Color;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 /**
  * Plocha vyhradena v Miestnosti
  *  
  * @author y0hn
- * @version v0.2
+ * @version v0.3
  */
 public enum Plocha {
-    VYHERNA_PLOCHA(0.2, 0.2, Color.YELLOW),
-    UZDRAVOVACIA_PLOCHA(0.3, 0.3, Color.PINK);
+    VYHERNA_PLOCHA(-200, -200, 200, 200, "assets/win_place.png"),
+    UZDRAVOVACIA_PLOCHA(80, 0, 150, 75, "assets/heal_place.png");
 
     private final Rozmer2D rozmerVMiestnosti;
-    private final Color farba;
+    private final JLabel grafika;
 
-    Plocha(double pX, double pY, Color farba) {
-        Vektor2D pomerVelkosti = new Vektor2D(pX, pY);
-        Vektor2D pozicia = Hra.ROZMER_OKNA.getVelkost().sucinSoSkalarom(0.5);
-        Vektor2D velkost = Hra.ROZMER_OKNA.getVelkost().roznasobenie(pomerVelkosti);
-        pozicia = pozicia.rozdiel(velkost.sucinSoSkalarom(0.5));
+    Plocha(double x, double y, double vX, double vY, String cesta) {
+        x += Stena.SIRKA_STENY;
+        y += Stena.SIRKA_STENY;
 
-        this.rozmerVMiestnosti = new Rozmer2D(pozicia, velkost);
-        this.farba = farba;
+        if (x < 0) {
+            x += Hra.ROZMER_OKNA.getVelkost().getX();
+            x -= Stena.SIRKA_STENY * 2;
+        }
+        if (y < 0) {
+            y += Hra.ROZMER_OKNA.getVelkost().getY();
+            y -= Stena.SIRKA_STENY * 2;
+        }
+
+        this.rozmerVMiestnosti = new Rozmer2D(x, y, vX, vY);
+        
+        this.grafika = new JLabel();
+        this.grafika.setIcon(new ImageIcon(cesta));
+        this.grafika.setAlignmentX(0);
+        this.grafika.setAlignmentY(0);
+        this.grafika.setLayout(null);
+        this.grafika.setBounds(this.rozmerVMiestnosti.vytvorRectangle());
     }
 
     /**
-     * Ziska farbu Plochy
+     * Ziska grafiku Plochy
      * @return
      */
-    public Color getFarba() {
-        return this.farba;
+    public JLabel getGrafika() {
+        return this.grafika;
     }
     /**
      * Ziska Rozmer plochy
@@ -55,7 +69,6 @@ public enum Plocha {
                     break;
             }
         }
-
         return stav;
     }
 }

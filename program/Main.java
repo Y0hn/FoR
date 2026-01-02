@@ -7,6 +7,7 @@
 public abstract class Main {
     /**
      * Sluzi na spustenie Hry s Casovacom
+     * @param args parametre pri spusteni (nedefinovane)
      */
     public static void main(String[] args) {
         Hra hra = Hra.start();

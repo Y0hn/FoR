@@ -24,12 +24,12 @@ public class Svet implements Serializable {
 
         ArrayList<Smer> smery = new ArrayList<Smer>();   
 
-        Miestnost miestnost = new Miestnost(0);
+        Miestnost miestnost = new Miestnost(0, nahoda);
         Smer smer; // Urcuje smer k dalsej miestnosti (L, P, D)
 
         // Vygeneruje Suseda Miestnosti
         while (this.miestnosti.size() + 1 < velkost) {
-            Miestnost sused = new Miestnost(this.miestnosti.size() + 1);
+            Miestnost sused = new Miestnost(this.miestnosti.size() + 1, nahoda);
 
             // zabezpecenie aby nesiel naspat z L do P a opacne
             Smer poslednySmer = null;
@@ -78,6 +78,7 @@ public class Svet implements Serializable {
         // nastavi Miestnost v krotrej hrac zacne hru
         // Miestnost je medzi prvou 1/5 a 4/5 celkoveho poctu
         this.indexPociatocnejMiestnosti = (int)Math.round(this.miestnosti.size() * 0.2 + nahoda.nextDouble() * (this.miestnosti.size() * 0.6));
+        this.miestnosti.get(this.indexPociatocnejMiestnosti).setPodlaha("assets/floor-start.png");
 
         int koniec = (nahoda.nextBoolean()) ? 0 : this.miestnosti.size() - 1;
         this.miestnosti.get(koniec).setPlocha(Plocha.VYHERNA_PLOCHA);

@@ -25,10 +25,10 @@ public class Displej {
     private static final int VRSTVA_STENA = 1;
     private static final int VRSTVA_ROH = 2;
     private static final int VRSTVA_PLOCHA = 2;
-    private static final int VRSTVA_HRAC = 4;
+    private static final int VRSTVA_HRAC = 5;
     private static final int VRSTVA_NEPRIATEL = 4;
-    private static final int VRSTVA_UI_HRAC = 5;
-    private static final int VRSTVA_UI = 6;
+    private static final int VRSTVA_UI_HRAC = 6;
+    private static final int VRSTVA_UI = 7;
 
     private static final int POSUN_ROZMERU_X = 10;
     private static final int POSUN_ROZMERU_Y = 36;
@@ -263,8 +263,8 @@ public class Displej {
             nepriatel.setGrafika(grafika);
         }
 
-        JPanel podlaha = new JPanel();
-        podlaha.setBackground(Color.GRAY); // docasne
+        JLabel podlaha = new JLabel();        
+        podlaha.setIcon(new ImageIcon(m.getPodlaha()));
         podlaha.setBounds(Hra.ROZMER_OKNA.vytvorRectangle());
         podlaha.setLayout(new BorderLayout());
         miestnost.setLayer(podlaha, VRSTVA_PODLAHA);
@@ -281,9 +281,7 @@ public class Displej {
 
         Plocha plocha = m.getPlocha();
         if (plocha != null) {
-            JPanel grafikaPlochy = new JPanel();
-            grafikaPlochy.setBackground(plocha.getFarba());
-            grafikaPlochy.setBounds(plocha.getRozmer().vytvorRectangle());
+            JLabel grafikaPlochy = plocha.getGrafika();
             miestnost.setLayer(grafikaPlochy, VRSTVA_PLOCHA);
             miestnost.add(grafikaPlochy);
         }
