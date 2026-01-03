@@ -6,11 +6,10 @@ import javax.swing.Timer;
  * Obnovuje Hru
  * 
  * @author y0hn
- * @version v0.2
+ * @version v0.3
  */
 public class Casovac implements ActionListener {
-    private static final int ONESKORENIE_MS = 25;
-    private static final long DLZKA_TIKU_MS = 0;  
+    private static final int DLZKA_TIKU_MS = 25;
     private static Casovac instancia;
 
     private final Timer casovac;
@@ -32,7 +31,7 @@ public class Casovac implements ActionListener {
     private Casovac(Hra hra) {
         this.hra = hra;
         
-        this.casovac = new javax.swing.Timer(ONESKORENIE_MS, null);        
+        this.casovac = new javax.swing.Timer(DLZKA_TIKU_MS, null);        
         this.casovac.addActionListener(this);      
         
         this.dalsiTik = 0;
@@ -50,11 +49,11 @@ public class Casovac implements ActionListener {
 
         if (this.dalsiTik <= sucastnyCas) {
             double deltaCasu = sucastnyCas - this.poslednyTik;
-            deltaCasu /= ONESKORENIE_MS;
+            deltaCasu /= DLZKA_TIKU_MS;
             this.hra.tik(deltaCasu); 
 
             this.poslednyTik = System.currentTimeMillis();
-            this.dalsiTik = this.poslednyTik + DLZKA_TIKU_MS;
+            this.dalsiTik = this.poslednyTik;
         }
     }  
 }

@@ -76,6 +76,8 @@ public class Nepriatel implements Serializable {
      * @return PRAVDA ak Hrac stratil posledny zivot
      */
     private boolean zautoc(Hrac hrac) {
+        Hudba vystrel = new Hudba("assets/saw.wav", false);
+        vystrel.prehraj();
         return !hrac.getTelo().zmenZdravie(-this.telo.getPoskodenie());
     }
 }

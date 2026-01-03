@@ -1,6 +1,5 @@
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -36,6 +35,7 @@ public class Hra {
 
     private Hrac hrac;
     private final Displej displej;
+    private final Hudba hudba;
     private Svet svet;
     private Miestnost aktivnaMiestnost;
     private StavHry stavHry;
@@ -43,6 +43,7 @@ public class Hra {
 
     private Hra() {
         this.displej = new Displej("assets/icon.png", "FrontRooms", Hra.ROZMER_OKNA);
+        this.hudba = new Hudba("assets/background.wav", true);
         this.hrac = new Hrac();
         this.hrac.nastavVstup(this.displej.getOkno());
         
@@ -58,16 +59,18 @@ public class Hra {
      */
     public void tik(double deltaCasu) {
         if (this.stavHry == StavHry.HRA) {
+            this.hudba.prehraj();
             this.stavHry = this.aktivnaMiestnost.tik(this.hrac, deltaCasu);
             this.stavHry = this.hrac.tik(this.aktivnaMiestnost, this.stavHry, deltaCasu);
 
         } else if (!this.prekryte) {
             this.displej.nastavGrafikuPreStavHry(this.stavHry, true);
+            this.hudba.zastav();
             this.prekryte = true;
             
         } else if (this.stavHry == StavHry.PAUZA) {
             if (this.displej.ziskajSpatDoMenu()) {
-                this.displej.nastavGrafikuPreStavHry(this.stavHry, false);   
+                this.displej.nastavGrafikuPreStavHry(this.stavHry, false);
                 
                 this.ulozHru();
 
@@ -75,7 +78,7 @@ public class Hra {
                 this.prekryte = false;                
 
             } else if (this.displej.ziskajRestart() || this.hrac.pauzaTik()) {
-                this.displej.nastavGrafikuPreStavHry(this.stavHry, false);   
+                this.displej.nastavGrafikuPreStavHry(this.stavHry, false);
 
                 this.stavHry = StavHry.HRA;
                 this.prekryte = false;
@@ -149,10 +152,8 @@ public class Hra {
             vystup.writeObject(this.hrac);
             vystup.close();
 
-        } catch (IOException e) {
-            System.out.print(e);
         } catch (Exception e) {
-            System.out.print(e);
+            System.out.println(e);
         }
     }
 
@@ -185,13 +186,11 @@ public class Hra {
             staryHrac = (Hrac)vstup.readObject();
             vstup.close();
             
-        } catch (IOException e) {
-            System.out.print(e);
         } catch (Exception e) {
-            System.out.print(e);
+            System.out.println(e);
         } finally {
             if (starySvet == null || staraMiestnost == null || null == hrac) {
-                System.out.println("\nNeuspesne nacitanie zo subora\n");
+                System.out.println("Neuspesne nacitanie zo subora\n");
             } else {
                 this.hrac = staryHrac;
                 this.svet = starySvet;

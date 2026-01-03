@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Casovac
-comment0.text=\r\n\ Obnovuje\ Hru\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.2\r\n
+comment0.text=\r\n\ Obnovuje\ Hru\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.3\r\n
 comment1.params=hra
 comment1.target=Casovac\ spust(Hra)
 comment1.text=\r\n\ Vytvori\ casovac\ pre\ Hru\r\n\ @param\ hra\r\n

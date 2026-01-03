@@ -29,7 +29,7 @@ public class Stena implements Serializable {
     }
     /**
      * Vrati Rozmery vsetkych Murov v Stene
-     * @return [mur[0].rozmery, ...] <- Rozmer2D
+     * @return [mur[0].rozmer, ...] <- Rozmer2D
      */
     public Rozmer2D[] getRozmery() {        
         Rozmer2D[] rozmery = new Rozmer2D[this.mury.length];        

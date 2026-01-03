@@ -37,6 +37,9 @@ public class Strela implements Serializable {
         JLayeredPane vrstvenaPlocha = (JLayeredPane)hrac.getGrafika().getParent();
         vrstvenaPlocha.setLayer(this.grafika, Displej.VRSTVA_STRELA);
         vrstvenaPlocha.add(this.grafika);
+
+        Hudba vystrel = new Hudba("assets/shot.wav", false);
+        vystrel.prehraj();
     }
     /**
      * Ziska grafiku Strely

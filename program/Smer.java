@@ -14,7 +14,7 @@ public enum Smer {
     /**
      * Vytvori Smer na zaklade priradenej hodnoty
      * @param smernik
-     * @return priradena hodnota Smer
+     * @return priradena hodnota Smer, ak nenajdeny tak NULL
      */
     public static Smer toSmer(Vektor2D smernik) {
         Smer s = null;

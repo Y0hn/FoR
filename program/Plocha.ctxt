@@ -1,11 +1,11 @@
 #BlueJ class context
 comment0.target=Plocha
-comment0.text=\r\n\ Plocha\ vyhradena\ v\ Miestnosti\r\n\ \ \r\n\ @author\ y0hn\r\n\ @version\ v0.2\r\n
-comment1.params=pX\ pY\ farba
-comment1.target=Plocha(double,\ double,\ java.awt.Color)
+comment0.text=\r\n\ Plocha\ vyhradena\ v\ Miestnosti\r\n\ \ \r\n\ @author\ y0hn\r\n\ @version\ v0.3\r\n
+comment1.params=x\ y\ vX\ vY\ cesta
+comment1.target=Plocha(double,\ double,\ double,\ double,\ java.lang.String)
 comment2.params=
-comment2.target=java.awt.Color\ getFarba()
-comment2.text=\r\n\ Ziska\ farbu\ Plochy\r\n\ @return\r\n
+comment2.target=javax.swing.JLabel\ getGrafika()
+comment2.text=\r\n\ Ziska\ grafiku\ Plochy\r\n\ @return\r\n
 comment3.params=
 comment3.target=Rozmer2D\ getRozmer()
 comment3.text=\r\n\ Ziska\ Rozmer\ plochy\r\n\ @return\r\n
