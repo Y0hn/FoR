@@ -11,12 +11,12 @@ import javax.sound.sampled.Clip;
  */
 public class Hudba {
     private Clip clipHudby;
-    private boolean opakovanie;
     private boolean spustene;
 
     /**
-     * Vytvori Prehravac pre Prehravanie Hudobneho suboru 
+     * Vytvori prehravac pre spustenie Hudobneho suboru 
      * @param cestaSuboru
+     * @param opakovanie ak PRAVDA opakuje sa
      */
     public Hudba(String cestaSuboru, boolean opakovanie) {
         try {
@@ -32,7 +32,6 @@ public class Hudba {
             this.clipHudby.stop();
 
             this.spustene = false;
-            this.opakovanie = opakovanie;
 
         } catch (Exception e) {
             System.out.println(e);
@@ -46,8 +45,7 @@ public class Hudba {
     public void prehraj() {
         if (!this.spustene) {
             this.clipHudby.start();
-
-            this.spustene = this.opakovanie;
+            this.spustene = true;
         }
     }
 

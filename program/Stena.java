@@ -136,7 +136,7 @@ public class Stena implements Serializable {
          * Vytvori cast Steny
          * @param rozmer rozmer Muru
          */
-        public Mur(Rozmer2D rozmer) {
+        private Mur(Rozmer2D rozmer) {
             this.rozmer = rozmer;
             this.aktivny = true;
         }

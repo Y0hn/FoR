@@ -1,7 +1,13 @@
 #BlueJ class context
 comment0.target=Hudba
-comment0.text=\r\n\ Prehravanie\ Hudby\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.1\r\n
-comment1.params=
-comment1.target=Hudba()
-comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Hudba\r\n
-numComments=2
+comment0.text=\r\n\ Trieda\ sluziaca\ na\ prehravanie\ Hudby\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.1\r\n
+comment1.params=cestaSuboru\ opakovanie
+comment1.target=Hudba(java.lang.String,\ boolean)
+comment1.text=\r\n\ Vytvori\ prehravac\ pre\ spustenie\ Hudobneho\ suboru\ \r\n\ @param\ cestaSuboru\r\n\ @param\ opakovanie\ ak\ PRAVDA\ opakuje\ sa\r\n
+comment2.params=
+comment2.target=void\ prehraj()
+comment2.text=\r\n\ Zacne\ alebo\ pokracuje\ v\ prehravani,\r\n\ iba\ ak\ je\ zastavene\r\n
+comment3.params=
+comment3.target=void\ zastav()
+comment3.text=\r\n\ Zastavi\ prehravanie,\r\n\ iba\ ak\ je\ spustene\r\n
+numComments=4
