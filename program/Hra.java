@@ -11,6 +11,10 @@ import java.io.ObjectOutputStream;
  * @version v0.7
  */
 public class Hra {
+    /**
+     * Rozmer okna Hry
+     * (po zmeneni je potrebne upravit vsetky hodnoty velkosti na obrazovke)
+     */
     public static final Rozmer2D ROZMER_OKNA = new Rozmer2D(0, 0, 1200, 840);
     private static final int VELKOST_SVETA = 50;
     private static Hra instancia;

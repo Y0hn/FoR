@@ -1,7 +1,7 @@
 import java.io.Serializable;
 
 /**
- * Reprezentacia postavy vo svete
+ * "Fyzicka" reprezentacia postavy v Miestnosti 
  * 
  * @author y0hn 
  * @version v0.9

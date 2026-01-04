@@ -1,12 +1,16 @@
 import java.io.Serializable;
 
 /**
- * Drzi Hraca v Miestnosti (na obrazovke)
+ * Drzi zabranuje "fyzickym" ojektom odist z Miestnosti (obrazovky),
+ * moze obsahovat cast urcenu na vypinanie a zapinanie (dvere)
  * 
  * @author y0hn
  * @version v0.8
  */
 public class Stena implements Serializable {
+    /**
+     * Sirka Steny od okraja okna
+     */
     public static final int SIRKA_STENY = 80;
     private static final double SIRKA_DVERI = 0.8;
     private static final double POMER_MUROV = (double)1 / (double)3;
@@ -126,7 +130,7 @@ public class Stena implements Serializable {
     }
 
     /**
-     * Reprezentuje cast Steny vo Svete
+     * Reprezentuje cast Steny v Miestnosti
      */
     private class Mur implements Serializable {
         private Rozmer2D rozmer;

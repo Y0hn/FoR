@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /**
- * Zoskupuje stavy v ktorych sa Hra moze nachadzat pocas svojho trvania
+ * Zoskupuje stavy a ich grafiky, v ktorych sa Hra moze nachadzat pocas svojho trvania
  * 
  * @author y0hn
  * @version v0.6

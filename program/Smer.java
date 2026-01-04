@@ -1,6 +1,5 @@
 /**
- * Enumeration trieda Smer
- * Obsahuje a popisuje Smer (pohybu) v rovine
+ * Obsahuje a popisuje Smer rotacie v rovine Vektor2D
  * 
  * @author y0hn
  * @version v0.5

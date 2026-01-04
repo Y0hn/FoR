@@ -20,6 +20,7 @@ public class Casovac implements ActionListener {
     /**
      * Vytvori casovac pre Hru
      * @param hra
+     * @return instancia Casovaca
      */
     public static Casovac spust(Hra hra) {
         if (Casovac.instancia == null) {

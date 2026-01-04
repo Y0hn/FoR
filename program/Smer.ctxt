@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Smer
-comment0.text=\r\n\ Enumeration\ trieda\ Smer\r\n\ Obsahuje\ a\ popisuje\ Smer\ (pohybu)\ v\ rovine\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.5\r\n
+comment0.text=\r\n\ Obsahuje\ a\ popisuje\ Smer\ rotacie\ v\ rovine\ Vektor2D\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.5\r\n
 comment1.params=smernik
 comment1.target=Smer\ toSmer(Vektor2D)
 comment1.text=\r\n\ Vytvori\ Smer\ na\ zaklade\ priradenej\ hodnoty\r\n\ @param\ smernik\r\n\ @return\ priradena\ hodnota\ Smer,\ ak\ nenajdeny\ tak\ NULL\r\n

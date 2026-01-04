@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Telo
-comment0.text=\r\n\ Reprezentacia\ postavy\ vo\ svete\r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ v0.9\r\n
+comment0.text=\r\n\ "Fyzicka"\ reprezentacia\ postavy\ v\ Miestnosti\ \r\n\ \r\n\ @author\ y0hn\ \r\n\ @version\ v0.9\r\n
 comment1.params=maxZdravie\ rozmer\ rychlost\ poskodenie
 comment1.target=Telo(int,\ Rozmer2D,\ double,\ int)
 comment1.text=\r\n\ Vytvori\ Telo\ pre\ postavu\ \r\n\ \r\n\ @param\ maxZdravie\ pociatocny\ pocet\ zravia\r\n\ @param\ rozmer\ Rozmer\ stvorca\ opisujuceho\ Tela\r\n\ @param\ rychlost\ ovplyvnuje\ rychlost\ pohybu\ tela\r\n\ @param\ poskodenie\ poskodenie\ sposobovane\ ostanym\r\n

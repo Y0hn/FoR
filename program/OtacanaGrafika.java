@@ -45,17 +45,23 @@ public class OtacanaGrafika extends JLabel {
     @Override
     protected void paintComponent(Graphics grafika) {
         Graphics2D g = (Graphics2D)grafika.create();
+
+        // lepsi vizual
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+        // ziska rozmery obrazu
         int w = getWidth();
         int h = getHeight();
 
+        // ziska stred obrazu
         int x = w / 2;
         int y = h / 2;
 
+        // otoci okolo stredu
         g.rotate(this.uhol, x, y);
         g.drawImage(this.obraz, 0, 0, w, h, this);
 
+        // zbavi sa grafiky (uvolni pamat)
         g.dispose();
     }
 }

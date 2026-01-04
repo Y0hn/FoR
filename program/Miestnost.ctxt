@@ -43,6 +43,7 @@ comment21.params=nahoda
 comment21.target=Vektor2D\ ziskajNahodnuPoziciuVnutri(java.util.Random)
 comment22.params=o
 comment22.target=boolean\ equals(java.lang.Object)
+comment22.text=\r\n\ Porovna\ objekt\ s\ Miestnostou\r\n\ @param\ o\ by\ mala\ byt\ ina\ Miestnost\r\n\ @return\ PRAVDA\ ak\ ma\ Miestnost\ zhodne\ poradove\ cislo\ vo\ Svete\r\n
 comment3.params=s
 comment3.target=Stena\ getStena(Smer)
 comment3.text=\r\n\ Vrati\ Stenu\ v\ Smere\ \r\n\ @param\ s\ smer\ od\ stredu\r\n\ @return\ Stena\ v\ Smere\r\n

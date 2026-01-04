@@ -13,7 +13,10 @@ import javax.swing.JPanel;
  * @version v0.7
  */
 public class Hrac implements Serializable {
-    public static final Rozmer2D GRAFIKA_ZIVOTOV_HRACA = new Rozmer2D(40, 10, 300, 40);
+    /**
+     * Rozmer grafiky urcenej pre ukazovatel zivotov
+     */
+    public static final Rozmer2D GRAFIKA_ZIVOTOV_HRACA = new Rozmer2D(40, 10, 300, 20);
 
     private static final int MAX_ZIVOT = 10;
     private static final Vektor2D VELKOST = new Vektor2D(100, 100);
@@ -178,10 +181,18 @@ public class Hrac implements Serializable {
      */
     public void nastavVstup(JFrame okno) {
         KeyAdapter ka = new KeyAdapter() {
+            /**
+             * Stlaceny klaves
+             * @param e udalost
+             */
             @Override
             public void keyPressed(KeyEvent e) {
                 Hrac.this.vstup(e.getKeyCode());
             }
+            /**
+             * Pusteny klaves
+             * @param e udalost
+             */
             @Override
             public void keyReleased(KeyEvent e) {
                 Hrac.this.koniecVstupu(e.getKeyCode());

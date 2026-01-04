@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=StavHry
-comment0.text=\r\n\ Zoskupuje\ stavy\ v\ ktorych\ sa\ Hra\ moze\ nachadzat\ pocas\ svojho\ trvania\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.6\r\n
+comment0.text=\r\n\ Zoskupuje\ stavy\ a\ ich\ grafiky,\ v\ ktorych\ sa\ Hra\ moze\ nachadzat\ pocas\ svojho\ trvania\r\n\ \r\n\ @author\ y0hn\r\n\ @version\ v0.6\r\n
 comment1.params=farbaPozadia\ cestaObrazu\ tlacitka
 comment1.target=StavHry(java.awt.Color,\ java.lang.String,\ java.lang.String)
 comment2.params=index

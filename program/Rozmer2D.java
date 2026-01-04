@@ -8,6 +8,9 @@ import java.io.Serializable;
  * @version v0.9
  */
 public class Rozmer2D implements Serializable {
+    /**
+     * Prazdny Rozmer
+     */
     public static final Rozmer2D ZERO = new Rozmer2D(0, 0, 0, 0);
 
     private double poziciaX;

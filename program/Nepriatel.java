@@ -1,12 +1,15 @@
 import java.io.Serializable;
 
 /**
- * Write a description of class Nepriatel here.
+ * Reprezentuje objekt Nepriatela v Miestnosti
  * 
  * @author y0hn
  * @version v0.2
  */
 public class Nepriatel implements Serializable {
+    /**
+     * Velkost Tela a grafiky Nepriatela (x - sirka, y - vyska)
+     */
     public static final Vektor2D VELKOST = new Vektor2D(100, 100);
 
     private static final int MAX_POCET_ZIVOTOV = 1; 

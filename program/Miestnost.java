@@ -272,6 +272,11 @@ public class Miestnost implements Serializable {
         return new Vektor2D(x, y);
     }
 
+    /**
+     * Porovna objekt s Miestnostou
+     * @param o by mala byt ina Miestnost
+     * @return PRAVDA ak ma Miestnost zhodne poradove cislo vo Svete
+     */
     @Override
     public boolean equals(Object o) {
         boolean rovnake = false;

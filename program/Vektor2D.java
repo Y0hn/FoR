@@ -3,16 +3,31 @@ import java.awt.Point;
 import java.io.Serializable;
 
 /**
- * 2D Vektor2D (reprezentuje bod v Kartezianskej suradnicovej sustave so suradnicami [x,y])
+ * Reprezentuje bod v Kartezianskej suradnicovej sustave so suradnicami [x,y]
  * 
  * @author y0hn
  * @version v0.12
  */
 public class Vektor2D implements Serializable {
+    /**
+     * Prazdny Vektor (0, 0)
+     */
     public static final Vektor2D ZERO = new Vektor2D(0, 0);
+    /**
+     * Smerovy Vektor Hore (0, 1)
+     */
     public static final Vektor2D HORE = new Vektor2D(0, 1);
+    /**
+     * Smerovy Vektor Dole (0, -1)
+     */
     public static final Vektor2D DOLE = new Vektor2D(0, -1);
+    /**
+     * Smerovy Vektor v Pravo (1, 0)
+     */
     public static final Vektor2D PRAVO = new Vektor2D(1, 0);
+    /**
+     * Smerovy Vektor v Lavo (0, -1)
+     */
     public static final Vektor2D LAVO = new Vektor2D(-1, 0);
 
     private final double x;

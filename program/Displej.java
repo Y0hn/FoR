@@ -19,6 +19,9 @@ import java.util.Hashtable;
  * @version v0.13
  */
 public class Displej {    
+    /**
+     * Vrstva, na ktorej sa vykresluju projektily
+     */
     public static final int VRSTVA_STRELA = 3;
 
     private static final int VRSTVA_PODLAHA = 0;
