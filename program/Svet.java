@@ -78,7 +78,7 @@ public class Svet implements Serializable {
         // nastavi Miestnost v krotrej hrac zacne hru
         // Miestnost je medzi prvou 1/5 a 4/5 celkoveho poctu
         this.indexPociatocnejMiestnosti = (int)Math.round(this.miestnosti.size() * 0.2 + nahoda.nextDouble() * (this.miestnosti.size() * 0.6));
-        this.miestnosti.get(this.indexPociatocnejMiestnosti).setPodlaha("assets/floor-start.png");
+        this.miestnosti.get(this.indexPociatocnejMiestnosti).setPodlaha(Hra.CESTA_K_SUBOROM + "floor-start.png");
 
         int koniec = (nahoda.nextBoolean()) ? 0 : this.miestnosti.size() - 1;
         this.miestnosti.get(koniec).setPlocha(Plocha.VYHERNA_PLOCHA);

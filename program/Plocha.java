@@ -7,11 +7,11 @@ import javax.swing.JLabel;
  * @version v0.3
  */
 public enum Plocha {
-    VYHERNA_PLOCHA(-200, -200, 200, 200, "assets/win_place.png"),
-    UZDRAVOVACIA_PLOCHA(80, 0, 150, 75, "assets/heal_place.png");
+    VYHERNA_PLOCHA(-200, -200, 200, 200, "win_place.png"),
+    UZDRAVOVACIA_PLOCHA(80, 0, 150, 75, "heal_place.png");
 
     private final Rozmer2D rozmerVMiestnosti;
-    private final JLabel grafika;
+    private final String grafika;
 
     Plocha(double x, double y, double vX, double vY, String cesta) {
         x += Stena.SIRKA_STENY;
@@ -28,12 +28,7 @@ public enum Plocha {
 
         this.rozmerVMiestnosti = new Rozmer2D(x, y, vX, vY);
         
-        this.grafika = new JLabel();
-        this.grafika.setIcon(new ImageIcon(cesta));
-        this.grafika.setAlignmentX(0);
-        this.grafika.setAlignmentY(0);
-        this.grafika.setLayout(null);
-        this.grafika.setBounds(this.rozmerVMiestnosti.vytvorRectangle());
+        this.grafika = Hra.CESTA_K_SUBOROM + cesta;
     }
 
     /**
@@ -41,7 +36,13 @@ public enum Plocha {
      * @return
      */
     public JLabel getGrafika() {
-        return this.grafika;
+        JLabel vytovenaGrafika = new JLabel();
+        vytovenaGrafika.setIcon(new ImageIcon(Plocha.class.getResource(this.grafika)));
+        vytovenaGrafika.setAlignmentX(0);
+        vytovenaGrafika.setAlignmentY(0);
+        vytovenaGrafika.setLayout(null);
+        vytovenaGrafika.setBounds(this.rozmerVMiestnosti.vytvorRectangle());
+        return vytovenaGrafika;
     }
     /**
      * Ziska Rozmer plochy

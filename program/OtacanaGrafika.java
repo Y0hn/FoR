@@ -21,7 +21,7 @@ public class OtacanaGrafika extends JLabel {
      * @param cesta
      */
     public OtacanaGrafika(String cesta) {
-        ImageIcon zobrazenie = new ImageIcon(cesta);
+        ImageIcon zobrazenie = new ImageIcon(OtacanaGrafika.class.getResource(Hra.CESTA_K_SUBOROM + cesta));
         this.obraz = zobrazenie.getImage();
         super.setIcon(zobrazenie);
         

@@ -1,4 +1,5 @@
-import java.io.File;
+import java.io.BufferedInputStream;
+import java.io.InputStream;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -7,7 +8,7 @@ import javax.sound.sampled.Clip;
  * Trieda sluziaca na prehravanie Hudby
  * 
  * @author y0hn
- * @version v0.1
+ * @version v0.2
  */
 public class Hudba {
     private Clip clipHudby;
@@ -15,13 +16,14 @@ public class Hudba {
 
     /**
      * Vytvori prehravac pre spustenie Hudobneho suboru 
-     * @param cestaSuboru
+     * @param subor
      * @param opakovanie ak PRAVDA opakuje sa
      */
-    public Hudba(String cestaSuboru, boolean opakovanie) {
-        try {
-            File subor = new File(cestaSuboru);
-            AudioInputStream ais = AudioSystem.getAudioInputStream(subor);
+    public Hudba(String subor, boolean opakovanie) {
+        try (InputStream is =
+            Hudba.class.getResourceAsStream(Hra.CESTA_K_SUBOROM + subor);
+            BufferedInputStream bis = new BufferedInputStream(is);
+            AudioInputStream ais = AudioSystem.getAudioInputStream(bis)) {
 
             this.clipHudby = AudioSystem.getClip();
             this.clipHudby.open(ais);
@@ -29,10 +31,9 @@ public class Hudba {
             if (opakovanie) {
                 this.clipHudby.loop(Clip.LOOP_CONTINUOUSLY);
             }            
-            this.clipHudby.stop();
 
+            this.clipHudby.stop();            
             this.spustene = false;
-
         } catch (Exception e) {
             System.out.println(e);
         }

@@ -11,6 +11,8 @@ import javax.swing.JLayeredPane;
  */
 public class Strela implements Serializable {
     private static final Vektor2D VELKOST = new Vektor2D(20, 20);
+    private static final String CESTA_ZVUKU = "shot.wav";
+    private static final String CESTA_OBRAZU = "shot.png";
     private static final double RYCHLOST = 25;
 
     private final Rozmer2D rozmer;
@@ -30,7 +32,7 @@ public class Strela implements Serializable {
         this.posun = smerovyVektor.normalizuj().sucinSoSkalarom(RYCHLOST);
         this.poskodenie = hrac.getTelo().getPoskodenie();
 
-        this.grafika = new OtacanaGrafika("assets/shot.png");
+        this.grafika = new OtacanaGrafika(CESTA_OBRAZU);
         this.grafika.setBounds(this.rozmer.vytvorRectangle());
         this.grafika.setUhol(this.posun.getUhol());
         
@@ -38,7 +40,7 @@ public class Strela implements Serializable {
         vrstvenaPlocha.setLayer(this.grafika, Displej.VRSTVA_STRELA);
         vrstvenaPlocha.add(this.grafika);
 
-        Hudba vystrel = new Hudba("assets/shot.wav", false);
+        Hudba vystrel = new Hudba(CESTA_ZVUKU, false);
         vystrel.prehraj();
     }
     /**

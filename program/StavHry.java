@@ -13,10 +13,10 @@ import javax.swing.JButton;
  */
 public enum StavHry {
     HRA(null, "", ""),
-    VYHRA(new Color(33, 125, 174), "assets/victory.png", ""),
-    PREHRA(Color.BLACK, "assets/death.png", ""),
-    PAUZA(Color.BLACK, "assets/pause.png", "Hlavná Ponuka"),
-    MENU(Color.BLACK, "assets/menu.png", "Ukonči Hru,Štart,Pokračuj");
+    VYHRA(new Color(33, 125, 174), "victory.png", ""),
+    PREHRA(Color.BLACK, "death.png", ""),
+    PAUZA(Color.BLACK, "pause.png", "Hlavná Ponuka"),
+    MENU(Color.BLACK, "menu.png", "Ukonči Hru,Štart,Pokračuj");
     
     private JButton[] grafika;
     private Hashtable<String, Integer> indexiTlacidiel;
@@ -103,7 +103,7 @@ public enum StavHry {
         tlacitko.setBounds(Rozmer2D.ZERO.vytvorRectangle());
 
         if (!ikona.equals("")) {
-            tlacitko.setIcon(new ImageIcon(ikona));
+            tlacitko.setIcon(new ImageIcon(StavHry.class.getResource(Hra.CESTA_K_SUBOROM + ikona)));
         }
         if (farba != null) {
             tlacitko.setBackground(farba);

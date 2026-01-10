@@ -16,6 +16,7 @@ public class Nepriatel implements Serializable {
     private static final int RYCHLOST = 8; 
     private static final double RYCHLOST_UTOKU = 1;
     private static final int POSKODENIE_UTOKU = 1;
+    private static final String CESTA_UTOKU = "saw.wav";
     
     private final Telo telo;
     private long buduciUtok;
@@ -79,7 +80,7 @@ public class Nepriatel implements Serializable {
      * @return PRAVDA ak Hrac stratil posledny zivot
      */
     private boolean zautoc(Hrac hrac) {
-        Hudba vystrel = new Hudba("assets/saw.wav", false);
+        Hudba vystrel = new Hudba(CESTA_UTOKU, false);
         vystrel.prehraj();
         return !hrac.getTelo().zmenZdravie(-this.telo.getPoskodenie());
     }

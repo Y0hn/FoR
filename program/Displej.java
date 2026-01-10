@@ -39,8 +39,8 @@ public class Displej {
     private static final Font FONT_MIESTNOST = new Font("Arial", 1, 200);
     private static final double VELKOST_ROHU = 1.05;
 
-    private static final String GRAFIKA_HRAC = "assets/player.png";
-    private static final String GRAFIKA_NEPIRATEL = "assets/enemy.png";
+    private static final String GRAFIKA_HRAC = "player.png";
+    private static final String GRAFIKA_NEPIRATEL = "enemy.png";
 
     private final JFrame okno;
     private final Hashtable<StavHry, JComponent> uzivatelskeRozhranie;
@@ -66,9 +66,11 @@ public class Displej {
 
         // hlavicka okna
         if (!ikonaOkna.equals("")) {
-            this.okno.setIconImage(new ImageIcon(ikonaOkna).getImage());
+            ikonaOkna = Hra.CESTA_K_SUBOROM + ikonaOkna;
+            this.okno.setIconImage(new ImageIcon(Displej.class.getResource(ikonaOkna)).getImage());
         }
         if (!nazovOkna.equals("")) {
+            nazovOkna = Hra.CESTA_K_SUBOROM + nazovOkna;
             this.okno.setTitle(nazovOkna);
         }
 
@@ -267,7 +269,7 @@ public class Displej {
         }
 
         JLabel podlaha = new JLabel();        
-        podlaha.setIcon(new ImageIcon(m.getPodlaha()));
+        podlaha.setIcon(new ImageIcon(Displej.class.getResource(m.getPodlaha())));
         podlaha.setBounds(Hra.ROZMER_OKNA.vytvorRectangle());
         podlaha.setLayout(new BorderLayout());
         miestnost.setLayer(podlaha, VRSTVA_PODLAHA);
@@ -300,8 +302,9 @@ public class Displej {
 
         for (int i = 0; i < 4; i++) {
             label = new JLabel();
-            String cesta = i == 0 || 3 == i ? "assets/cornerL.png" : "assets/cornerR.png";
-            label.setIcon(new ImageIcon(cesta));
+            String cesta = Hra.CESTA_K_SUBOROM;
+            cesta += i == 0 || 3 == i ? "cornerL.png" : "cornerR.png";
+            label.setIcon(new ImageIcon(Displej.class.getResource(cesta)));
             label.setHorizontalAlignment(SwingConstants.CENTER);
             label.setVerticalAlignment(SwingConstants.CENTER);
             label.setBounds(rozmeryRohov[i].vytvorRectangle());

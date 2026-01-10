@@ -39,7 +39,7 @@ public class Miestnost implements Serializable {
         this.dvereOtvorene = false;
         this.plocha = null;
 
-        this.cestaKPodlahe = "assets/floor-";
+        this.cestaKPodlahe = Hra.CESTA_K_SUBOROM + "floor-";
         this.cestaKPodlahe += nahoda.nextInt(POCET_GRAFIK_PODLAHY);
         this.cestaKPodlahe += ".png";
     }

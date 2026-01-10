@@ -2,6 +2,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Trieda pre zjednotenie vsetkych komponentov Hry, 
@@ -16,9 +19,14 @@ public class Hra {
      * (po zmeneni je potrebne upravit vsetky hodnoty velkosti na obrazovke)
      */
     public static final Rozmer2D ROZMER_OKNA = new Rozmer2D(0, 0, 1200, 840);
+    /**
+     * Cesta k externym suborom Hry (obrazky, hudba)
+     */
+    public static final String CESTA_K_SUBOROM = "/assets/";
+    private static final String CESTA_ULOZENIA = "./saves/";
     private static final int VELKOST_SVETA = 50;
     private static Hra instancia;
-
+    
     /**
      * Zacne novu Hru iba pripade ak uz nebezi ina
      * @return beziacu Hru
@@ -46,8 +54,8 @@ public class Hra {
     private boolean prekryte;
 
     private Hra() {
-        this.displej = new Displej("assets/icon.png", "FrontRooms", Hra.ROZMER_OKNA);
-        this.hudba = new Hudba("assets/background.wav", true);
+        this.displej = new Displej("icon.png", "FrontRooms", Hra.ROZMER_OKNA);
+        this.hudba = new Hudba("background.wav", true);
         this.hrac = new Hrac();
         this.hrac.nastavVstup(this.displej.getOkno());
         
@@ -141,17 +149,20 @@ public class Hra {
         ObjectOutputStream vystup;
 
         try {
-            subor = new FileOutputStream("./saves/world.sav");
+            Path dir = Paths.get(CESTA_ULOZENIA);
+            Files.createDirectories(dir);
+
+            subor = new FileOutputStream(CESTA_ULOZENIA + "world.sav");
             vystup = new ObjectOutputStream(subor);
             vystup.writeObject(this.svet);
             vystup.close();
 
-            subor = new FileOutputStream("./saves/room.sav");
+            subor = new FileOutputStream(CESTA_ULOZENIA + "room.sav");
             vystup = new ObjectOutputStream(subor);
             vystup.writeObject(this.aktivnaMiestnost);
             vystup.close();
 
-            subor = new FileOutputStream("./saves/player.sav");
+            subor = new FileOutputStream(CESTA_ULOZENIA + "player.sav");
             vystup = new ObjectOutputStream(subor);
             vystup.writeObject(this.hrac);
             vystup.close();
@@ -175,17 +186,17 @@ public class Hra {
         Miestnost staraMiestnost = null;
 
         try {
-            subor = new FileInputStream("./saves/world.sav");
+            subor = new FileInputStream(CESTA_ULOZENIA + "world.sav");
             vstup = new ObjectInputStream(subor);
             starySvet = (Svet)vstup.readObject();
             vstup.close();
             
-            subor = new FileInputStream("./saves/room.sav");
+            subor = new FileInputStream(CESTA_ULOZENIA + "room.sav");
             vstup = new ObjectInputStream(subor);
             staraMiestnost = (Miestnost)vstup.readObject();
             vstup.close();
             
-            subor = new FileInputStream("./saves/player.sav");
+            subor = new FileInputStream(CESTA_ULOZENIA + "player.sav");
             vstup = new ObjectInputStream(subor);
             staryHrac = (Hrac)vstup.readObject();
             vstup.close();
